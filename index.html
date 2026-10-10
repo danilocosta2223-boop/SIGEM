@@ -1,162 +1,95 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGEM Enterprise - War Room Operacional</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        slate: {
-                            950: '#020617',
-                            900: '#0f172a',
-                            800: '#1e293b',
-                        }
-                    }
-                }
-            }
+    
+    <title>SIGEM Engenharia Clínica - Portal</title>
+    
+    <meta name="description" content="SIGEM Engenharia Clínica - Sistema de Gestão de Engenharia Clínica para monitoramento, rastreabilidade e controle de equipamentos hospitalares.">
+    <meta name="author" content="Danilo Rafael da Silva Costa">
+    
+    <!-- Open Graph / Redes Sociais -->
+    <meta property="og:title" content="SIGEM Engenharia Clínica">
+    <meta property="og:site_name" content="SIGEM Engenharia Clínica">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://danilocosta2223-boop.github.io/wdd231/SIGEM-Engenharia-Clinica/">
+    <meta property="og:description" content="Sistema de Gestão de Engenharia Clínica para monitoramento, rastreabilidade e controle de equipamentos hospitalares.">
+    <meta property="og:image" content="https://danilocosta2223-boop.github.io/wdd231/SIGEM-Engenharia-Clinica/imagens/banner-hospital.jpg">
+    <meta property="og:locale" content="pt_BR">
+    
+    <!-- Favicon (Descomente se houver o arquivo favicon.ico dentro da pasta imagens) -->
+    <!-- <link rel="icon" href="imagens/favicon.ico" type="image/x-icon"> -->
+
+    <!-- Fonte Roboto do Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #0f172a;
+            color: #f8fafc;
+            line-height: 1.6;
         }
-    </script>
-    <!-- FontAwesome para Ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        h1 {
+            color: #38bdf8;
+            border-bottom: 2px solid #1e293b;
+            padding-bottom: 10px;
+        }
+        p {
+            color: #94a3b8;
+        }
+        h2 {
+            color: #e2e8f0;
+            margin-top: 30px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 12px;
+        }
+        a {
+            display: inline-block;
+            background-color: #1e293b;
+            color: #38bdf8;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        a:hover {
+            background-color: #334155;
+            color: #7dd3fc;
+            border-color: #38bdf8;
+        }
+    </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex">
-
-    <!-- MENU LATERAL (SIDEBAR) PADRONIZADO -->
-    <aside class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col justify-between hidden md:flex">
-        <div>
-            <!-- Logo / Topo da Sidebar -->
-            <div class="h-16 flex items-center px-6 border-b border-slate-800">
-                <span class="text-cyan-400 font-bold text-lg tracking-wider flex items-center gap-2">
-                    <i class="fa-solid fa-shield-halved"></i> SIGEM ENTERPRISE
-                </span>
-            </div>
-
-            <!-- Navegação -->
-            <nav class="p-4 space-y-1">
-                <a href="index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition-colors">
-                    <i class="fa-solid fa-chart-pie w-5"></i> Dashboard
-                </a>
-                <a href="command.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition-colors">
-                    <i class="fa-solid fa-satellite-dish w-5"></i> Command Center
-                </a>
-                <a href="equipe/organograma.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition-colors">
-                    <i class="fa-solid fa-sitemap w-5"></i> Organograma
-                </a>
-                <a href="pecas/index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition-colors">
-                    <i class="fa-solid fa-hospital w-5"></i> Central
-                </a>
-                <a href="pecas/cadastro.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition-colors">
-                    <i class="fa-solid fa-pen-to-square w-5"></i> Cadastro
-                </a>
-                <a href="pecas/estoque.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition-colors">
-                    <i class="fa-solid fa-boxes-stacked w-5"></i> Estoque
-                </a>
-                <a href="pecas/entradas.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition-colors">
-                    <i class="fa-solid fa-arrow-right-to-bracket w-5"></i> Entradas
-                </a>
-                <a href="pecas/retiradas.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition-colors">
-                    <i class="fa-solid fa-arrow-right-from-bracket w-5"></i> Retiradas
-                </a>
-                <a href="pecas/historico.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition-colors">
-                    <i class="fa-solid fa-clock-rotate-left w-5"></i> Histórico
-                </a>
-                <a href="pecas/qr-center.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition-colors">
-                    <i class="fa-solid fa-qrcode w-5"></i> QR Center
-                </a>
-            </nav>
-        </div>
-
-        <!-- Rodapé da Sidebar -->
-        <div class="p-4 border-t border-slate-800 text-xs text-slate-500 text-center">
-            v3.2.0 - War Room Ativo
-        </div>
-    </aside>
-
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
-        <!-- Topbar -->
-        <header class="h-16 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-6 sticky top-0 z-10">
-            <h1 class="text-lg font-semibold text-slate-100 flex items-center gap-2">
-                <i class="fa-solid fa-chart-line text-cyan-400"></i> Painel de Controle e Monitoramento
-            </h1>
-            <div class="flex items-center gap-4">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Sistema Operacional
-                </span>
-            </div>
-        </header>
-
-        <!-- Corpo da Página -->
-        <div class="p-6 space-y-6">
-            
-            <!-- Cards de KPIs -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
-                    <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Inventário</p>
-                    <p class="text-2xl font-bold text-cyan-400 mt-1">99,8%</p>
-                </div>
-                <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
-                    <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Rastreabilidade</p>
-                    <p class="text-2xl font-bold text-cyan-400 mt-1">100%</p>
-                </div>
-                <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
-                    <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Parque Crítico</p>
-                    <p class="text-2xl font-bold text-cyan-400 mt-1">4.532</p>
-                </div>
-                <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
-                    <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">SLA Global</p>
-                    <p class="text-2xl font-bold text-cyan-400 mt-1">96%</p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Seção Visual Principal -->
-                <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-xl p-6">
-                    <h2 class="text-base font-semibold text-slate-200 mb-4">Monitoramento Hospitalar em Tempo Real</h2>
-                    <div class="rounded-lg overflow-hidden border border-slate-800 mb-4 bg-slate-950 p-4 flex items-center justify-center min-h-[250px]">
-                        <div class="text-center text-slate-400">
-                            <i class="fa-solid fa-satellite-dish text-cyan-400 text-3xl mb-2"></i>
-                            <p class="text-sm">War Room Operacional - Conectado ao Core</p>
-                        </div>
-                    </div>
-                    <p class="text-sm text-slate-400">
-                        O painel consolida as principais frentes da engenharia clínica e materiais, garantindo total transparência e agilidade na tomada de decisões operacionais.
-                    </p>
-                </div>
-
-                <!-- Status Lateral / Resumo -->
-                <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 flex flex-col justify-between">
-                    <div>
-                        <h2 class="text-base font-semibold text-slate-200 mb-4">Atividade Recente</h2>
-                        <ul class="space-y-3 text-sm text-slate-300">
-                            <li class="flex items-center gap-3 pb-3 border-b border-slate-800">
-                                <i class="fa-solid fa-circle-check text-emerald-400"></i>
-                                <span>Sincronização de QR Codes concluída.</span>
-                            </li>
-                            <li class="flex items-center gap-3 pb-3 border-b border-slate-800">
-                                <i class="fa-solid fa-triangle-exclamation text-amber-400"></i>
-                                <span>Manutenção preventiva programada (Setor B).</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fa-solid fa-arrow-right-to-bracket text-cyan-400"></i>
-                                <span>Nova entrada de materiais registrada.</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="mt-6 pt-4 border-t border-slate-800 text-xs text-slate-400 text-center">
-                        Painel atualizado em tempo real.
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </main>
-
+<body>
+    
+    <h1>SIGEM Engenharia Clínica</h1>
+    
+    <p>
+        Sistema de Gestão de Engenharia Clínica para controle de equipamentos, estoque, rastreabilidade e monitoramento operacional em tempo real.
+    </p>
+    
+    <h2>Acessos Rápidos do Sistema</h2>
+    
+    <ul>
+        <li><a href="paginas/dashboard.html">📊 Dashboard Operacional</a></li>
+        <li><a href="paginas/command.html">📡 Command Center</a></li>
+        <li><a href="paginas/site-plan.html">📋 Site Plan (Planejamento do Projeto)</a></li>
+    </ul>
+    
 </body>
 </html>
