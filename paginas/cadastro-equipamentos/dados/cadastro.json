@@ -1,0 +1,20 @@
+[
+  {
+    "id": "EQP-001",
+    "status": "Ativo",
+    "dataSolicitacao": "2026-10-12",
+    "solicitante": "Danilo Rafael da Silva Costa",
+    "regionalId": "REG-SP",
+    "regional": "São Paulo",
+    "unidadeId": "HSP-HCO",
+    "unidade": "Hospital Hcor",
+    "descricaoAtivo": "Monitor Multiparâmetro",
+    "ativoPai": "LSSPLS4-00",
+    "setorInstalacao": "UTI Adulto",
+    "numeroSerie": "MP-123456",
+    "dataAquisicao": "2025-01-15",
+    "classificacaoContabil": "Equipamento Médico",
+    "notaFiscal": "NF-10001",
+    "dataRegistro": "2026-10-12T08:00:00"
+  }
+]

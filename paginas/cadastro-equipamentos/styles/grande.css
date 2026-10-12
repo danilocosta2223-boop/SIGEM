@@ -1,0 +1,117 @@
+/* ===================================================== */
+/* SIGEM - Grande CSS (Desktop / Telas Maiores >= 900px)   */
+/* ===================================================== */
+
+@media screen and (min-width: 900px) {
+    
+    /* 1. Layout Geral e Container Principal */
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 40px 20px;
+    }
+
+    .cadastro-container,
+    .relatorios-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        border-radius: 12px;
+    }
+
+    .header-cadastro,
+    .header-relatorios {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    /* 2. Formulário e Blocos de Campos (Grids) */
+    #cadastroForm {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+
+    .bloco-formulario {
+        grid-column: span 2;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 24px;
+        border-radius: 8px;
+    }
+
+    .bloco-formulario h2 {
+        grid-column: span 2;
+        margin-bottom: 5px;
+        font-size: 1.25rem;
+        border-bottom: 2px solid var(--borda-cor, #333);
+        padding-bottom: 8px;
+    }
+
+    /* Classe utilitária para campos que ocupam toda a largura */
+    .bloco-formulario .campo-grupo.full-width {
+        grid-column: span 2;
+    }
+
+    /* 3. Botões e Ações do Formulário */
+    .acoes-formulario {
+        grid-column: span 2;
+        display: flex;
+        justify-content: flex-end;
+        gap: 16px;
+        margin-top: 10px;
+        padding-top: 20px;
+        border-top: 1px solid var(--borda-cor, #444);
+    }
+
+    .acoes-formulario button {
+        width: auto;
+        min-width: 180px;
+        padding: 12px 24px;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+    }
+
+    .acoes-formulario button:hover {
+        transform: translateY(-2px);
+    }
+
+    /* 4. Tabela de Relatórios e Filtros (Desktop) */
+    .filtros-relatorio {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr) auto;
+        gap: 16px;
+        align-items: flex-end;
+    }
+
+    .tabela-wrapper {
+        overflow-x: auto;
+        max-height: 600px;
+        margin-top: 20px;
+        border-radius: 8px;
+    }
+
+    table.tabela-dados {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+    }
+
+    table.tabela-dados th {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background-color: var(--fundo-cabecalho-tabela, #1e1e1e);
+    }
+
+    table.tabela-dados th,
+    table.tabela-dados td {
+        padding: 14px 16px;
+    }
+}
