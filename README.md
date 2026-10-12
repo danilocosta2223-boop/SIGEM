@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 🏥 Portal de Engenharia Clínica Brasil
 Sistema Web para gestão, monitoramento de equipamentos médico-hospitalares, documentação do projeto e controle de processos da Engenharia Clínica.
 
@@ -49,3 +50,7 @@ O SIGEM foi desenvolvido para auxiliar as atividades de Engenharia Clínica, pro
 
 👨‍💻 Autor
 Danilo Rafael da Silva Costa
+=======
+# SIGEM
+Sistema de Gestão de Equipamentos Médico-Hospitalares desenvolvido para cadastro e gerenciamento de equipamentos de Engenharia Clínica.
+>>>>>>> 7d8589c9550f3701559fda86a1d18964399b4a97
