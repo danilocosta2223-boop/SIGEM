@@ -240,3 +240,58 @@
   border-bottom-right-radius: 8px;
   border-right: none;
 }
+
+/* ===================================================== */
+/* SIGEM - Padrão Unificado de Botões (botoes.css)       */
+/* ===================================================== */
+
+.btn-primario,
+.btn-secundario {
+    display: inline-block;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    border: 2px solid transparent;
+}
+
+/* Botão Primário - Ação Principal */
+.btn-primario {
+    background-color: var(--primary-color, #0f4c81);
+    color: var(--white, #ffffff);
+}
+
+.btn-primario:hover {
+    background-color: #0b3962;
+    transform: translateY(-1px);
+}
+
+.btn-primario:focus {
+    outline: 3px solid #FFBF47;
+    outline-offset: 2px;
+    background-color: #0b3962;
+    color: var(--white, #ffffff);
+}
+
+/* Botão Secundário - Ação Alternativa */
+.btn-secundario {
+    background-color: transparent;
+    color: var(--primary-color, #0f4c81);
+    border-color: var(--primary-color, #0f4c81);
+}
+
+.btn-secundario:hover {
+    background-color: rgba(15, 76, 129, 0.08);
+    transform: translateY(-1px);
+}
+
+.btn-secundario:focus {
+    outline: 3px solid #FFBF47;
+    outline-offset: 2px;
+    background-color: rgba(15, 76, 129, 0.12);
+}

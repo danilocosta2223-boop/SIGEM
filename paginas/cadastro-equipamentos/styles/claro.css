@@ -351,3 +351,172 @@ footer .footer-content .versao {
     padding: 0 12px;
   }
 }
+
+/* ===================================================== */
+/* SIGEM - Variáveis e Estilos Globais (Tema Claro)      */
+/* ===================================================== */
+
+:root {
+    --primary-color: #0f4c81;
+    --secondary-color: #2c7da0;
+    --accent-color: #2a9d8f;
+    --bg-light: #f5f7fa;
+    --white: #ffffff;
+    --text-color: #222222;
+    --borda-cor: #d1d5db;
+    --cor-card: #ffffff;
+    --cor-cabecalho-tabela: #1e1e1e;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: var(--bg-light);
+    color: var(--text-color);
+    -webkit-font-smoothing: antialiased;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ===================================================== */
+/* SIGEM - Variáveis e Estilos Globais - Tema Claro     */
+/* Padrão Institucional (Saúde / Corporativo)            */
+/* ===================================================== */
+
+:root {
+    --primary-color: #0f4c81;
+    --primary-dark: #0b3a62;
+    --secondary-color: #2c7da0;
+    --accent-color: #2a9d8f;
+    --success-color: #198754;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --bg-light: #f5f7fa;
+    --card-bg: #ffffff;
+    --text-color: #222222;
+    --text-secondary: #6c757d;
+    --border-color: #dee2e6;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-color);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Tipografia Corporativa */
+h1, h2, h3, h4 {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+/* Estrutura de Cards */
+.card,
+.resumo-item,
+.bloco-formulario {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border-color);
+}
+
+/* Inputs, Selects e Textareas Profissionais */
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 10px 14px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--text-color);
+    background-color: var(--white, #ffffff);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(44, 125, 160, 0.2);
+}
+
+/* Botões do Sistema */
+.btn-principal,
+.btn-primario {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: #ffffff;
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-principal:hover,
+.btn-primario:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-secundario {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: #ffffff;
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-secundario:hover {
+    background-color: #238578;
+    transform: translateY(-1px);
+}
+
+/* Utilitário de Acessibilidade */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
