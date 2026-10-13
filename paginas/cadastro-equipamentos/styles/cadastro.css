@@ -668,3 +668,253 @@ body.tema-escuro .mensagem-erro,
     gap: 8px;
   }
 }
+
+/* FUNDO DO SISTEMA */
+body {
+    background: #f4f7fb;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* CONTAINER PRINCIPAL */
+.cadastro-container {
+    max-width: 1400px;
+    margin: auto;
+    padding: 30px;
+}
+
+/* CARDS DE SEÇÃO */
+.cadastro-secao {
+    background: #fff;
+    border: 1px solid #dbe5f1;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* TÍTULOS DE SEÇÃO */
+.cadastro-secao h2 {
+    color: #005baa;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.secao-icone {
+    font-size: 24px;
+}
+
+/* GRID DUPLO */
+.form-grid-duplo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+@media(max-width: 900px) {
+    .form-grid-duplo {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* CAMPOS DO FORMULÁRIO */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* INPUTS, SELECTS E TEXTAREAS */
+input,
+select,
+textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: white;
+    font-size: 14px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #0066cc;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.15);
+}
+
+textarea {
+    min-height: 120px;
+}
+
+/* DESTAQUE DE OBRIGATÓRIOS */
+.obrigatorio::after {
+    content: " *";
+    color: #dc2626;
+}
+
+/* INPUT COM ÍCONE */
+.input-icon {
+    position: relative;
+}
+
+.input-icon span {
+    position: absolute;
+    left: 14px;
+    top: 14px;
+}
+
+.input-icon input {
+    padding-left: 42px;
+}
+
+/* BARRA DE ETAPAS */
+.etapas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.passo {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #dbe5f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #475569;
+}
+
+.passo.ativo {
+    background: #0066cc;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 102, 204, 0.3);
+}
+
+.linha {
+    width: 80px;
+    height: 4px;
+    background: #dbe5f1;
+}
+
+/* UPLOAD BOX */
+.upload-box {
+    border: 2px dashed #9ec5fe;
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    background: #f8fbff;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.upload-box:hover {
+    background: #f1f7ff;
+    border-color: #0066cc;
+}
+
+.upload-box span {
+    font-size: 36px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.upload-box input[type="file"] {
+    display: none;
+}
+
+/* RESUMO EM CARDS */
+.resumo-card {
+    background: #f8fafc;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.resumo-card strong {
+    font-size: 12px;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.resumo-card span {
+    font-size: 16px;
+    color: #0f172a;
+    font-weight: 600;
+}
+
+/* BOTÕES DE AÇÃO */
+.form-acoes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.grupo-botoes-direita {
+    display: flex;
+    gap: 12px;
+}
+
+.btn {
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.btn-principal {
+    background: #0066cc;
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.btn-principal:hover {
+    background: #0050a3;
+}
+
+.btn-secundario {
+    background: white;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.btn-secundario:hover {
+    background: #f8fafc;
+}
+
+.btn-terciario {
+    background: #eef6ff;
+    color: #0066cc;
+    border: 1px solid transparent;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.btn-terciario:hover {
+    background: #e0f0ff;
+}
