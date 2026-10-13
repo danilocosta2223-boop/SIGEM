@@ -145,3 +145,148 @@
         white-space: nowrap;
     }
 }
+
+/* ==========================================
+   SIGEM - Responsividade Mobile (pequeno.css)
+   ========================================== */
+
+/* Tablets e celulares (até 899px) */
+@media screen and (max-width: 899px) {
+    /* Container Principal */
+    .cadastro-container {
+        width: 100%;
+        padding: 16px;
+    }
+
+    /* Cabeçalho */
+    .header-principal {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px;
+        text-align: center;
+    }
+
+    /* Menu */
+    .menu-principal {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .menu-principal a {
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    /* Ações do cabeçalho */
+    .header-acoes {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    /* Formulário */
+    .form-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .campo-metade,
+    .campo-full {
+        width: 100%;
+    }
+
+    /* Inputs otimizados para toque e sem zoom no iOS */
+    input,
+    select,
+    textarea {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    /* Upload */
+    .upload-area {
+        min-height: 120px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    /* Resumo */
+    .resumo-equipamento {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .resumo-item {
+        width: 100%;
+    }
+
+    /* Botões */
+    .form-acoes {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .grupo-botoes-direita {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .form-acoes button {
+        width: 100%;
+    }
+
+    /* Rodapé */
+    .rodape-container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .rodape-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+}
+
+/* ==========================================
+   CELULARES MUITO PEQUENOS (até 480px)
+   ========================================== */
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    h2 {
+        font-size: 1.1rem;
+    }
+
+    .logo-texto strong {
+        font-size: 1rem;
+    }
+
+    .logo-texto small {
+        font-size: 0.8rem;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+        padding: 12px;
+    }
+
+    .resumo-item {
+        padding: 12px;
+    }
+}

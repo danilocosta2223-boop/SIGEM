@@ -115,3 +115,124 @@
         padding: 14px 16px;
     }
 }
+
+/* ==========================================
+   SIGEM - Estilos para Desktop (grande.css)
+   Refinamento Profissional V2
+   ========================================== */
+
+/* 3. Header quebrando corretamente em telas menores */
+.header-principal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px 32px;
+}
+
+/* 4. Menu mais moderno com transição e hover */
+.menu-principal {
+  display: flex;
+  gap: 24px;
+}
+
+.menu-principal a {
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.menu-principal a:hover {
+  background: rgba(0, 90, 156, 0.1);
+}
+
+/* ==========================================
+   DESKTOP - 900px ou mais
+   ========================================== */
+@media screen and (min-width: 900px) {
+  /* 1. Largura máxima controlada do formulário */
+  .cadastro-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .campo-full {
+    grid-column: 1 / -1;
+  }
+
+  .campo-metade {
+    grid-column: span 1;
+  }
+
+  /* Resumo do Equipamento em Grid */
+  .resumo-equipamento {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  /* 2. Cards de resumo estilizados */
+  .resumo-item {
+    padding: 16px;
+    border-radius: 12px;
+    background: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+  }
+
+  /* 6. Upload mais bonito e centralizado */
+  .upload-area {
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Ações do Formulário Alinhadas */
+  .form-acoes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+  }
+
+  /* 7. Rodapé responsivo */
+  .rodape-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+}
+
+/* ==========================================
+   TELA ULTRAWIDE - 1400px ou mais
+   ========================================== */
+@media screen and (min-width: 1400px) {
+  .form-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ==========================================
+   TELA ULTRAWIDE EXPANDIDA - 1600px ou mais
+   ========================================== */
+@media screen and (min-width: 1600px) {
+  .cadastro-container {
+    max-width: 1500px;
+  }
+
+  .resumo-equipamento {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}

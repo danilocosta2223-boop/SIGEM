@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGEM - Relatório de Equipamentos</title>
+</head>
+<body>
+
+    <!-- 1. Menu do SIGEM -->
+    <header class="menu-principal">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="cadastro.html">Cadastro</a>
+        <a href="relatorios.html" class="ativo">Relatórios</a>
+    </header>
+
+    <h1>Relatório de Equipamentos - SIGEM</h1>
+
+    <!-- 2. Data da última atualização -->
+    <p>
+        Última atualização: 
+        <span id="ultimaAtualizacao">--</span>
+    </p>
+
+    <!-- Filtros e Botões -->
+    <div>
+        <input 
+            type="text" 
+            id="filtroGeral" 
+            placeholder="Pesquisar equipamento..."
+        >
+
+        <select id="filtroRegional">
+            <option value="">Todas as Regionais</option>
+        </select>
+
+        <select id="filtroFabricante">
+            <option value="">Todos os Fabricantes</option>
+        </select>
+
+        <button id="btnAtualizar">Atualizar</button>
+        <button id="btnExcel">Exportar Excel</button>
+        <button id="btnImprimir">Imprimir</button>
+    </div>
+
+    <!-- Cards de Resumo -->
+    <div class="summary-container">
+        <div class="card">
+            <h3>Total Equipamentos</h3>
+            <strong id="totalEquipamentos">0</strong>
+        </div>
+        <div class="card">
+            <h3>Fabricantes</h3>
+            <strong id="totalFabricantes">0</strong>
+        </div>
+        <div class="card">
+            <h3>Regionais</h3>
+            <strong id="totalRegionais">0</strong>
+        </div>
+    </div>
+
+    <!-- Contador da Tabela -->
+    <h2>
+        Equipamentos Cadastrados 
+        <span id="totalTabela">(0)</span>
+    </h2>
+
+    <!-- Tabela Principal com a nova coluna de Data Cadastro -->
+    <table>
+        <thead>
+            <tr>
+                <th>Nº Série</th>
+                <th>Equipamento</th>
+                <th>Fabricante</th>
+                <th>Modelo</th>
+                <th>Regional</th>
+                <th>Unidade</th>
+                <th>Setor</th>
+                <th>Data Aquisição</th>
+                <th>Data Cadastro</th>
+            </tr>
+        </thead>
+        <tbody id="listaEquipamentos">
+            <!-- Os dados do localStorage entram aqui dinamicamente -->
+        </tbody>
+    </table>
+
+    <!-- Mensagem quando não houver registros -->
+    <div id="semEquipamentos">
+        Nenhum equipamento cadastrado.
+    </div>
+
+    <!-- Arquivo JavaScript -->
+    <script src="scripts/relatorios.js"></script>
+</body>
+</html>

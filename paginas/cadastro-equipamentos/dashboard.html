@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SIGEM</title>
+    <!-- Biblioteca dos Gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- Menu do SIGEM -->
+    <aside>
+        <nav>
+            <a href="dashboard.html" class="ativo">🏠 Dashboard</a>
+            <a href="cadastro.html">📝 Cadastro</a>
+            <a href="relatorios.html">📋 Relatórios</a>
+        </nav>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+    <main class="dashboard-container">
+        
+        <!-- Cabeçalho do Dashboard & Status de Tempo Real -->
+        <header class="dashboard-header">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h1>Dashboard SIGEM</h1>
+                    <p>Visão geral e tempo real dos equipamentos cadastrados</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div class="status-sistema">
+                        <span class="status-online"></span>
+                        Dados atualizados em tempo real
+                    </div>
+                    <button id="btnAtualizar" class="btn-atualizar">Atualizar Dashboard</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Data de Atualização -->
+        <div class="ultima-atualizacao">
+            Última atualização: <span id="ultimaAtualizacao">--</span>
+        </div>
+      
+        <!-- Cards de Totais Completos -->
+        <section class="cards-dashboard">
+            <div class="card">
+                <h3>Total Equipamentos</h3>
+                <strong id="totalEquipamentos">0</strong>
+            </div>
+      
+            <div class="card">
+                <h3>Fabricantes</h3>
+                <strong id="totalFabricantes">0</strong>
+            </div>
+
+            <div class="card">
+                <h3>Modelos</h3>
+                <strong id="totalModelos">0</strong>
+            </div>
+      
+            <div class="card">
+                <h3>Regionais</h3>
+                <strong id="totalRegionais">0</strong>
+            </div>
+
+            <div class="card">
+                <h3>Unidades</h3>
+                <strong id="totalUnidades">0</strong>
+            </div>
+
+            <div class="card">
+                <h3>Setores</h3>
+                <strong id="totalSetores">0</strong>
+            </div>
+
+            <div class="card">
+                <h3>Cadastros Hoje</h3>
+                <strong id="cadastrosHoje">0</strong>
+            </div>
+
+            <div class="card">
+                <h3>Último Equipamento</h3>
+                <strong id="ultimoEquipamento" style="font-size: 1.1rem; word-break: break-all;">--</strong>
+            </div>
+        </section>
+
+        <!-- Ações Rápidas -->
+        <section class="acoes-rapidas">
+            <a href="cadastro.html">Novo Cadastro</a>
+            <a href="relatorios.html">Ver Relatórios</a>
+        </section>
+
+        <!-- Busca Rápida -->
+        <section class="busca-dashboard">
+            <input type="text" id="buscaEquipamento" placeholder="Pesquisar equipamento...">
+        </section>
+      
+        <!-- Gráficos Agrupados (Regional, Unidade, Fabricante e Crescimento Mensal) -->
+        <section class="dashboard-graficos">
+            <div class="grafico-card">
+                <h2>Equipamentos por Regional</h2>
+                <canvas id="graficoRegional"></canvas>
+            </div>
+
+            <div class="grafico-card">
+                <h2>Equipamentos por Unidade</h2>
+                <canvas id="graficoUnidade"></canvas>
+            </div>
+      
+            <div class="grafico-card">
+                <h2>Equipamentos por Fabricante</h2>
+                <canvas id="graficoFabricante"></canvas>
+            </div>
+
+            <div class="grafico-card" style="grid-column: 1 / -1;">
+                <h2>Crescimento do Inventário (Mensal)</h2>
+                <canvas id="graficoCrescimento"></canvas>
+            </div>
+        </section>
+      
+        <!-- Últimos Cadastros -->
+        <section class="dashboard-tabela">
+            <h2>Últimos Equipamentos Cadastrados <span id="totalTabela">(0)</span></h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nº Série</th>
+                        <th>Equipamento</th>
+                        <th>Fabricante</th>
+                        <th>Modelo</th>
+                        <th>Regional</th>
+                        <th>Unidade</th>
+                    </tr>
+                </thead>
+                <tbody id="ultimosCadastros">
+                    <!-- Preenchido via JavaScript -->
+                </tbody>
+            </table>
+            <!-- Mensagem de Sistema Vazio -->
+            <div id="dashboardVazio" style="display: none;" class="empty-message">
+                Nenhum equipamento cadastrado.
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

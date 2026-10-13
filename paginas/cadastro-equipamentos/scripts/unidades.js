@@ -69,3 +69,17 @@ const unidadesGrupoFleury = {
         { id: "VTA-BR", nome: "Rede VITA" }
     ]
 };
+
+const unidadesPorRegional = {
+
+    "REG-SP": [
+        { id:"HSP-HCO", nome:"Hospital Hcor" },
+        { id:"HSP-SAM", nome:"Hospital Samaritano" }
+    ],
+
+    "REG-RJ": [
+        { id:"LAB-RJA", nome:"Labs a+" },
+        { id:"FMT-RJA", nome:"Felippe Mattoso" }
+    ]
+
+};

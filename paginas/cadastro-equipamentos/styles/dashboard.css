@@ -1,0 +1,278 @@
+/* ==========================================
+   SIGEM - Dashboard
+   dashboard.css
+========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fa;
+    color: #1f2937;
+}
+
+/* ==========================================
+   MENU LATERAL
+========================================== */
+
+aside {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 240px;
+    height: 100vh;
+    background: #005A9C;
+    padding: 20px;
+}
+
+aside nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+aside nav a {
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 8px;
+    transition: .3s;
+}
+
+aside nav a:hover,
+aside nav a.ativo {
+    background: rgba(255,255,255,.15);
+}
+
+/* ==========================================
+   CONTEÚDO PRINCIPAL
+========================================== */
+
+.dashboard-container {
+    margin-left: 260px;
+    padding: 24px;
+}
+
+/* ==========================================
+   CABEÇALHO
+========================================== */
+
+.dashboard-header {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+.dashboard-header h1 {
+    color: #005A9C;
+    margin-bottom: 8px;
+}
+
+.status-sistema {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+}
+
+.status-online {
+    width: 10px;
+    height: 10px;
+    background: #22c55e;
+    border-radius: 50%;
+}
+
+/* ==========================================
+   ÚLTIMA ATUALIZAÇÃO
+========================================== */
+
+.ultima-atualizacao {
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+/* ==========================================
+   CARDS
+========================================== */
+
+.cards-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+.card h3 {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 10px;
+}
+
+.card strong {
+    font-size: 32px;
+    color: #005A9C;
+}
+
+/* ==========================================
+   AÇÕES RÁPIDAS
+========================================== */
+
+.acoes-rapidas {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.acoes-rapidas a {
+    text-decoration: none;
+    padding: 12px 18px;
+    background: #005A9C;
+    color: white;
+    border-radius: 8px;
+    transition: .3s;
+}
+
+.acoes-rapidas a:hover {
+    opacity: .9;
+}
+
+/* ==========================================
+   BUSCA
+========================================== */
+
+.busca-dashboard {
+    margin-bottom: 24px;
+}
+
+.busca-dashboard input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+}
+
+/* ==========================================
+   GRÁFICOS
+========================================== */
+
+.dashboard-graficos {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.grafico-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+.grafico-card h2 {
+    margin-bottom: 16px;
+    color: #005A9C;
+    font-size: 18px;
+}
+
+.grafico-card canvas {
+    width: 100%;
+    height: 350px !important;
+}
+
+/* ==========================================
+   TABELA
+========================================== */
+
+.dashboard-tabela {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+.dashboard-tabela h2 {
+    color: #005A9C;
+    margin-bottom: 16px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #005A9C;
+    color: white;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+tbody tr:hover {
+    background: #f3f4f6;
+}
+
+/* ==========================================
+   MENSAGEM SEM DADOS
+========================================== */
+
+#dashboardVazio {
+    display: none;
+    text-align: center;
+    padding: 30px;
+    color: #6b7280;
+}
+
+/* ==========================================
+   RESPONSIVO
+========================================== */
+
+@media (max-width: 900px) {
+
+    aside {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .dashboard-container {
+        margin-left: 0;
+    }
+
+    .dashboard-graficos {
+        grid-template-columns: 1fr;
+    }
+
+    .acoes-rapidas {
+        flex-direction: column;
+    }
+
+    .card strong {
+        font-size: 24px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+
+}

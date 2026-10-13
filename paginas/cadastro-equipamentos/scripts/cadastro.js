@@ -1,202 +1,241 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Referências aos elementos do DOM
-    const formCadastro = document.getElementById("cadastroForm");
-    const selectRegional = document.getElementById("regional");
-    const selectUnidade = document.getElementById("unidade");
-    const grupoOutraUnidade = document.getElementById("grupoOutraUnidade");
-    const unidadePersonalizada = document.getElementById("unidadePersonalizada");
-    const campoDataSolicitacao = document.getElementById("dataSolicitacao");
+    // ==========================================
+    // 1. SELETORES E ELEMENTOS DO DOM (Atualizados)
+    // ==========================================
+    const DOM = {
+        form: document.getElementById("cadastroForm"),
+        regional: document.getElementById("regional"),
+        unidade: document.getElementById("unidade"),
+        grupoOutraUnidade: document.getElementById("grupoOutraUnidade"),
+        unidadePersonalizada: document.getElementById("unidadePersonalizada"),
+        dataSolicitacao: document.getElementById("dataSolicitacao"),
+        observacoes: document.getElementById("observacoes"),
+        contadorObservacoes: document.getElementById("contadorObservacoes"),
+        numeroSerie: document.getElementById("numeroSerie"),
+        solicitante: document.getElementById("solicitante"),
+        descricaoAtivo: document.getElementById("descricaoAtivo"),
+        setorInstalacao: document.getElementById("setorInstalacao"),
+        dataAquisicao: document.getElementById("dataAquisicao"),
+        notaFiscal: document.getElementById("notaFiscal"),
+        fabricante: document.getElementById("fabricante"),
+        modelo: document.getElementById("modelo"),
+        // Card de Resumo (Com Fabricante e Modelo)
+        resumoEquipamento: document.getElementById("resumoEquipamento"),
+        resumoFabricante: document.getElementById("resumoFabricante"),
+        resumoModelo: document.getElementById("resumoModelo"),
+        resumoSerie: document.getElementById("resumoSerie"),
+        resumoRegional: document.getElementById("resumoRegional"),
+        resumoUnidade: document.getElementById("resumoUnidade")
+    };
 
-    // 1. Preenchimento automático da Data da Solicitação com a data atual (YYYY-MM-DD)
-    if (campoDataSolicitacao && !campoDataSolicitacao.value) {
-        campoDataSolicitacao.value = new Date().toISOString().split("T")[0];
+    // ==========================================
+    // 2. FUNÇÕES AUXILIARES E DE NEGÓCIO
+    // ==========================================
+
+    // Inicializa campos padrão (Data da Solicitação)
+    function inicializarCamposPadrao() {
+        if (DOM.dataSolicitacao && !DOM.dataSolicitacao.value) {
+            DOM.dataSolicitacao.value = new Date().toISOString().split("T")[0];
+        }
+        if (DOM.unidade) {
+            DOM.unidade.disabled = true;
+        }
     }
 
-    // 2. Preenchimento do combo de Regionais
-    if (selectRegional && typeof regionaisDisponiveis !== "undefined") {
-        regionaisDisponiveis.forEach(reg => {
-            const option = document.createElement("option");
-            option.value = reg.id || reg;          
-            option.textContent = reg.nome || reg;  
-            selectRegional.appendChild(option);
-        });
-    }
-
-    // 3. Preenchimento do combo de Unidades agrupadas por categoria
-    if (selectUnidade && typeof unidadesGrupoFleury !== "undefined") {
-        Object.entries(unidadesGrupoFleury).forEach(([grupo, listaUnidades]) => {
-            const optgroup = document.createElement("optgroup");
-            optgroup.label = grupo;
-
-            listaUnidades.forEach(unidade => {
+    // Carrega as regionais no select principal
+    function carregarRegionais() {
+        if (DOM.regional && typeof regionaisDisponiveis !== "undefined") {
+            DOM.regional.innerHTML = '<option value="" data-i18n="selecioneRegional">Selecione a Regional...</option>';
+            regionaisDisponiveis.forEach(reg => {
                 const option = document.createElement("option");
-                option.value = unidade.id || unidade;          
-                option.textContent = unidade.nome || unidade;  
-                optgroup.appendChild(option);
+                option.value = reg.id;
+                option.textContent = reg.nome;
+                DOM.regional.appendChild(option);
             });
-
-            selectUnidade.appendChild(optgroup);
-        });
+        }
     }
 
-    // 4. Lógica para o campo condicional "Outra Unidade"
-    if (selectUnidade && grupoOutraUnidade && unidadePersonalizada) {
-        selectUnidade.addEventListener("change", () => {
-            if (selectUnidade.value === "OUTRA") {
-                grupoOutraUnidade.style.display = "block";
-                unidadePersonalizada.required = true;
-                unidadePersonalizada.focus();
-            } else {
-                grupoOutraUnidade.style.display = "none";
-                unidadePersonalizada.required = false;
-                unidadePersonalizada.value = "";
+    // Atualiza o card de resumo em tempo real
+    function atualizarCardResumo() {
+        if (DOM.resumoEquipamento) {
+            DOM.resumoEquipamento.textContent = DOM.descricaoAtivo?.value || '--';
+        }
+        if (DOM.resumoFabricante) {
+            DOM.resumoFabricante.textContent = DOM.fabricante?.value || '--';
+        }
+        if (DOM.resumoModelo) {
+            DOM.resumoModelo.textContent = DOM.modelo?.value || '--';
+        }
+        if (DOM.resumoSerie) {
+            DOM.resumoSerie.textContent = DOM.numeroSerie?.value || '--';
+        }
+        if (DOM.resumoRegional && DOM.regional) {
+            const textoRegional = DOM.regional.options[DOM.regional.selectedIndex]?.text;
+            DOM.resumoRegional.textContent = DOM.regional.value ? textoRegional : '--';
+        }
+        if (DOM.resumoUnidade && DOM.unidade) {
+            const textoUnidade = DOM.unidadePersonalizada && DOM.unidadePersonalizada.value && DOM.unidade.value === "OUTRA" 
+                ? DOM.unidadePersonalizada.value 
+                : DOM.unidade.options[DOM.unidade.selectedIndex]?.text;
+            DOM.resumoUnidade.textContent = DOM.unidade.value ? textoUnidade : '--';
+        }
+    }
+
+    // Reseta o formulário para o estado inicial (com escopo local seguro)
+    const ToResetForm = () => {
+        if (DOM.form) DOM.form.reset();
+        if (DOM.grupoOutraUnidade) DOM.grupoOutraUnidade.style.display = "none";
+        if (DOM.unidade) {
+            DOM.unidade.disabled = true;
+            DOM.unidade.innerHTML = '<option value="">Primeiro selecione uma regional...</option>';
+        }
+        inicializarCamposPadrao();
+        atualizarCardResumo();
+    };
+
+    // ==========================================
+    // 3. CONFIGURAÇÃO DE EVENTOS (LISTENERS)
+    // ==========================================
+
+    // Mudança de Regional -> Atualiza unidades dependentes
+    if (DOM.regional && DOM.unidade) {
+        DOM.regional.addEventListener("change", (e) => {
+            const regionalId = e.target.value;
+            DOM.unidade.innerHTML = '<option value="" data-i18n="selecioneUnidade">Selecione a Unidade...</option>';
+            
+            if (DOM.grupoOutraUnidade) DOM.grupoOutraUnidade.style.display = "none";
+            if (DOM.unidadePersonalizada) {
+                DOM.unidadePersonalizada.required = false;
+                DOM.unidadePersonalizada.value = "";
             }
+
+            if (regionalId && typeof unidadesPorRegional !== "undefined" && unidadesPorRegional[regionalId]) {
+                DOM.unidade.disabled = false;
+                unidadesPorRegional[regionalId].forEach(unidade => {
+                    const option = document.createElement("option");
+                    option.value = unidade.id;
+                    option.textContent = unidade.nome;
+                    DOM.unidade.appendChild(option);
+                });
+
+                const optOutra = document.createElement("option");
+                optOutra.value = "OUTRA";
+                optOutra.textContent = "Outra Unidade (Digitar manualmente)";
+                DOM.unidade.appendChild(optOutra);
+            } else {
+                DOM.unidade.disabled = true;
+                DOM.unidade.innerHTML = '<option value="" data-i18n="selecioneRegionalPrimeiro">Primeiro selecione uma regional...</option>';
+            }
+            atualizarCardResumo();
+        });
+
+        // Mudança de Unidade -> Controla campo "Outra Unidade"
+        DOM.unidade.addEventListener("change", (e) => {
+            if (e.target.value === "OUTRA" && DOM.grupoOutraUnidade && DOM.unidadePersonalizada) {
+                DOM.grupoOutraUnidade.style.display = "block";
+                DOM.unidadePersonalizada.required = true;
+                DOM.unidadePersonalizada.focus();
+            } else if (DOM.grupoOutraUnidade && DOM.unidadePersonalizada) {
+                DOM.grupoOutraUnidade.style.display = "none";
+                DOM.unidadePersonalizada.required = false;
+                DOM.unidadePersonalizada.value = "";
+            }
+            atualizarCardResumo();
         });
     }
 
-    // 5. Captura do Envio do Formulário (Submit)
-    if (formCadastro) {
-        formCadastro.addEventListener("submit", (e) => {
-            e.preventDefault(); // Evita o recarregamento padrão da página
+    // Contador de Caracteres (Observações)
+    if (DOM.observacoes && DOM.contadorObservacoes) {
+        DOM.contadorObservacoes.textContent = `${DOM.observacoes.value.length} / 500`;
+        DOM.observacoes.addEventListener("input", () => {
+            DOM.contadorObservacoes.textContent = `${DOM.observacoes.value.length} / 500`;
+        });
+    }
 
-            // Captura os textos selecionados nos selects
-            const regionalSelecionada = selectRegional.options[selectRegional.selectedIndex];
-            const unidadeSelecionada = selectUnidade.options[selectUnidade.selectedIndex];
+    // Ouve alterações nos inputs para atualizar o resumo em tempo real
+    const inputsParaResumo = [
+        DOM.descricaoAtivo,
+        DOM.numeroSerie,
+        DOM.fabricante,
+        DOM.modelo,
+        DOM.regional,
+        DOM.unidade,
+        DOM.unidadePersonalizada
+    ];
+    
+    inputsParaResumo.forEach(input => {
+        if (input) {
+            input.addEventListener('input', atualizarCardResumo);
+            input.addEventListener('change', atualizarCardResumo);
+        }
+    });
 
-            // Resolve o nome da unidade e o ID caso tenha escolhido a opção personalizada
-            let unidadeIdFinal = selectUnidade.value;
+    // ==========================================
+    // 4. ENVIO DO FORMULÁRIO (SUBMIT)
+    // ==========================================
+    if (DOM.form) {
+        DOM.form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const regionalSelecionada = DOM.regional.options[DOM.regional.selectedIndex];
+            const unidadeSelecionada = DOM.unidade.options[DOM.unidade.selectedIndex];
+
+            let unidadeIdFinal = DOM.unidade.value;
             let unidadeNomeFinal = unidadeSelecionada.textContent;
-
             if (unidadeIdFinal === "OUTRA") {
                 unidadeIdFinal = "OUTRA";
-                unidadeNomeFinal = unidadePersonalizada.value.trim();
+                unidadeNomeFinal = DOM.unidadePersonalizada.value.trim();
             }
 
-            const numeroSerieInput = document.getElementById("numeroSerie").value.trim();
-
-            // Recupera lista existente no localStorage
+            const numeroSerieInput = DOM.numeroSerie.value.trim();
             let listaEquipamentos = JSON.parse(localStorage.getItem("sigem_equipamentos")) || [];
 
-            // Validação: Evitar número de série duplicado
             const serieExiste = listaEquipamentos.some(
                 item => item.numeroSerie.toLowerCase() === numeroSerieInput.toLowerCase()
             );
 
             if (serieExiste) {
                 alert("Atenção: Já existe um equipamento cadastrado com esse número de série!");
-                document.getElementById("numeroSerie").focus();
+                DOM.numeroSerie.focus();
                 return;
             }
 
-            // Monta o objeto com os dados completos do equipamento
+            // Montagem do objeto unificado e totalmente integrado ao Dashboard
             const novoEquipamento = {
-                id: "EQP-" + Date.now(),
-                status: document.getElementById("status").value,
-                dataSolicitacao: campoDataSolicitacao.value,
-                solicitante: document.getElementById("solicitante").value.trim(),
-                regionalId: selectRegional.value,
-                regional: regionalSelecionada.textContent,
-                unidadeId: unidadeIdFinal,
-                unidade: unidadeNomeFinal,
-                descricaoAtivo: document.getElementById("descricaoAtivo").value.trim(),
-                ativoPai: document.getElementById("ativoPai").value.trim() || "N/A",
-                setorInstalacao: document.getElementById("setorInstalacao").value.trim(),
+                id: "EQP-" + new Date().getFullYear() + "-" + (Date.now() % 100000),
                 numeroSerie: numeroSerieInput,
-                dataAquisicao: document.getElementById("dataAquisicao").value,
-                classificacaoContabil: document.getElementById("classificacaoContabil").value.trim(),
-                notaFiscal: document.getElementById("notaFiscal").value.trim(),
-                dataRegistro: new Date().toISOString()
+                descricaoAtivo: DOM.descricaoAtivo.value.trim(),
+                fabricante: DOM.fabricante.value.trim(),
+                modelo: DOM.modelo.value.trim(),
+                regional: regionalSelecionada?.textContent || "",
+                regionalId: DOM.regional.value,
+                unidade: unidadeNomeFinal,
+                unidadeId: unidadeIdFinal,
+                setorInstalacao: DOM.setorInstalacao.value.trim(),
+                solicitante: DOM.solicitante.value.trim(),
+                dataSolicitacao: DOM.dataSolicitacao.value,
+                dataAquisicao: DOM.dataAquisicao.value,
+                notaFiscal: DOM.notaFiscal.value.trim(),
+                dataRegistro: new Date().toISOString(),
+                dataRegistroFormatada: new Date().toLocaleDateString("pt-BR")
             };
 
-            // Adiciona o novo equipamento à lista
             listaEquipamentos.push(novoEquipamento);
 
-            // Salva de volta no localStorage
-            localStorage.setItem("sigem_equipamentos", JSON.stringify(listaEquipamentos));
-
-            // Feedback de sucesso ao usuário
-            alert("Equipamento cadastrado com sucesso!");
-
-            // Reseta o formulário e oculta o campo condicional de outra unidade
-            formCadastro.reset();
-            grupoOutraUnidade.style.display = "none";
-            
-            // Repreenche a data atual após o reset
-            campoDataSolicitacao.value = new Date().toISOString().split("T")[0];
+            try {
+                localStorage.setItem("sigem_equipamentos", JSON.stringify(listaEquipamentos));
+                alert("Equipamento cadastrado com sucesso!"); 
+                ToResetForm();
+            } catch (error) {
+                alert("Erro ao salvar equipamento. Verifique o espaço de armazenamento do navegador.");
+            }
         });
     }
-});
 
-// Atualiza o contador de caracteres do campo de observações
-const textareaObs = document.getElementById("observacoes");
-const contadorObs = document.getElementById("contadorObservacoes");
-
-if (textareaObs && contadorObs) {
-
-    // Atualiza ao carregar
-    contadorObs.textContent =
-    `${textareaObs.value.length} / 500`;
-
-    // Atualiza enquanto digita
-    textareaObs.addEventListener("input", () => {
-        contadorObs.textContent =
-        `${textareaObs.value.length} / 500`;
-    });
-
-}
-
-// Mapeamento dos 6 campos do resumo
-const inputsResumo = {
-    patrimonio: document.getElementById('patrimonio'),
-    descricao: document.getElementById('descricaoAtivo'),
-    serie: document.getElementById('numeroSerie'),
-    regional: document.getElementById('regional'),
-    unidade: document.getElementById('unidade'),
-    criticidade: document.getElementById('criticidade')
-};
-
-function atualizarCardResumo() {
-    if (inputsResumo.patrimonio) {
-        document.getElementById('resumoPatrimonio').textContent = inputsResumo.patrimonio.value || '--';
-    }
-    if (inputsResumo.descricao) {
-        document.getElementById('resumoEquipamento').textContent = inputsResumo.descricao.value || '--';
-    }
-    if (inputsResumo.serie) {
-        document.getElementById('resumoSerie').textContent = inputsResumo.serie.value || '--';
-    }
-    if (inputsResumo.regional) {
-        const textoRegional = inputsResumo.regional.options[inputsResumo.regional.selectedIndex]?.text;
-        document.getElementById('resumoRegional').textContent = inputsResumo.regional.value ? textoRegional : '--';
-    }
-    if (inputsResumo.unidade) {
-        const textoUnidade = inputsResumo.unidade.options[inputsResumo.unidade.selectedIndex]?.text;
-        document.getElementById('resumoUnidade').textContent = inputsResumo.unidade.value ? textoUnidade : '--';
-    }
-    if (inputsResumo.criticidade) {
-        const badgeCrit = document.getElementById('resumoCriticidade');
-        const valorCrit = inputsResumo.criticidade.value;
-        
-        if (valorCrit) {
-            badgeCrit.textContent = valorCrit;
-            // Aplica a classe correspondente ao CSS existente
-            const classeMapa = {
-                'Alta': 'criticidade-alta',
-                'Media': 'criticidade-media',
-                'Baixa': 'criticidade-baixa'
-            };
-            badgeCrit.className = `badge-status ${classeMapa[valorCrit] || 'badge-neutral'}`;
-        } else {
-            badgeCrit.textContent = 'Não Informado';
-            badgeCrit.className = 'badge-status badge-neutral';
-        }
-    }
-}
-
-// Vincula ouvintes em todos os inputs relevantes
-Object.values(inputsResumo).forEach(input => {
-    if (input) {
-        input.addEventListener('input', atualizarCardResumo);
-        input.addEventListener('change', atualizarCardResumo);
-    }
+    // ==========================================
+    // 5. INICIALIZAÇÃO INICIAL
+    // ==========================================
+    inicializarCamposPadrao();
+    carregarRegionais();
+    atualizarCardResumo();
 });
