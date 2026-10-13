@@ -1,0 +1,579 @@
+/* =================================================_
+   SIGEM - Tema Escuro Corporativo (Padrão Hospitalar Premium)
+   Inspirado em Prisma, Fleury, Einstein e Dasa
+   ================================================= */
+
+:root {
+  --azul-principal: #1D4ED8;
+  --azul-hover: #2563EB;
+  
+  --fundo: #0F172A;
+  --card: #1E293B;
+  
+  --texto: #F8FAFC;
+  --texto-secundario: #CBD5E1;
+  
+  --borda: #334155;
+  
+  --sucesso: #22C55E;
+  --alerta: #F59E0B;
+  --erro: #EF4444;
+  
+  --sombra: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Scrollbar Personalizada */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0F172A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Seleção de Texto */
+::selection {
+  background: #1D4ED8;
+  color: #FFFFFF;
+}
+
+/* Reset Global e Corpo com Transições Suaves */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Links Gerais */
+a {
+  color: #60A5FA;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: #93C5FD;
+}
+
+/* Linha Divisória */
+hr {
+  border: none;
+  border-top: 1px solid var(--borda);
+  margin: 20px 0;
+}
+
+/* Cabeçalho e Logo Corporativa */
+header {
+  background: #0F3D91;
+  color: #FFFFFF;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+header nav a {
+  color: #FFFFFF;
+  text-decoration: none;
+  margin-left: 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+header nav a:hover {
+  color: #DDEAFE;
+}
+
+header nav a.ativo {
+  color: #FFD54F;
+}
+
+/* Containers e Cards com Hover Dinâmico */
+.container {
+  max-width: 1200px;
+  margin: 32px auto;
+  padding: 0 16px;
+  flex: 1;
+  width: 100%;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--sombra);
+  margin-bottom: 24px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.card h2 {
+  color: #60A5FA;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--borda);
+  padding-bottom: 10px;
+}
+
+/* Formulários, Campos e Estados */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--texto);
+  margin-bottom: 6px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  height: 45px;
+  padding: 0 14px;
+  background: #0F172A;
+  color: #F8FAFC;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+textarea {
+  min-height: 120px;
+  padding: 12px 14px;
+  resize: vertical;
+}
+
+::placeholder {
+  color: #94A3B8;
+  opacity: 1;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: #64748B;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.20);
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled,
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Botões do Sistema */
+.btn {
+  background: var(--azul-principal);
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 180px;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.30);
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn:hover {
+  background: var(--azul-hover);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-secundario {
+  background: transparent;
+  color: #60A5FA;
+  border: 1px solid #60A5FA;
+  box-shadow: none;
+}
+
+.btn-secundario:hover {
+  background: rgba(96, 165, 250, 0.10);
+}
+
+.btn-sucesso {
+  background: var(--sucesso);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
+}
+
+.btn-sucesso:hover {
+  filter: brightness(0.95);
+}
+
+.btn-alerta {
+  background: var(--alerta);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);
+}
+
+.btn-alerta:hover {
+  filter: brightness(0.95);
+}
+
+.btn-erro {
+  background: var(--erro);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+}
+
+.btn-erro:hover {
+  filter: brightness(0.95);
+}
+
+/* Classe utilitária de Loading */
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Tabelas para Relatórios e Listagens */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--sombra);
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+th {
+  background: #0F3D91;
+  color: #FFFFFF;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--borda);
+  font-size: 0.9rem;
+  color: var(--texto);
+}
+
+tr:hover {
+  background: #293548;
+}
+
+/* Badges de Status (Gerais e Engenharia Clínica) */
+.status-ativo {
+  background: #14532D;
+  color: #DCFCE7;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: .85rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-inativo {
+  background: #7F1D1D;
+  color: #FEE2E2;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: .85rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-manutencao {
+  background: #78350F;
+  color: #FDE68A;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: .85rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-pendente {
+  background: #1E3A8A;
+  color: #BFDBFE;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: .85rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-baixado {
+  background: #374151;
+  color: #E5E7EB;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: .85rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* Indicadores da Home */
+.grid-indicadores {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.card-indicador {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--sombra);
+  border-left: 5px solid #60A5FA;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--borda);
+  border-right: 1px solid var(--borda);
+  border-bottom: 1px solid var(--borda);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-indicador:hover {
+  transform: translateY(-2px);
+}
+
+.card-indicador .valor {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #60A5FA;
+  margin-top: 8px;
+}
+
+.card-indicador .titulo-indicador {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Rodapé Premium */
+footer {
+  background: #0B1220;
+  color: #F8FAFC;
+  padding: 24px;
+  text-align: center;
+  margin-top: auto;
+  border-top: 1px solid var(--borda);
+}
+
+footer .footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  font-size: 0.9rem;
+}
+
+footer .footer-content p:first-child {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+footer .footer-content .subtitulo-footer {
+  font-size: 0.85rem;
+  color: var(--texto-secundario);
+  margin-bottom: 8px;
+}
+
+footer .footer-content .versao {
+  font-size: 0.8rem;
+  color: #94A3B8;
+  margin-top: 4px;
+}
+
+/* Responsividade (Mobile e Tablet) */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    height: auto;
+    padding: 16px;
+    gap: 12px;
+  }
+  
+  header nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+  
+  header nav a {
+    margin-left: 0;
+  }
+
+  .container {
+    margin: 16px auto;
+    padding: 0 12px;
+  }
+}
+
+/* Cabeçalho Principal Integrado */
+header.header-principal {
+  background: var(--azul-principal);
+  color: #fff;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  gap: 20px;
+}
+
+/* Logo com Texto e Subtítulo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.logo-texto {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logo-texto strong {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.logo-texto small {
+  font-size: 0.72rem;
+  opacity: 0.85;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Menu Principal Corporativo */
+.menu-principal {
+  display: flex;
+  gap: 24px;
+}
+
+.menu-principal a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
+  padding: 4px 0;
+  position: relative;
+}
+
+.menu-principal a:hover {
+  opacity: 0.8;
+}
+
+.menu-principal a.ativo {
+  color: #FFD54F;
+}
+
+.menu-principal a.ativo::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #FFD54F;
+  border-radius: 2px;
+}
+
+/* Ações à Direita */
+.header-acoes {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Seletor de Idioma Específico */
+.seletor-idioma-select {
+  height: 36px;
+  border-radius: 6px;
+  padding: 0 10px;
+  background: #fff;
+  color: var(--texto, #1F2937);
+  border: 1px solid var(--borda, #D1D5DB);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Responsividade do Cabeçalho para Telas Menores */
+@media (max-width: 900px) {
+  header.header-principal {
+    height: auto;
+    flex-direction: column;
+    padding: 16px;
+    gap: 16px;
+  }
+  
+  .menu-principal {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+  
+  .header-acoes {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

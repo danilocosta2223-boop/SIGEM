@@ -126,3 +126,77 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+// Atualiza o contador de caracteres do campo de observações
+const textareaObs = document.getElementById("observacoes");
+const contadorObs = document.getElementById("contadorObservacoes");
+
+if (textareaObs && contadorObs) {
+
+    // Atualiza ao carregar
+    contadorObs.textContent =
+    `${textareaObs.value.length} / 500`;
+
+    // Atualiza enquanto digita
+    textareaObs.addEventListener("input", () => {
+        contadorObs.textContent =
+        `${textareaObs.value.length} / 500`;
+    });
+
+}
+
+// Mapeamento dos 6 campos do resumo
+const inputsResumo = {
+    patrimonio: document.getElementById('patrimonio'),
+    descricao: document.getElementById('descricaoAtivo'),
+    serie: document.getElementById('numeroSerie'),
+    regional: document.getElementById('regional'),
+    unidade: document.getElementById('unidade'),
+    criticidade: document.getElementById('criticidade')
+};
+
+function atualizarCardResumo() {
+    if (inputsResumo.patrimonio) {
+        document.getElementById('resumoPatrimonio').textContent = inputsResumo.patrimonio.value || '--';
+    }
+    if (inputsResumo.descricao) {
+        document.getElementById('resumoEquipamento').textContent = inputsResumo.descricao.value || '--';
+    }
+    if (inputsResumo.serie) {
+        document.getElementById('resumoSerie').textContent = inputsResumo.serie.value || '--';
+    }
+    if (inputsResumo.regional) {
+        const textoRegional = inputsResumo.regional.options[inputsResumo.regional.selectedIndex]?.text;
+        document.getElementById('resumoRegional').textContent = inputsResumo.regional.value ? textoRegional : '--';
+    }
+    if (inputsResumo.unidade) {
+        const textoUnidade = inputsResumo.unidade.options[inputsResumo.unidade.selectedIndex]?.text;
+        document.getElementById('resumoUnidade').textContent = inputsResumo.unidade.value ? textoUnidade : '--';
+    }
+    if (inputsResumo.criticidade) {
+        const badgeCrit = document.getElementById('resumoCriticidade');
+        const valorCrit = inputsResumo.criticidade.value;
+        
+        if (valorCrit) {
+            badgeCrit.textContent = valorCrit;
+            // Aplica a classe correspondente ao CSS existente
+            const classeMapa = {
+                'Alta': 'criticidade-alta',
+                'Media': 'criticidade-media',
+                'Baixa': 'criticidade-baixa'
+            };
+            badgeCrit.className = `badge-status ${classeMapa[valorCrit] || 'badge-neutral'}`;
+        } else {
+            badgeCrit.textContent = 'Não Informado';
+            badgeCrit.className = 'badge-status badge-neutral';
+        }
+    }
+}
+
+// Vincula ouvintes em todos os inputs relevantes
+Object.values(inputsResumo).forEach(input => {
+    if (input) {
+        input.addEventListener('input', atualizarCardResumo);
+        input.addEventListener('change', atualizarCardResumo);
+    }
+});

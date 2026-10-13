@@ -1,164 +1,570 @@
-<!-- ======================================================= -->
-<!-- BLOCO 1: ESTRUTURA BÁSICA DA PÁGINA                     -->
-<!-- ======================================================= -->
+<!-- ================================================= -->
+<!-- BLOCO 01 - CABEÇALHO E CONFIGURAÇÕES GERAIS       -->
+<!-- ================================================= -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="SIGEM - Sistema Integrado de Gestão de Engenharia Clínica. Módulo de Cadastro de Equipamentos Médico-Hospitalares.">
+    <meta name="author" content="Danilo Rafael da Silva Costa">
+    <meta name="theme-color" content="#005A9C">
+
     <title data-i18n="cadastroEquipamentos">Cadastro de Equipamentos - SIGEM</title>
 
-    <!-- Importação dos estilos CSS (Caminhos locais corretos) -->
+    <!-- Favicon do SIGEM -->
+    <link rel="icon" href="assets/img/logo.png" type="image/png">
+
+    <!-- 1. Reset Global de CSS -->
     <link rel="stylesheet" href="styles/normalize.css">
-    <link rel="stylesheet" href="styles/dark.css">
+
+    <!-- 2. Tema Ativo (Suporta troca dinâmica entre claro.css e escuro.css) -->
+    <link id="tema-css" rel="stylesheet" href="styles/claro.css">
+
+    <!-- 3. Componentes e Estrutura do Módulo -->
+    <link rel="stylesheet" href="styles/botoes.css">
+    <link rel="stylesheet" href="styles/cadastro.css">
+
+    <!-- 4. Regras de Responsividade -->
     <link rel="stylesheet" href="styles/pequeno.css">
     <link rel="stylesheet" href="styles/grande.css" media="screen and (min-width: 900px)">
-    <link rel="stylesheet" href="styles/cadastro.css">
 </head>
-<body>
+<body id="cadastro-equipamento">
 
-    <main class="cadastro-container">
+    <!-- ================================================= -->
+    <!-- BLOCO 02 - MENU SUPERIOR E IDIOMA                 -->
+    <!-- ================================================= -->
+    <header class="header-principal">
+        
+        <!-- Logo Institucional com Nome e Subtítulo -->
+        <a href="../../index.html" class="logo" title="Ir para a página inicial do SIGEM">
+            <img src="assets/img/logo.png" alt="Logo SIGEM" width="38" height="38" onerror="this.style.display='none'">
+            <div class="logo-texto">
+                <strong>SIGEM</strong>
+                <small>Engenharia Clínica</small>
+            </div>
+        </a>
 
-        <!-- Cabeçalho de navegação e seleção de idioma -->
-        <header class="header-cadastro">
-            <a href="../../index.html" class="btn-voltar">&larr; Voltar ao Módulo</a>
-            
+        <!-- Menu de Navegação Principal do Sistema -->
+        <nav class="menu-principal">
+            <a href="index.html" data-i18n="menuInicio">Início</a>
+            <a href="cadastro.html" class="ativo" data-i18n="menuCadastro">Cadastro</a>
+            <a href="relatorios.html" data-i18n="menuRelatorios">Relatórios</a>
+        </nav>
+
+        <!-- Ações do Cabeçalho (Idioma, Tema e Voltar) -->
+        <div class="header-acoes">
+            <!-- Seletor de Idioma Internacional (i18n) -->
             <div class="seletor-idioma">
-                <select id="idioma">
-                    <option value="pt-BR">🇧🇷 Português</option>
-                    <option value="en-US">🇺🇸 English</option>
-                    <option value="es-ES">🇪🇸 Español</option>
+                <select id="idioma" class="seletor-idioma-select" aria-label="Selecionar idioma">
+                    <option value="pt-BR">🇧🇷 Pt-BR</option>
+                    <option value="en-US">🇺🇸 En-US</option>
+                    <option value="es-ES">🇪🇸 Es-ES</option>
                 </select>
             </div>
-        </header>
+
+            <!-- Alternador de Tema (Claro / Escuro) -->
+            <button type="button" id="btn-troca-tema" class="btn btn-ghost btn-sm btn-icon" title="Alternar entre tema claro e escuro" aria-label="Alternar tema">
+                <span id="icone-tema">🌙</span>
+            </button>
+
+            <!-- Botão de Retorno Rápido -->
+            <a href="../../index.html" class="btn btn-secundario btn-sm" data-i18n="voltarModulo">
+                &larr; Voltar
+            </a>
+        </div>
+
+    </header>
+
+    <!-- ================================================= -->
+    <!-- BLOCO 03 - APRESENTAÇÃO DO CADASTRO               -->
+    <!-- ================================================= -->
+    <main class="cadastro-container">
+
+        <!-- Barra de Progresso do Cadastro -->
+        <div class="progresso-cadastro" aria-hidden="true" title="Progresso do preenchimento do formulário">
+            <div class="barra" id="barraProgresso" style="width: 15%;"></div>
+        </div>
 
         <!-- Título principal e subtítulo institucional -->
-        <h1 data-i18n="cadastroEquipamentos">Cadastro de Equipamentos</h1>
-        <p class="subtitulo">Registro e gerenciamento de equipamentos médico-hospitalares.</p>
+        <div class="cadastro-header-secao">
+            <h1 data-i18n="cadastroEquipamentos">Cadastro de Equipamentos</h1>
+            <p class="subtitulo" data-i18n="subtituloEquipamentos">Registro, inventário e gerenciamento de equipamentos médico-hospitalares da engenharia clínica.</p>
+        </div>
 
-        <!-- Formulário Principal contendo todos os Blocos de 2 a 6 -->
-        <form id="cadastroForm">
+        <!-- Início do Formulário Principal -->
+        <form id="cadastroForm" novalidate>
 
-            <!-- ======================================================= -->
-            <!-- BLOCO 2: DADOS DA SOLICITAÇÃO                           -->
-            <!-- ======================================================= -->
-            <section class="bloco-formulario">
+
+        <!-- ================================================= -->
+            <!-- BLOCO 04 - DADOS DA SOLICITAÇÃO                   -->
+            <!-- ================================================= -->
+            <section class="cadastro-secao">
                 <h2 data-i18n="dadosSolicitacao">Dados da Solicitação</h2>
 
-                <div class="campo-grupo">
-                    <label for="status" data-i18n="status">Status *</label>
-                    <select id="status" name="status" required>
-                        <option value="Ativo">Ativo</option>
-                        <option value="Inativo">Inativo</option>
-                        <option value="Em Implantação">Em Implantação</option>
-                    </select>
-                </div>
+                <div class="form-grid">
+                    <!-- ID da Solicitação Automático -->
+                    <div class="form-group">
+                        <label for="idSolicitacao" data-i18n="idSolicitacao">ID da Solicitação</label>
+                        <input type="text" id="idSolicitacao" value="SIG-2026-0001" readonly class="readonly">
+                        <small class="form-help" data-i18n="helpIdSolicitacao">Gerado automaticamente pelo sistema.</small>
+                    </div>
 
-                <div class="campo-grupo">
-                    <label for="dataSolicitacao" data-i18n="dataSolicitacao">Data da Solicitação *</label>
-                    <input type="date" id="dataSolicitacao" name="dataSolicitacao" required>
-                </div>
+                    <!-- Status do Equipamento -->
+                    <div class="form-group">
+                        <label for="status" class="obrigatorio" data-i18n="status">Status</label>
+                        <select id="status" name="status" required>
+                            <option value="Ativo" data-i18n="statusAtivo">Ativo</option>
+                            <option value="Inativo" data-i18n="statusInativo">Inativo</option>
+                            <option value="Em Implantação" data-i18n="statusImplantacao">Em Implantação</option>
+                            <option value="Manutenção" data-i18n="statusManutencao">Em Manutenção</option>
+                        </select>
+                        <small class="form-help" data-i18n="helpStatus">Situação atual do equipamento.</small>
+                    </div>
 
-                <div class="campo-grupo">
-                    <label for="solicitante" data-i18n="solicitante">Nome do Solicitante *</label>
-                    <input type="text" id="solicitante" name="solicitante" placeholder="Digite o nome do solicitante" required>
+                    <!-- Data da Solicitação (Preenchida via JS) -->
+                    <div class="form-group">
+                        <label for="dataSolicitacao" class="obrigatorio" data-i18n="dataSolicitacao">Data da Solicitação</label>
+                        <input type="date" id="dataSolicitacao" name="dataSolicitacao" required>
+                        <small class="form-help" data-i18n="helpData">Preenchida automaticamente.</small>
+                    </div>
+
+                    <!-- Nome do Solicitante -->
+                    <div class="form-group campo-metade">
+                        <label for="solicitante" class="obrigatorio" data-i18n="solicitante">Nome do Solicitante</label>
+                        <input type="text" id="solicitante" name="solicitante" placeholder="Digite o nome do solicitante" data-i18n-placeholder="placeholderSolicitante" required>
+                        <small class="form-help" data-i18n="helpSolicitante">Profissional responsável pelo pedido.</small>
+                    </div>
                 </div>
             </section>
 
-            <!-- ======================================================= -->
-            <!-- BLOCO 3: LOCALIZAÇÃO (REGIONAL E UNIDADE)               -->
-            <!-- ======================================================= -->
-            <section class="bloco-formulario">
+            <!-- ================================================= -->
+            <!-- BLOCO 05 - LOCALIZAÇÃO DO EQUIPAMENTO             -->
+            <!-- ================================================= -->
+            <section class="cadastro-secao">
                 <h2 data-i18n="localizacao">Localização</h2>
 
-                <div class="campo-grupo">
-                    <label for="regional" data-i18n="regional">Regional *</label>
-                    <select id="regional" name="regionalId" required>
-                        <option value="">Selecione a Regional...</option>
-                    </select>
-                </div>
+                <div class="form-grid">
+                    <!-- Seleção de Regional -->
+                    <div class="form-group">
+                        <label for="regional" class="obrigatorio" data-i18n="regional">Regional</label>
+                        <select id="regional" name="regionalId" required>
+                            <option value="" data-i18n="selecioneRegional">Selecione a Regional...</option>
+                        </select>
+                        <small class="form-help" data-i18n="helpRegional">Área ou divisão corporativa.</small>
+                    </div>
 
-                <div class="campo-grupo">
-                    <label for="unidade" data-i18n="unidade">Unidade / Hospital *</label>
-                    <select id="unidade" name="unidadeId" required>
-                        <option value="">Selecione a Unidade...</option>
-                        <option value="OUTRA" data-i18n="outraUnidadeOpcao">Outra Unidade (Digitar manualmente)</option>
-                    </select>
-                </div>
+                    <!-- Seleção de Unidade / Hospital -->
+                    <div class="form-group">
+                        <label for="unidade" class="obrigatorio" data-i18n="unidade">Unidade / Hospital</label>
+                        <select id="unidade" name="unidadeId" required>
+                            <option value="" data-i18n="selecioneUnidade">Selecione a Unidade...</option>
+                            <option value="OUTRA" data-i18n="outraUnidadeOpcao">Outra Unidade (Digitar manualmente)</option>
+                        </select>
+                        <small class="form-help" data-i18n="helpUnidade">Hospital, laboratório ou centro clínico.</small>
+                    </div>
 
-                <!-- Campo Condicional para Unidade Personalizada -->
-                <div class="campo-grupo" id="grupoOutraUnidade" style="display: none;">
-                    <label for="unidadePersonalizada" data-i18n="digiteOutraUnidade">Digite o nome da unidade:</label>
-                    <input type="text" id="unidadePersonalizada" name="unidadePersonalizada" placeholder="Nome da nova unidade ou hospital">
-                </div>
-            </section>
-
-            <!-- ======================================================= -->
-            <!-- BLOCO 4: DADOS DO EQUIPAMENTO                           -->
-            <!-- ======================================================= -->
-            <section class="bloco-formulario">
-                <h2 data-i18n="dadosEquipamento">Dados do Equipamento</h2>
-
-                <div class="campo-grupo">
-                    <label for="descricaoAtivo" data-i18n="descricaoAtivo">Descrição do Ativo *</label>
-                    <input type="text" id="descricaoAtivo" name="descricaoAtivo" maxlength="150" placeholder="Ex: Monitor Multiparâmetro / Tomógrafo" required>
-                </div>
-
-                <div class="campo-grupo">
-                    <label for="ativoPai" data-i18n="ativoPai">Ativo Pai</label>
-                    <input type="text" id="ativoPai" name="ativoPai" placeholder="Ex: LSSPLS4-00 (Opcional se for equipamento principal)">
-                </div>
-
-                <div class="campo-grupo">
-                    <label for="setorInstalacao" data-i18n="setorInstalacao">Setor de Instalação *</label>
-                    <input type="text" id="setorInstalacao" name="setorInstalacao" placeholder="Ex: UTI Adulto / Centro Cirúrgico / Recepção" required>
-                </div>
-
-                <div class="campo-grupo">
-                    <label for="numeroSerie" data-i18n="numeroSerie">Número de Série *</label>
-                    <input type="text" id="numeroSerie" name="numeroSerie" placeholder="Ex: MP-123456" autocomplete="off" required>
+                    <!-- Campo Condicional para Unidade Personalizada -->
+                    <div class="form-group campo-full" id="grupoOutraUnidade" style="display: none;">
+                        <label for="unidadePersonalizada" class="obrigatorio" data-i18n="digiteOutraUnidade">Digite o nome da unidade:</label>
+                        <input type="text" id="unidadePersonalizada" name="unidadePersonalizada" placeholder="Nome da nova unidade ou hospital" data-i18n-placeholder="placeholderOutraUnidade">
+                        <small class="form-help" data-i18n="helpOutraUnidade">Informe o nome completo da nova unidade hospitalar.</small>
+                    </div>
                 </div>
             </section>
 
-            <!-- ======================================================= -->
-            <!-- BLOCO 5: DADOS ADMINISTRATIVOS                          -->
-            <!-- ======================================================= -->
-            <section class="bloco-formulario">
+            <!-- ================================================= -->
+            <!-- BLOCO 06 - IDENTIFICAÇÃO DO EQUIPAMENTO           -->
+            <!-- ================================================= -->
+            <section class="cadastro-secao">
+                <h2 data-i18n="identificacaoEquipamento">Identificação do Equipamento</h2>
+
+                <div class="form-grid">
+                    <!-- Número de Patrimônio / Tag -->
+                    <div class="form-group">
+                        <label for="patrimonio" class="obrigatorio" data-i18n="patrimonio">Patrimônio / Tag</label>
+                        <input type="text" id="patrimonio" name="patrimonio" placeholder="Ex: EQ-2026-9041" data-i18n-placeholder="placeholderPatrimonio" required>
+                        <small class="form-help" data-i18n="helpPatrimonio">Código único de tombo patrimonial.</small>
+                    </div>
+
+                    <!-- Número de Série -->
+                    <div class="form-group">
+                        <label for="numeroSerie" class="obrigatorio" data-i18n="numeroSerie">Número de Série</label>
+                        <input type="text" id="numeroSerie" name="numeroSerie" placeholder="Ex: SN-8830192" data-i18n-placeholder="placeholderSerie" autocomplete="off" required>
+                        <small class="form-help" data-i18n="helpNumeroSerie">Identificador do fabricante.</small>
+                    </div>
+
+                    <!-- Ativo Pai (Equipamento Principal / Sistema) -->
+                    <div class="form-group">
+                        <label for="ativoPai" data-i18n="ativoPai">Ativo Pai (Opcional)</label>
+                        <input type="text" id="ativoPai" name="ativoPai" placeholder="Ex: LSSPLS4-00" data-i18n-placeholder="placeholderAtivoPai">
+                        <small class="form-help" data-i18n="helpAtivoPai">Vincule se este item for um componente/módulo.</small>
+                    </div>
+
+                    <!-- Descrição do Ativo -->
+                    <div class="form-group campo-metade">
+                        <label for="descricaoAtivo" class="obrigatorio" data-i18n="descricaoAtivo">Descrição do Ativo</label>
+                        <input type="text" id="descricaoAtivo" name="descricaoAtivo" maxlength="150" placeholder="Ex: Monitor Multiparâmetro / Tomógrafo" data-i18n-placeholder="placeholderDescricao" required>
+                        <small class="form-help" data-i18n="helpDescricao">Nome oficial e especificação do equipamento.</small>
+                    </div>
+
+                    <!-- Setor de Instalação -->
+                    <div class="form-group">
+                        <label for="setorInstalacao" class="obrigatorio" data-i18n="setorInstalacao">Setor de Instalação</label>
+                        <input type="text" id="setorInstalacao" name="setorInstalacao" placeholder="Ex: UTI Adulto / Centro Cirúrgico" data-i18n-placeholder="placeholderSetor" required>
+                        <small class="form-help" data-i18n="helpSetor">Setor onde o ativo permanecerá instalado.</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================= -->
+            <!-- BLOCO 07 - DADOS TÉCNICOS                         -->
+            <!-- ================================================= -->
+            <section class="cadastro-secao">
+                <h2 data-i18n="dadosTecnicos">Dados Técnicos</h2>
+
+                <div class="form-grid">
+                    <!-- Fabricante -->
+                    <div class="form-group">
+                        <label for="fabricante" class="obrigatorio" data-i18n="fabricante">Fabricante</label>
+                        <input type="text" id="fabricante" name="fabricante" placeholder="Ex: GE Healthcare / Philips" data-i18n-placeholder="placeholderFabricante" required>
+                        <small class="form-help" data-i18n="helpFabricante">Marca ou fabricante do equipamento.</small>
+                    </div>
+
+                    <!-- Modelo -->
+                    <div class="form-group">
+                        <label for="modelo" class="obrigatorio" data-i18n="modelo">Modelo</label>
+                        <input type="text" id="modelo" name="modelo" placeholder="Ex: Carescape B650 / IntelliVue" data-i18n-placeholder="placeholderModelo" required>
+                        <small class="form-help" data-i18n="helpModelo">Modelo comercial do equipamento.</small>
+                    </div>
+
+                    <!-- Família / Categoria do Equipamento -->
+                    <div class="form-group">
+                        <label for="familiaEquipamento" class="obrigatorio" data-i18n="familiaEquipamento">Família do Equipamento</label>
+                        <select id="familiaEquipamento" name="familiaEquipamento" required>
+                            <option value="" data-i18n="selecioneFamilia">Selecione a Família...</option>
+                            <option value="Suporte à Vida">Suporte à Vida (Ventiladores, Desfibriladores)</option>
+                            <option value="Diagnóstico por Imagem">Diagnóstico por Imagem (Raio-X, Tomografia)</option>
+                            <option value="Monitoração">Monitoração (Monitores Multiparâmetros, ECG)</option>
+                            <option value="Infusão">Infusão (Bombas de Infusão, Seringas)</option>
+                            <option value="Cirúrgico">Equipamentos Cirúrgicos e Bisturis</option>
+                            <option value="Outros">Outros Equipamentos Médico-Hospitalares</option>
+                        </select>
+                        <small class="form-help" data-i18n="helpFamilia">Classificação técnica do ativo.</small>
+                    </div>
+
+                    <!-- Voltagem / Alimentação Elétrica -->
+                    <div class="form-group">
+                        <label for="alimentacaoEletrica" data-i18n="alimentacaoEletrica">Alimentação Elétrica</label>
+                        <select id="alimentacaoEletrica" name="alimentacaoEletrica">
+                            <option value="">Selecione a voltagem...</option>
+                            <option value="110V">110V / 127V</option>
+                            <option value="220V">220V / 380V</option>
+                            <option value="Bivolt">Bivolt Automático</option>
+                            <option value="Bateria / Recarregável">Bateria / Operação Interna</option>
+                        </select>
+                        <small class="form-help" data-i18n="helpAlimentacao">Especificação elétrica de alimentação.</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================= -->
+            <!-- BLOCO 08 - DADOS ADMINISTRATIVOS                  -->
+            <!-- ================================================= -->
+            <section class="cadastro-secao">
                 <h2 data-i18n="dadosAdministrativos">Dados Administrativos</h2>
 
-                <div class="campo-grupo">
-                    <label for="dataAquisicao" data-i18n="dataAquisicao">Data de Aquisição / Instalação *</label>
-                    <input type="date" id="dataAquisicao" name="dataAquisicao" required>
-                </div>
+                <div class="form-grid">
+                    <!-- Data de Aquisição / Instalação -->
+                    <div class="form-group">
+                        <label for="dataAquisicao" class="obrigatorio" data-i18n="dataAquisicao">Data de Aquisição / Instalação</label>
+                        <input type="date" id="dataAquisicao" name="dataAquisicao" required>
+                        <small class="form-help" data-i18n="helpDataAquisicao">Data de entrada do ativo na instituição.</small>
+                    </div>
 
-                <div class="campo-grupo">
-                    <label for="classificacaoContabil" data-i18n="classificacaoContabil">Classificação Contábil *</label>
-                    <input type="text" id="classificacaoContabil" name="classificacaoContabil" placeholder="Ex: Equipamento Médico-Hospitalar / Imobilizado" required>
-                </div>
+                    <!-- Classificação Contábil -->
+                    <div class="form-group">
+                        <label for="classificacaoContabil" class="obrigatorio" data-i18n="classificacaoContabil">Classificação Contábil</label>
+                        <input type="text" id="classificacaoContabil" name="classificacaoContabil" placeholder="Ex: Equipamento Médico-Hospitalar" data-i18n-placeholder="placeholderContabil" required>
+                        <small class="form-help" data-i18n="helpContabil">Conta do ativo imobilizado.</small>
+                    </div>
 
-                <div class="campo-grupo">
-                    <label for="notaFiscal" data-i18n="notaFiscal">Nota Fiscal *</label>
-                    <input type="text" id="notaFiscal" name="notaFiscal" placeholder="Ex: NF-10001" maxlength="50" autocomplete="off" required>
+                    <!-- Nota Fiscal -->
+                    <div class="form-group">
+                        <label for="notaFiscal" class="obrigatorio" data-i18n="notaFiscal">Nota Fiscal</label>
+                        <input type="text" id="notaFiscal" name="notaFiscal" placeholder="Ex: NF-10001" maxlength="50" data-i18n-placeholder="placeholderNF" autocomplete="off" required>
+                        <small class="form-help" data-i18n="helpNotaFiscal">Número do documento fiscal de compra.</small>
+                    </div>
+
+                    <!-- Tipo de Aquisição -->
+                    <div class="form-group">
+                        <label for="tipoAquisicao" data-i18n="tipoAquisicao">Tipo de Aquisição</label>
+                        <select id="tipoAquisicao" name="tipoAquisicao">
+                            <option value="Compra Direta">Compra Direta</option>
+                            <option value="Comodato">Comodato</option>
+                            <option value="Doação">Doação</option>
+                            <option value="Locação">Locação</option>
+                        </select>
+                        <small class="form-help" data-i18n="helpTipoAquisicao">Forma de posse do equipamento.</small>
+                    </div>
                 </div>
             </section>
 
-            <!-- ======================================================= -->
-            <!-- BLOCO 6: BOTÕES DE AÇÃO                                 -->
-            <!-- ======================================================= -->
-            <section class="acoes-formulario">
-                <button type="submit" class="btn-salvar" data-i18n="salvar">💾 Salvar Cadastro</button>
-                <button type="reset" class="btn-limpar" data-i18n="limpar">🧹 Limpar</button>
+            <!-- ================================================= -->
+            <!-- BLOCO 09 - CRITICIDADE E CLASSIFICAÇÃO            -->
+            <!-- ================================================= -->
+            <section class="cadastro-secao">
+                <h2 data-i18n="criticidadeClassificacao">Criticidade e Classificação de Risco</h2>
+
+                <div class="form-grid">
+                    <!-- Nível de Criticidade -->
+                    <div class="form-group">
+                        <label for="criticidade" class="obrigatorio" data-i18n="criticidade">Nível de Criticidade</label>
+                        <select id="criticidade" name="criticidade" required>
+                            <option value="" data-i18n="selecioneCriticidade">Selecione o nível de risco...</option>
+                            <option value="Alta">🔴 Alta (Suporte à Vida / Risco Crítico)</option>
+                            <option value="Media">🟡 Média (Diagnóstico / Monitoramento)</option>
+                            <option value="Baixa">🟢 Baixa (Apoio / Baixo Risco Operacional)</option>
+                        </select>
+                        <small class="form-help" data-i18n="helpCriticidade">Impacto do equipamento na assistência ao paciente.</small>
+                    </div>
+
+                    <!-- Periodicidade de Preventiva (Obrigatória + Novas Opções) -->
+                    <div class="form-group">
+                        <label for="periodicidadeManutencao" class="obrigatorio" data-i18n="periodicidadeManutencao">Periodicidade de Preventiva</label>
+                        <select id="periodicidadeManutencao" name="periodicidadeManutencao" required>
+                            <option value="" data-i18n="selecionePeriodicidade">Selecione a frequência...</option>
+                            <option value="Mensal">Mensal</option>
+                            <option value="Trimestral">Trimestral</option>
+                            <option value="Semestral">Semestral</option>
+                            <option value="Anual">Anual</option>
+                            <option value="Fabricante">Conforme Fabricante</option>
+                            <option value="SobDemanda">Sob Demanda</option>
+                        </select>
+                        <small class="form-help" data-i18n="helpPeriodicidade">Frequência dos ciclos de calibração e manutenção.</small>
+                    </div>
+
+                    <!-- Classe de Risco Regulatória -->
+                    <div class="form-group">
+                        <label for="classeRisco" class="obrigatorio">Classe de Risco</label>
+                        <select id="classeRisco" name="classeRisco" required>
+                            <option value="">Selecione...</option>
+                            <option value="I">Classe I (Baixo Risco)</option>
+                            <option value="II">Classe II (Médio Risco)</option>
+                            <option value="III">Classe III (Alto Risco)</option>
+                            <option value="IV">Classe IV (Máximo Risco)</option>
+                        </select>
+                        <small class="form-help">Classificação regulatória do equipamento.</small>
+                    </div>
+
+                    <!-- Equipamento Estratégico -->
+                    <div class="form-group">
+                        <label for="equipamentoEstrategico">Equipamento Estratégico</label>
+                        <select id="equipamentoEstrategico" name="equipamentoEstrategico">
+                            <option value="Nao">Não</option>
+                            <option value="Sim">Sim</option>
+                        </select>
+                        <small class="form-help">Relevância para os indicadores assistenciais da instituição.</small>
+                    </div>
+                </div>
             </section>
+
+            <!-- ================================================= -->
+            <!-- BLOCO 10 - DOCUMENTOS E ANEXOS                    -->
+            <!-- ================================================= -->
+            <section class="cadastro-secao">
+                <h2 data-i18n="documentosAnexos">Documentos e Anexos</h2>
+
+                <div class="form-grid">
+                    <!-- Foto do Equipamento -->
+                    <div class="form-group">
+                        <label for="fotoEquipamento" data-i18n="fotoEquipamento">Foto do Equipamento</label>
+                        <input type="file" id="fotoEquipamento" name="fotoEquipamento" accept="image/*">
+                        <small class="form-help" data-i18n="helpFoto">Imagem para identificação visual do ativo no inventário.</small>
+                    </div>
+
+                    <!-- Anexo da Nota Fiscal -->
+                    <div class="form-group">
+                        <label for="anexoNotaFiscal" data-i18n="anexoNotaFiscal">Anexo da Nota Fiscal</label>
+                        <input type="file" id="anexoNotaFiscal" name="anexoNotaFiscal" accept=".pdf,.png,.jpg,.jpeg">
+                        <small class="form-help" data-i18n="helpAnexoNF">Cópia digital da nota fiscal de compra.</small>
+                    </div>
+
+                    <!-- Registro ANVISA -->
+                    <div class="form-group">
+                        <label for="registroAnvisa" data-i18n="registroAnvisa">Registro ANVISA</label>
+                        <input type="file" id="registroAnvisa" name="registroAnvisa" accept=".pdf,.png,.jpg,.jpeg">
+                        <small class="form-help" data-i18n="helpAnvisa">Documento ou comprovante regulatório de registro da ANVISA.</small>
+                    </div>
+
+                    <!-- Contrato de Manutenção -->
+                    <div class="form-group">
+                        <label for="contratoManutencao" data-i18n="contratoManutencao">Contrato de Manutenção</label>
+                        <input type="file" id="contratoManutencao" name="contratoManutencao" accept=".pdf">
+                        <small class="form-help" data-i18n="helpContrato">Contrato com fornecedor, fabricante ou prestador de serviço.</small>
+                    </div>
+
+                    <!-- Manual Técnico -->
+                    <div class="form-group">
+                        <label for="manualTecnico" data-i18n="manualTecnico">Manual Técnico (PDF)</label>
+                        <input type="file" id="manualTecnico" name="manualTecnico" accept=".pdf">
+                        <small class="form-help" data-i18n="helpManual">Manual do fabricante ou guia de operação.</small>
+                    </div>
+
+                    <!-- Termo de Garantia -->
+                    <div class="form-group">
+                        <label for="termoGarantia" data-i18n="termoGarantia">Termo de Garantia</label>
+                        <input type="file" id="termoGarantia" name="termoGarantia" accept=".pdf,.png,.jpg,.jpeg">
+                        <small class="form-help" data-i18n="helpGarantia">Documento de cobertura e prazos de garantia.</small>
+                    </div>
+
+                    <!-- Laudo de Aceitação / Recebimento -->
+                    <div class="form-group">
+                        <label for="laudoRecebimento" data-i18n="laudoRecebimento">Laudo de Aceitação / Recebimento</label>
+                        <input type="file" id="laudoRecebimento" name="laudoRecebimento" accept=".pdf">
+                        <small class="form-help" data-i18n="helpLaudo">Relatório de inspeção física e testes operacionais de recebimento.</small>
+                    </div>
+
+                    <!-- Certificado de Calibração -->
+                    <div class="form-group">
+                        <label for="certificadoCalibracao" data-i18n="certificadoCalibracao">Certificado de Calibração</label>
+                        <input type="file" id="certificadoCalibracao" name="certificadoCalibracao" accept=".pdf">
+                        <small class="form-help" data-i18n="helpCalibracao">Certificado de calibração padrão de fábrica ou pré-instalação.</small>
+                    </div>
+
+                    <!-- Upload em Lote via Arraste e Solte (Dropzone) -->
+                    <div class="form-group campo-full">
+                        <label data-i18n="documentosComplementares">Documentos Complementares (Upload em Lote)</label>
+                        <div class="upload-area" id="uploadDropzone">
+                            <strong>Arraste arquivos aqui</strong>
+                            <p>ou clique para selecionar múltiplos documentos (.pdf, .jpg, .png)</p>
+                            <input type="file" id="múltiplosAnexos" name="múltiplosAnexos" multiple hidden>
+                        </div>
+                        <small class="form-help" data-i18n="helpDropzone">Adicione laudos extras, esquemas elétricos ou notas adicionais.</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================= -->
+            <!-- BLOCO 11 - OBSERVAÇÕES                            -->
+            <!-- ================================================= -->
+            <section class="cadastro-secao">
+                <h2 data-i18n="observacoesGerais">Observações Gerais</h2>
+
+                <div class="form-grid">
+                    <!-- Campo de Texto para Observações com Contador -->
+                    <div class="form-group campo-full">
+                        <label for="observacoes" data-i18n="observacoes">Notas e Ocorrências</label>
+                        <textarea id="observacoes" name="observacoes" rows="6" maxlength="500" placeholder="Insira restrições de uso, histórico de instalação, particularidades de calibração ou observações do fabricante..." data-i18n-placeholder="placeholderObservacoes"></textarea>
+                        
+                        <div class="form-help-contador">
+                            <small class="form-help" data-i18n="helpObservacoes">Informações complementares para a equipe de engenharia.</small>
+                            <small id="contadorObservacoes" class="contador-caracteres">0 / 500</small>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================= -->
+            <!-- BLOCO 12 - RESUMO DO CADASTRO                     -->
+            <!-- ================================================= -->
+            <section class="cadastro-secao" id="secao-resumo">
+                <h2 data-i18n="resumoCadastro">Resumo e Conferência</h2>
+
+                <p class="resumo-instrucao" data-i18n="instrucaoResumo" style="margin-bottom: 16px; color: var(--texto-secundario);">
+                    Confira os principais dados do ativo antes de efetivar o registro no sistema:
+                </p>
+
+                <div class="resumo-equipamento">
+                    <!-- Patrimônio / Tag -->
+                    <div class="resumo-item">
+                        <span class="resumo-label" data-i18n="patrimonio">Patrimônio / Tag:</span>
+                        <strong id="resumoPatrimonio">--</strong>
+                    </div>
+
+                    <!-- Equipamento / Descrição -->
+                    <div class="resumo-item">
+                        <span class="resumo-label" data-i18n="descricaoAtivo">Equipamento:</span>
+                        <strong id="resumoEquipamento">--</strong>
+                    </div>
+
+                    <!-- Número de Série -->
+                    <div class="resumo-item">
+                        <span class="resumo-label" data-i18n="numeroSerie">Número de Série:</span>
+                        <strong id="resumoSerie">--</strong>
+                    </div>
+
+                    <!-- Regional -->
+                    <div class="resumo-item">
+                        <span class="resumo-label" data-i18n="regional">Regional:</span>
+                        <strong id="resumoRegional">--</strong>
+                    </div>
+
+                    <!-- Unidade / Hospital -->
+                    <div class="resumo-item">
+                        <span class="resumo-label" data-i18n="unidade">Unidade / Hospital:</span>
+                        <strong id="resumoUnidade">--</strong>
+                    </div>
+
+                    <!-- Criticidade -->
+                    <div class="resumo-item">
+                        <span class="resumo-label" data-i18n="criticidade">Criticidade:</span>
+                        <span id="resumoCriticidade" class="badge-status badge-neutral">Não Informado</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================= -->
+            <!-- BLOCO 13 - BOTÕES DE AÇÃO DO FORMULÁRIO           -->
+            <!-- ================================================= -->
+            <div class="form-acoes">
+                <!-- Botão Secundário: Cancelar / Limpar -->
+                <button type="reset" class="btn btn-secundario" id="btnCancelar" data-i18n="btnCancelar">
+                    Cancelar / Limpar
+                </button>
+
+                <div class="grupo-botoes-direita">
+                    <!-- Botão Neutro: Salvar Rascunho -->
+                    <button type="button" class="btn btn-terciario" id="btnRascunho" data-i18n="btnRascunho">
+                        Salvar Rascunho
+                    </button>
+
+                    <!-- Botão Principal: Salvar / Cadastrar -->
+                    <button type="submit" class="btn btn-principal" id="btnSalvar" data-i18n="btnSalvar">
+                        Salvar Cadastramento
+                    </button>
+                </div>
+            </div>
 
         </form>
-
     </main>
 
-    <!-- Importação dos Scripts JS dentro da mesma pasta -->
-    <script src="scripts/regionais.js"></script>
-    <script src="scripts/unidades.js"></script>
-    <script src="scripts/idiomas.js"></script>
-    <script src="scripts/cadastro.js"></script>
+    <!-- ================================================= -->
+    <!-- BLOCO 14 - RODAPÉ INSTITUCIONAL                   -->
+    <!-- ================================================= -->
+    <footer class="rodape-institucional">
+        <div class="rodape-container">
+            <div class="rodape-info">
+                <p>&copy; 2026 SIGEM — Sistema Integrado de Gestão de Engenharia Clínica</p>
+                <small class="rodape-subtexto">Todos os direitos reservados. Uso exclusivo para gestão hospitalar e controle de ativos biomédicos.</small>
+            </div>
 
+            <div class="rodape-meta">
+                <span class="versao-sistema" title="Versão Inicial da Plataforma">v1.0.0</span>
+                <nav class="rodape-links" aria-label="Navegação do Rodapé">
+                    <a href="#termos" data-i18n="termosUso">Termos de Uso</a>
+                    <span class="divisor">•</span>
+                    <a href="#privacidade" data-i18n="politicaPrivacidade">Privacidade</a>
+                    <span class="divisor">•</span>
+                    <a href="#suporte" data-i18n="suporteTecnico">Suporte Técnico</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts de Funcionalidade e Internacionalização -->
+    <script src="js/cadastro.js"></script>
+    <script src="js/idiomas.js"></script>
 </body>
 </html>
