@@ -204,3 +204,9 @@
         justify-content: center;
     }
 }
+
+.header-principal {
+    height: 72px;
+    background: linear-gradient(90deg, #005baa, #006fd6);
+    width: 100%;
+}

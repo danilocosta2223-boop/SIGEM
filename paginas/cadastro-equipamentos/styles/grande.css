@@ -1,41 +1,36 @@
 /* ===================================================== */
 /* SIGEM - Grande CSS (Desktop / Telas Maiores >= 900px)   */
+/* Versão Refinada - Padrão Corporativo Hospitalar       */
 /* ===================================================== */
 
 @media screen and (min-width: 900px) {
     
-    /* 1. Layout Geral e Container Principal */
+    /* 1. Layout Geral (Sem centralizar o body para o header ocupar 100%) */
     body {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        padding: 40px 20px;
+        padding: 0;
+        margin: 0;
     }
 
     .cadastro-container,
     .relatorios-container {
         width: 100%;
-        max-width: 1280px;
+        max-width: 1400px;
         margin: 0 auto;
-        padding: 40px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-        border-radius: 12px;
+        padding: 32px;
+        box-shadow: none; /* Sombra removida do container principal */
     }
 
-    .header-cadastro,
-    .header-relatorios {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-    }
-
-    /* 2. Formulário e Blocos de Campos (Grids) */
-    #cadastroForm,
+    /* 2. Formulário e Grids Modernos */
     .form-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 24px;
+    }
+
+    .form-grid-duplo {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
     }
 
     .campo-full {
@@ -46,52 +41,95 @@
         grid-column: span 1;
     }
 
-    .bloco-formulario {
-        grid-column: span 2;
+    /* 3. Secções, Cards e Elementos Arredondados (16px) */
+    .cadastro-secao {
+        min-height: 240px;
+        padding: 28px;
+        border-radius: 16px;
+        background: var(--card-bg, #ffffff);
+        border: 1px solid var(--border-color, #dee2e6);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Sombra aplicada nos cards */
+    }
+
+    /* Seção de Etapas */
+    .etapas {
+        margin: 20px 0 40px;
+    }
+
+    .linha {
+        flex: 1;
+        max-width: 80px;
+    }
+
+    /* 4. Resumo do Equipamento em Grid */
+    #secao-resumo .form-grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-        padding: 24px;
-        border-radius: 8px;
-    }
-
-    .bloco-formulario h2 {
-        grid-column: span 2;
-        margin-bottom: 5px;
-        font-size: 1.25rem;
-        border-bottom: 2px solid var(--borda-cor, #333);
-        padding-bottom: 8px;
-    }
-
-    .bloco-formulario .campo-grupo.full-width {
-        grid-column: span 2;
-    }
-
-    /* 3. Resumo do Equipamento em Grid */
-    .resumo-equipamento {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, minmax(200px, 1fr));
         gap: 16px;
     }
 
-    .resumo-item {
-        padding: 16px;
-        border-radius: 12px;
-        background: var(--cor-card);
-        border: 1px solid var(--cor-borda);
+    .resumo-card {
+        padding: 20px;
+        border-radius: 16px;
+        background: #f8fafc;
+        border: 1px solid var(--border-color, #dee2e6);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    /* 4. Área de Upload */
-    .upload-area {
+    .resumo-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    /* 5. Upload Box Arredondado */
+    .upload-box {
         min-height: 180px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        padding: 24px;
+        border: 2px dashed var(--border-color, #dee2e6);
+        border-radius: 16px;
+        background: var(--card-bg, #ffffff);
     }
 
-    /* 5. Botões e Ações do Formulário */
-    .acoes-formulario,
+    .upload-box input[type="file"] {
+        margin-top: 12px;
+    }
+
+    /* 6. Tipografia, Labels e Campos Obrigatórios */
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #334155;
+    }
+
+    .obrigatorio::after {
+        content: " *";
+        color: #ef4444;
+        font-weight: bold;
+    }
+
+    .form-help {
+        display: block;
+        margin-top: 6px;
+        color: #64748b;
+        font-size: 12px;
+    }
+
+    /* 7. Altura padronizada para Inputs e Textareas */
+    input,
+    select {
+        height: 52px;
+    }
+
+    textarea {
+        min-height: 140px;
+    }
+
+    /* 8. Botões e Ações do Formulário Corporativos */
     .form-acoes {
         grid-column: 1 / -1;
         display: flex;
@@ -99,24 +137,24 @@
         align-items: center;
         margin-top: 32px;
         padding-top: 20px;
-        border-top: 1px solid var(--borda-cor, #444);
+        border-top: 1px solid var(--border-color, #dee2e6);
     }
 
-    .acoes-formulario button,
     .form-acoes button {
         width: auto;
-        min-width: 180px;
-        padding: 12px 24px;
+        min-width: 220px;
+        height: 52px;
+        padding: 0 24px;
         font-size: 1rem;
+        font-weight: 600;
         transition: all 0.2s ease;
     }
 
-    .acoes-formulario button:hover,
     .form-acoes button:hover {
-        transform: translateY(-2px);
+        transform: translateY(-1px);
     }
 
-    /* 6. Rodapé Responsivo */
+    /* 9. Rodapé Responsivo */
     .rodape-container {
         display: flex;
         justify-content: space-between;
@@ -125,7 +163,7 @@
         gap: 16px;
     }
 
-    /* 7. Tabela de Relatórios e Filtros (Desktop) */
+    /* 10. Tabela de Relatórios e Filtros (Desktop) */
     .filtros-relatorio {
         display: grid;
         grid-template-columns: repeat(3, 1fr) auto;
@@ -137,7 +175,7 @@
         overflow-x: auto;
         max-height: 600px;
         margin-top: 20px;
-        border-radius: 8px;
+        border-radius: 12px;
     }
 
     table.tabela-dados {
@@ -151,6 +189,7 @@
         top: 0;
         z-index: 10;
         background-color: var(--fundo-cabecalho-tabela, #1e1e1e);
+        color: #ffffff;
     }
 
     table.tabela-dados th,
@@ -160,12 +199,11 @@
 }
 
 /* ========================================== */
-/* TELA ULTRAWIDE - 1400px ou mais            */
+/* TELA ULTRAWIDE - 1400px ou mais (4 Colunas)*/
 /* ========================================== */
 @media screen and (min-width: 1400px) {
-    .form-grid,
-    #cadastroForm {
-        grid-template-columns: repeat(3, 1fr);
+    .form-grid {
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
@@ -178,7 +216,7 @@
         max-width: 1500px;
     }
 
-    .resumo-equipamento {
+    #secao-resumo .form-grid {
         grid-template-columns: repeat(6, 1fr);
     }
 }
