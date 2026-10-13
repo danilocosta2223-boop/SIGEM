@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - SIGEM</title>
-    <!-- Biblioteca dos Gráficos -->
+    
+    <!-- Estilos da pasta styles/ -->
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/botoes.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/claro.css">
+
+    <!-- Biblioteca dos Gráficos (Chart.js) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -97,7 +105,7 @@
             <input type="text" id="buscaEquipamento" placeholder="Pesquisar equipamento...">
         </section>
       
-        <!-- Gráficos Agrupados (Regional, Unidade, Fabricante e Crescimento Mensal) -->
+        <!-- Gráficos Agrupados -->
         <section class="dashboard-graficos">
             <div class="grafico-card">
                 <h2>Equipamentos por Regional</h2>
@@ -146,5 +154,7 @@
 
     </main>
 
+    <!-- Script do Dashboard -->
+    <script src="dashboard.js"></script>
 </body>
 </html>

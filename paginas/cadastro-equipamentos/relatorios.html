@@ -4,91 +4,101 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIGEM - Relatório de Equipamentos</title>
+    
+    <!-- Importação dos estilos da pasta styles/ -->
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/botoes.css">
+    <link rel="stylesheet" href="styles/relatorios.css">
 </head>
 <body>
 
-    <!-- 1. Menu do SIGEM -->
+    <!-- Menu do SIGEM -->
     <header class="menu-principal">
         <a href="dashboard.html">Dashboard</a>
         <a href="cadastro.html">Cadastro</a>
         <a href="relatorios.html" class="ativo">Relatórios</a>
     </header>
 
-    <h1>Relatório de Equipamentos - SIGEM</h1>
+    <main class="container">
+        <h1>Relatório de Equipamentos - SIGEM</h1>
 
-    <!-- 2. Data da última atualização -->
-    <p>
-        Última atualização: 
-        <span id="ultimaAtualizacao">--</span>
-    </p>
+        <!-- Data da última atualização -->
+        <p>
+            Última atualização: 
+            <span id="ultimaAtualizacao">--</span>
+        </p>
 
-    <!-- Filtros e Botões -->
-    <div>
-        <input 
-            type="text" 
-            id="filtroGeral" 
-            placeholder="Pesquisar equipamento..."
-        >
+        <!-- Filtros e Botões -->
+        <div class="filters-container">
+            <input 
+                type="text" 
+                id="filtroGeral" 
+                placeholder="Pesquisar equipamento..."
+            >
 
-        <select id="filtroRegional">
-            <option value="">Todas as Regionais</option>
-        </select>
+            <select id="filtroRegional">
+                <option value="">Todas as Regionais</option>
+            </select>
 
-        <select id="filtroFabricante">
-            <option value="">Todos os Fabricantes</option>
-        </select>
+            <select id="filtroFabricante">
+                <option value="">Todos os Fabricantes</option>
+            </select>
 
-        <button id="btnAtualizar">Atualizar</button>
-        <button id="btnExcel">Exportar Excel</button>
-        <button id="btnImprimir">Imprimir</button>
-    </div>
-
-    <!-- Cards de Resumo -->
-    <div class="summary-container">
-        <div class="card">
-            <h3>Total Equipamentos</h3>
-            <strong id="totalEquipamentos">0</strong>
+            <button id="btnAtualizar" class="btn">Atualizar</button>
+            <button id="btnExcel" class="btn">Exportar Excel</button>
+            <button id="btnImprimir" class="btn">Imprimir</button>
         </div>
-        <div class="card">
-            <h3>Fabricantes</h3>
-            <strong id="totalFabricantes">0</strong>
+
+        <!-- Cards de Resumo -->
+        <div class="summary-container">
+            <div class="card">
+                <h3>Total Equipamentos</h3>
+                <strong id="totalEquipamentos">0</strong>
+            </div>
+            <div class="card">
+                <h3>Fabricantes</h3>
+                <strong id="totalFabricantes">0</strong>
+            </div>
+            <div class="card">
+                <h3>Regionais</h3>
+                <strong id="totalRegionais">0</strong>
+            </div>
         </div>
-        <div class="card">
-            <h3>Regionais</h3>
-            <strong id="totalRegionais">0</strong>
+
+        <!-- Contador da Tabela -->
+        <h2>
+            Equipamentos Cadastrados 
+            <span id="totalTabela">(0)</span>
+        </h2>
+
+        <!-- Tabela Principal -->
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nº Série</th>
+                        <th>Equipamento</th>
+                        <th>Fabricante</th>
+                        <th>Modelo</th>
+                        <th>Regional</th>
+                        <th>Unidade</th>
+                        <th>Setor</th>
+                        <th>Data Aquisição</th>
+                        <th>Data Cadastro</th>
+                    </tr>
+                </thead>
+                <tbody id="listaEquipamentos">
+                    <!-- Os dados do localStorage entram aqui dinamicamente -->
+                </tbody>
+            </table>
         </div>
-    </div>
 
-    <!-- Contador da Tabela -->
-    <h2>
-        Equipamentos Cadastrados 
-        <span id="totalTabela">(0)</span>
-    </h2>
-
-    <!-- Tabela Principal com a nova coluna de Data Cadastro -->
-    <table>
-        <thead>
-            <tr>
-                <th>Nº Série</th>
-                <th>Equipamento</th>
-                <th>Fabricante</th>
-                <th>Modelo</th>
-                <th>Regional</th>
-                <th>Unidade</th>
-                <th>Setor</th>
-                <th>Data Aquisição</th>
-                <th>Data Cadastro</th>
-            </tr>
-        </thead>
-        <tbody id="listaEquipamentos">
-            <!-- Os dados do localStorage entram aqui dinamicamente -->
-        </tbody>
-    </table>
-
-    <!-- Mensagem quando não houver registros -->
-    <div id="semEquipamentos">
-        Nenhum equipamento cadastrado.
-    </div>
+        <!-- Mensagem quando não houver registros -->
+        <div id="semEquipamentos" style="display: none;">
+            Nenhum equipamento cadastrado.
+        </div>
+    </main>
 
     <!-- Arquivo JavaScript -->
     <script src="scripts/relatorios.js"></script>

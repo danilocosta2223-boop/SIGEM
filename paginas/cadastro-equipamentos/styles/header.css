@@ -1,0 +1,105 @@
+/* ================================================= */
+/* ESTILOS DO CABEÇALHO CORPORATIVO - SIGEM          */
+/* ================================================= */
+
+.header-principal {
+    background: #005A9C;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.logo img {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+}
+
+.logo-texto {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-texto strong {
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.5px;
+}
+
+.logo-texto span {
+    font-size: 0.8rem;
+    opacity: 0.85;
+}
+
+.menu-principal {
+    display: flex;
+    gap: 30px;
+}
+
+.menu-principal a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.menu-principal a:hover {
+    color: #FFD54F;
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.menu-principal a.ativo {
+    color: #FFD54F;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.acoes {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ================================================= */
+/* RESPONSIVIDADE DO CABEÇALHO                       */
+/* ================================================= */
+@media (max-width: 900px) {
+    .header-principal {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .menu-principal {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .acoes {
+        width: 100%;
+        justify-content: center;
+    }
+}

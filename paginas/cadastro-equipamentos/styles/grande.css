@@ -15,10 +15,10 @@
     .cadastro-container,
     .relatorios-container {
         width: 100%;
-        max-width: 1200px;
+        max-width: 1280px;
         margin: 0 auto;
         padding: 40px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
         border-radius: 12px;
     }
 
@@ -31,10 +31,19 @@
     }
 
     /* 2. Formulário e Blocos de Campos (Grids) */
-    #cadastroForm {
+    #cadastroForm,
+    .form-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 24px;
+    }
+
+    .campo-full {
+        grid-column: 1 / -1;
+    }
+
+    .campo-metade {
+        grid-column: span 1;
     }
 
     .bloco-formulario {
@@ -54,23 +63,47 @@
         padding-bottom: 8px;
     }
 
-    /* Classe utilitária para campos que ocupam toda a largura */
     .bloco-formulario .campo-grupo.full-width {
         grid-column: span 2;
     }
 
-    /* 3. Botões e Ações do Formulário */
-    .acoes-formulario {
-        grid-column: span 2;
-        display: flex;
-        justify-content: flex-end;
+    /* 3. Resumo do Equipamento em Grid */
+    .resumo-equipamento {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
         gap: 16px;
-        margin-top: 10px;
+    }
+
+    .resumo-item {
+        padding: 16px;
+        border-radius: 12px;
+        background: var(--cor-card);
+        border: 1px solid var(--cor-borda);
+    }
+
+    /* 4. Área de Upload */
+    .upload-area {
+        min-height: 180px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* 5. Botões e Ações do Formulário */
+    .acoes-formulario,
+    .form-acoes {
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 32px;
         padding-top: 20px;
         border-top: 1px solid var(--borda-cor, #444);
     }
 
-    .acoes-formulario button {
+    .acoes-formulario button,
+    .form-acoes button {
         width: auto;
         min-width: 180px;
         padding: 12px 24px;
@@ -78,11 +111,21 @@
         transition: all 0.2s ease;
     }
 
-    .acoes-formulario button:hover {
+    .acoes-formulario button:hover,
+    .form-acoes button:hover {
         transform: translateY(-2px);
     }
 
-    /* 4. Tabela de Relatórios e Filtros (Desktop) */
+    /* 6. Rodapé Responsivo */
+    .rodape-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    /* 7. Tabela de Relatórios e Filtros (Desktop) */
     .filtros-relatorio {
         display: grid;
         grid-template-columns: repeat(3, 1fr) auto;
@@ -116,123 +159,26 @@
     }
 }
 
-/* ==========================================
-   SIGEM - Estilos para Desktop (grande.css)
-   Refinamento Profissional V2
-   ========================================== */
-
-/* 3. Header quebrando corretamente em telas menores */
-.header-principal {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  padding: 16px 32px;
-}
-
-/* 4. Menu mais moderno com transição e hover */
-.menu-principal {
-  display: flex;
-  gap: 24px;
-}
-
-.menu-principal a {
-  font-weight: 600;
-  padding: 8px 12px;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-}
-
-.menu-principal a:hover {
-  background: rgba(0, 90, 156, 0.1);
-}
-
-/* ==========================================
-   DESKTOP - 900px ou mais
-   ========================================== */
-@media screen and (min-width: 900px) {
-  /* 1. Largura máxima controlada do formulário */
-  .cadastro-container {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 32px;
-  }
-
-  .form-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-  }
-
-  .campo-full {
-    grid-column: 1 / -1;
-  }
-
-  .campo-metade {
-    grid-column: span 1;
-  }
-
-  /* Resumo do Equipamento em Grid */
-  .resumo-equipamento {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-  }
-
-  /* 2. Cards de resumo estilizados */
-  .resumo-item {
-    padding: 16px;
-    border-radius: 12px;
-    background: var(--cor-card);
-    border: 1px solid var(--cor-borda);
-  }
-
-  /* 6. Upload mais bonito e centralizado */
-  .upload-area {
-    min-height: 180px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  /* Ações do Formulário Alinhadas */
-  .form-acoes {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 32px;
-  }
-
-  /* 7. Rodapé responsivo */
-  .rodape-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-}
-
-/* ==========================================
-   TELA ULTRAWIDE - 1400px ou mais
-   ========================================== */
+/* ========================================== */
+/* TELA ULTRAWIDE - 1400px ou mais            */
+/* ========================================== */
 @media screen and (min-width: 1400px) {
-  .form-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+    .form-grid,
+    #cadastroForm {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
-/* ==========================================
-   TELA ULTRAWIDE EXPANDIDA - 1600px ou mais
-   ========================================== */
+/* ========================================== */
+/* TELA ULTRAWIDE EXPANDIDA - 1600px ou mais  */
+/* ========================================== */
 @media screen and (min-width: 1600px) {
-  .cadastro-container {
-    max-width: 1500px;
-  }
+    .cadastro-container,
+    .relatorios-container {
+        max-width: 1500px;
+    }
 
-  .resumo-equipamento {
-    grid-template-columns: repeat(6, 1fr);
-  }
+    .resumo-equipamento {
+        grid-template-columns: repeat(6, 1fr);
+    }
 }

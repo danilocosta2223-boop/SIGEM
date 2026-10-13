@@ -22,8 +22,9 @@
     <!-- 2. Tema Ativo (Suporta troca dinâmica entre claro.css e escuro.css) -->
     <link id="tema-css" rel="stylesheet" href="styles/claro.css">
 
-    <!-- 3. Componentes e Estrutura do Módulo -->
+    <!-- 3. Componentes, Header e Estrutura do Módulo -->
     <link rel="stylesheet" href="styles/botoes.css">
+    <link rel="stylesheet" href="styles/header.css">
     <link rel="stylesheet" href="styles/cadastro.css">
 
     <!-- 4. Regras de Responsividade -->
@@ -33,28 +34,30 @@
 <body id="cadastro-equipamento">
 
     <!-- ================================================= -->
-    <!-- BLOCO 02 - MENU SUPERIOR E IDIOMA                 -->
+    <!-- BLOCO 02 - MENU SUPERIOR CORPORATIVO              -->
     <!-- ================================================= -->
     <header class="header-principal">
 
-        <!-- Logo Institucional com Nome e Subtítulo -->
-        <a href="../../index.html" class="logo" title="Ir para a página inicial do SIGEM">
-            <img src="assets/img/logo.png" alt="Logo SIGEM" width="38" height="38" onerror="this.style.display='none'">
-            <div class="logo-texto">
-                <strong>SIGEM</strong>
-                <small>Engenharia Clínica</small>
-            </div>
-        </a>
+        <!-- Área da Logo e Nome Institucional -->
+        <div class="logo-area">
+            <a href="dashboard.html" class="logo" title="Ir para o Dashboard do SIGEM">
+                <img src="assets/img/logo.png" alt="Logo SIGEM" width="48" height="48" onerror="this.style.display='none'">
+                <div class="logo-texto">
+                    <strong>SIGEM</strong>
+                    <span>Engenharia Clínica</span>
+                </div>
+            </a>
+        </div>
 
-        <!-- Menu de Navegação Principal do Sistema -->
+        <!-- Menu de Navegação Principal Corporativo -->
         <nav class="menu-principal">
-            <a href="index.html" data-i18n="menuInicio">Início</a>
+            <a href="dashboard.html" data-i18n="menuDashboard">Dashboard</a>
             <a href="cadastro.html" class="ativo" data-i18n="menuCadastro">Cadastro</a>
             <a href="relatorios.html" data-i18n="menuRelatorios">Relatórios</a>
         </nav>
 
-        <!-- Ações do Cabeçalho (Idioma, Tema e Voltar) -->
-        <div class="header-acoes">
+        <!-- Ações do Cabeçalho (Idioma e Tema) -->
+        <div class="acoes">
             <!-- Seletor de Idioma Internacional (i18n) -->
             <div class="seletor-idioma">
                 <select id="idioma" class="seletor-idioma-select" aria-label="Selecionar idioma">
@@ -68,11 +71,6 @@
             <button type="button" id="btn-troca-tema" class="btn btn-ghost btn-sm btn-icon" title="Alternar entre tema claro e escuro" aria-label="Alternar tema">
                 <span id="icone-tema">🌙</span>
             </button>
-
-            <!-- Botão de Retorno Rápido -->
-            <a href="../../index.html" class="btn btn-secundario btn-sm" data-i18n="voltarModulo">
-                &larr; Voltar
-            </a>
         </div>
 
     </header>
@@ -276,7 +274,7 @@
             <section class="cadastro-secao" id="secao-resumo">
                 <h2 data-i18n="resumoCadastro">Resumo e Conferência</h2>
 
-                <p class="resumo-instrucao" data-i18n="instrucaoResumo" style="margin-bottom: 16px; color: var(--texto-secundario);">
+                <p class="resumo-instrucao" data-i18n="instrucaoResumo">
                     Confira os principais dados do ativo antes de efetivar o registro no sistema:
                 </p>
 
