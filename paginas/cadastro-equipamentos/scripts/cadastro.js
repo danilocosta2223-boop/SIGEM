@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
-    // 1. SELETORES E ELEMENTOS DO DOM (Atualizados)
+    // 1. SELETORES E ELEMENTOS DO DOM (Sem Resumo)
     // ==========================================
     const DOM = {
         form: document.getElementById("cadastroForm"),
@@ -18,14 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
         dataAquisicao: document.getElementById("dataAquisicao"),
         notaFiscal: document.getElementById("notaFiscal"),
         fabricante: document.getElementById("fabricante"),
-        modelo: document.getElementById("modelo"),
-        // Card de Resumo (Com Fabricante e Modelo)
-        resumoEquipamento: document.getElementById("resumoEquipamento"),
-        resumoFabricante: document.getElementById("resumoFabricante"),
-        resumoModelo: document.getElementById("resumoModelo"),
-        resumoSerie: document.getElementById("resumoSerie"),
-        resumoRegional: document.getElementById("resumoRegional"),
-        resumoUnidade: document.getElementById("resumoUnidade")
+        modelo: document.getElementById("modelo")
     };
 
     // ==========================================
@@ -55,34 +48,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Atualiza o card de resumo em tempo real
-    function atualizarCardResumo() {
-        if (DOM.resumoEquipamento) {
-            DOM.resumoEquipamento.textContent = DOM.descricaoAtivo?.value || '--';
-        }
-        if (DOM.resumoFabricante) {
-            DOM.resumoFabricante.textContent = DOM.fabricante?.value || '--';
-        }
-        if (DOM.resumoModelo) {
-            DOM.resumoModelo.textContent = DOM.modelo?.value || '--';
-        }
-        if (DOM.resumoSerie) {
-            DOM.resumoSerie.textContent = DOM.numeroSerie?.value || '--';
-        }
-        if (DOM.resumoRegional && DOM.regional) {
-            const textoRegional = DOM.regional.options[DOM.regional.selectedIndex]?.text;
-            DOM.resumoRegional.textContent = DOM.regional.value ? textoRegional : '--';
-        }
-        if (DOM.resumoUnidade && DOM.unidade) {
-            const textoUnidade = DOM.unidadePersonalizada && DOM.unidadePersonalizada.value && DOM.unidade.value === "OUTRA" 
-                ? DOM.unidadePersonalizada.value 
-                : DOM.unidade.options[DOM.unidade.selectedIndex]?.text;
-            DOM.resumoUnidade.textContent = DOM.unidade.value ? textoUnidade : '--';
-        }
-    }
-
-    // Reseta o formulário para o estado inicial (com escopo local seguro)
-    const ToResetForm = () => {
+    // Reseta o formulário para o estado inicial com função declarada
+    function resetarFormulario() {
         if (DOM.form) DOM.form.reset();
         if (DOM.grupoOutraUnidade) DOM.grupoOutraUnidade.style.display = "none";
         if (DOM.unidade) {
@@ -90,8 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
             DOM.unidade.innerHTML = '<option value="">Primeiro selecione uma regional...</option>';
         }
         inicializarCamposPadrao();
-        atualizarCardResumo();
-    };
+    }
 
     // ==========================================
     // 3. CONFIGURAÇÃO DE EVENTOS (LISTENERS)
@@ -126,7 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 DOM.unidade.disabled = true;
                 DOM.unidade.innerHTML = '<option value="" data-i18n="selecioneRegionalPrimeiro">Primeiro selecione uma regional...</option>';
             }
-            atualizarCardResumo();
         });
 
         // Mudança de Unidade -> Controla campo "Outra Unidade"
@@ -140,7 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 DOM.unidadePersonalizada.required = false;
                 DOM.unidadePersonalizada.value = "";
             }
-            atualizarCardResumo();
         });
     }
 
@@ -151,24 +115,6 @@ document.addEventListener("DOMContentLoaded", () => {
             DOM.contadorObservacoes.textContent = `${DOM.observacoes.value.length} / 500`;
         });
     }
-
-    // Ouve alterações nos inputs para atualizar o resumo em tempo real
-    const inputsParaResumo = [
-        DOM.descricaoAtivo,
-        DOM.numeroSerie,
-        DOM.fabricante,
-        DOM.modelo,
-        DOM.regional,
-        DOM.unidade,
-        DOM.unidadePersonalizada
-    ];
-    
-    inputsParaResumo.forEach(input => {
-        if (input) {
-            input.addEventListener('input', atualizarCardResumo);
-            input.addEventListener('change', atualizarCardResumo);
-        }
-    });
 
     // ==========================================
     // 4. ENVIO DO FORMULÁRIO (SUBMIT)
@@ -225,7 +171,8 @@ document.addEventListener("DOMContentLoaded", () => {
             try {
                 localStorage.setItem("sigem_equipamentos", JSON.stringify(listaEquipamentos));
                 alert("Equipamento cadastrado com sucesso!"); 
-                ToResetForm();
+                console.log("Equipamento cadastrado com sucesso:", novoEquipamento);
+                resetarFormulario();
             } catch (error) {
                 alert("Erro ao salvar equipamento. Verifique o espaço de armazenamento do navegador.");
             }
@@ -237,5 +184,4 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
     inicializarCamposPadrao();
     carregarRegionais();
-    atualizarCardResumo();
 });

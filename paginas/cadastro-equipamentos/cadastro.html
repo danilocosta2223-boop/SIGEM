@@ -80,260 +80,212 @@
     <!-- ================================================= -->
     <main class="cadastro-container">
 
-        <!-- Barra de Progresso do Cadastro -->
-        <div class="progresso-cadastro" aria-hidden="true" title="Progresso do preenchimento do formulário">
-            <div class="barra" id="barraProgresso" style="width: 15%;"></div>
-        </div>
-
-        <!-- Título principal e subtítulo institucional -->
+        <!-- Cabeçalho da Seção com Cartão Profissional -->
         <div class="cadastro-header-secao">
-            <h1 data-i18n="cadastroEquipamentos">Cadastro de Equipamentos</h1>
-            <p class="subtitulo" data-i18n="subtituloEquipamentos">Registro, inventário e gerenciamento de equipamentos médico-hospitalares da engenharia clínica.</p>
+            <div class="header-titulo-wrapper">
+                <h1>
+                    <span>🏥</span> Cadastro de Equipamentos
+                </h1>
+                <span class="badge-clinica">Engenharia Clínica</span>
+            </div>
+            <p class="subtitulo" data-i18n="subtituloEquipamentos">Registro, inventário e gerenciamento de equipamentos médico-hospitalares da instituição.</p>
         </div>
 
         <!-- Início do Formulário Principal -->
         <form id="cadastroForm" novalidate>
 
             <!-- ================================================= -->
-            <!-- BLOCO 04 - DADOS DA SOLICITAÇÃO                   -->
+            <!-- BLOCO 04 - DADOS DA SOLICITAÇÃO & LOCALIZAÇÃO     -->
+            <!-- ================================================= -->
+            <div class="form-grid-duplo">
+                <!-- Seção: Dados da Solicitação -->
+                <section class="cadastro-secao">
+                    <h2>
+                        <span class="secao-icone">📄</span>
+                        Dados da Solicitação
+                    </h2>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="dataSolicitacao" class="obrigatorio" data-i18n="dataSolicitacao">Data da Solicitação</label>
+                            <input type="date" id="dataSolicitacao" name="dataSolicitacao" readonly class="readonly" required>
+                            <small class="form-help" data-i18n="helpData">Preenchida automaticamente.</small>
+                        </div>
+
+                        <div class="form-group campo-full">
+                            <label for="solicitante" class="obrigatorio" data-i18n="solicitante">Nome do Solicitante</label>
+                            <div class="input-icon">
+                                <span>👤</span>
+                                <input type="text" id="solicitante" name="solicitante" placeholder="Digite o nome do solicitante" data-i18n-placeholder="placeholderSolicitante" required>
+                            </div>
+                            <small class="form-help" data-i18n="helpSolicitante">Profissional responsável.</small>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Seção: Localização do Equipamento -->
+                <section class="cadastro-secao">
+                    <h2>
+                        <span class="secao-icone">📍</span>
+                        Localização do Equipamento
+                    </h2>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="regional" class="obrigatorio" data-i18n="regional">Regional</label>
+                            <select id="regional" name="regional" required>
+                                <option value="" data-i18n="selecioneRegional">Selecione...</option>
+                            </select>
+                            <small class="form-help" data-i18n="helpRegional">Região administrativa.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="unidade" class="obrigatorio" data-i18n="unidade">Unidade / Hospital</label>
+                            <select id="unidade" name="unidade" required disabled>
+                                <option value="" data-i18n="selecioneRegionalPrimeiro">Primeiro selecione...</option>
+                            </select>
+                            <small class="form-help" data-i18n="helpUnidade">Unidade de atendimento.</small>
+                        </div>
+
+                        <div class="form-group" id="grupoOutraUnidade" style="display: none;">
+                            <label for="unidadePersonalizada" class="obrigatorio" data-i18n="outraUnidade">Nome da Outra Unidade</label>
+                            <input type="text" id="unidadePersonalizada" name="unidadePersonalizada" placeholder="Digite o nome completo...">
+                        </div>
+
+                        <div class="form-group campo-full">
+                            <label for="setorInstalacao" class="obrigatorio" data-i18n="setorInstalacao">Setor de Instalação</label>
+                            <div class="input-icon">
+                                <span>🏥</span>
+                                <input type="text" id="setorInstalacao" name="setorInstalacao" placeholder="Ex: UTI Adulto, Centro Cirúrgico" data-i18n-placeholder="placeholderSetor" required>
+                            </div>
+                            <small class="form-help" data-i18n="helpSetor">Setor onde operará.</small>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- ================================================= -->
+            <!-- BLOCO 05 - IDENTIFICAÇÃO DO EQUIPAMENTO           -->
             <!-- ================================================= -->
             <section class="cadastro-secao">
-                <h2 data-i18n="dadosSolicitacao">Dados da Solicitação</h2>
+                <h2>
+                    <span class="secao-icone">⚙️</span>
+                    Identificação do Equipamento
+                </h2>
 
                 <div class="form-grid">
-                    <!-- ID da Solicitação Automático -->
-                    <div class="form-group">
-                        <label for="idSolicitacao" data-i18n="idSolicitacao">ID da Solicitação</label>
-                        <input type="text" id="idSolicitacao" readonly class="readonly">
-                        <small class="form-help" data-i18n="helpIdSolicitacao">Gerado automaticamente pelo sistema.</small>
-                    </div>
-
-                    <!-- Data da Solicitação (Automática e Somente Leitura) -->
-                    <div class="form-group">
-                        <label for="dataSolicitacao" class="obrigatorio" data-i18n="dataSolicitacao">Data da Solicitação</label>
-                        <input type="date" id="dataSolicitacao" name="dataSolicitacao" readonly class="readonly" required>
-                        <small class="form-help" data-i18n="helpData">Preenchida automaticamente.</small>
-                    </div>
-
-                    <!-- Nome do Solicitante -->
-                    <div class="form-group campo-metade">
-                        <label for="solicitante" class="obrigatorio" data-i18n="solicitante">Nome do Solicitante</label>
-                        <input type="text" id="solicitante" name="solicitante" placeholder="Digite o nome do solicitante" data-i18n-placeholder="placeholderSolicitante" required>
-                        <small class="form-help" data-i18n="helpSolicitante">Profissional responsável pelo pedido.</small>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ================================================= -->
-            <!-- BLOCO 05 - LOCALIZAÇÃO DO EQUIPAMENTO             -->
-            <!-- ================================================= -->
-            <section class="cadastro-secao">
-                <h2 data-i18n="localizacaoEquipamento">Localização do Equipamento</h2>
-
-                <div class="form-grid">
-                    <!-- Regional (Carregada Dinamicamente) -->
-                    <div class="form-group">
-                        <label for="regional" class="obrigatorio" data-i18n="regional">Regional</label>
-                        <select id="regional" name="regional" required>
-                            <option value="" data-i18n="selecioneRegional">Selecione...</option>
-                        </select>
-                        <small class="form-help" data-i18n="helpRegional">Selecione a região administrativa.</small>
-                    </div>
-
-                    <!-- Unidade / Hospital (Dependente da Regional) -->
-                    <div class="form-group">
-                        <label for="unidade" class="obrigatorio" data-i18n="unidade">Unidade / Hospital</label>
-                        <select id="unidade" name="unidade" required disabled>
-                            <option value="" data-i18n="selecioneRegionalPrimeiro">Primeiro selecione uma regional...</option>
-                        </select>
-                        <small class="form-help" data-i18n="helpUnidade">Hospital, clínica ou unidade de atendimento.</small>
-                    </div>
-
-                    <!-- Unidade Manual (Exibido apenas se escolher "Outra Unidade") -->
-                    <div class="form-group" id="grupoOutraUnidade" style="display: none;">
-                        <label for="unidadePersonalizada" class="obrigatorio" data-i18n="outraUnidade">Nome da Outra Unidade</label>
-                        <input type="text" id="unidadePersonalizada" name="unidadePersonalizada" placeholder="Digite o nome completo da unidade..." data-i18n-placeholder="placeholderOutraUnidade">
-                        <small class="form-help" data-i18n="helpOutraUnidade">Informe o nome da unidade não listada.</small>
-                    </div>
-
-                    <!-- Setor de Instalação -->
-                    <div class="form-group">
-                        <label for="setorInstalacao" class="obrigatorio" data-i18n="setorInstalacao">Setor de Instalação</label>
-                        <input type="text" id="setorInstalacao" name="setorInstalacao" placeholder="Ex: UTI Adulto, Centro Cirúrgico, Tomografia" data-i18n-placeholder="placeholderSetor" required>
-                        <small class="form-help" data-i18n="helpSetor">Setor ou departamento onde o ativo operará.</small>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ================================================= -->
-            <!-- BLOCO 06 - IDENTIFICAÇÃO DO EQUIPAMENTO           -->
-            <!-- ================================================= -->
-            <section class="cadastro-secao">
-                <h2 data-i18n="identificacaoEquipamento">Identificação do Equipamento</h2>
-
-                <div class="form-grid">
-                    <!-- Número de Série (Identificador Principal) -->
                     <div class="form-group">
                         <label for="numeroSerie" class="obrigatorio" data-i18n="numeroSerie">Número de Série</label>
                         <input type="text" id="numeroSerie" name="numeroSerie" placeholder="Ex: SN-8830192" data-i18n-placeholder="placeholderSerie" autocomplete="off" required>
                         <small class="form-help" data-i18n="helpNumeroSerie">Identificador único do fabricante.</small>
                     </div>
 
-                    <!-- Descrição do Ativo -->
-                    <div class="form-group campo-metade">
+                    <div class="form-group">
                         <label for="descricaoAtivo" class="obrigatorio" data-i18n="descricaoAtivo">Descrição do Ativo</label>
-                        <input type="text" id="descricaoAtivo" name="descricaoAtivo" maxlength="150" placeholder="Ex: Monitor Multiparâmetro / Tomógrafo" data-i18n-placeholder="placeholderDescricao" required>
-                        <small class="form-help" data-i18n="helpDescricao">Nome oficial e especificação do equipamento.</small>
+                        <input type="text" id="descricaoAtivo" name="descricaoAtivo" maxlength="150" placeholder="Ex: Monitor Multiparâmetro" data-i18n-placeholder="placeholderDescricao" required>
+                        <small class="form-help" data-i18n="helpDescricao">Nome oficial.</small>
                     </div>
 
-                    <!-- Fabricante -->
                     <div class="form-group">
                         <label for="fabricante" class="obrigatorio" data-i18n="fabricante">Fabricante</label>
                         <input type="text" id="fabricante" name="fabricante" placeholder="Ex: GE Healthcare / Philips" data-i18n-placeholder="placeholderFabricante" required>
-                        <small class="form-help" data-i18n="helpFabricante">Marca ou fabricante do equipamento.</small>
+                        <small class="form-help" data-i18n="helpFabricante">Marca do equipamento.</small>
                     </div>
 
-                    <!-- Modelo -->
                     <div class="form-group">
                         <label for="modelo" class="obrigatorio" data-i18n="modelo">Modelo</label>
-                        <input type="text" id="modelo" name="modelo" placeholder="Ex: Carescape B650 / IntelliVue" data-i18n-placeholder="placeholderModelo" required>
-                        <small class="form-help" data-i18n="helpModelo">Modelo comercial do equipamento.</small>
+                        <input type="text" id="modelo" name="modelo" placeholder="Ex: Carescape B650" data-i18n-placeholder="placeholderModelo" required>
+                        <small class="form-help" data-i18n="helpModelo">Modelo comercial.</small>
                     </div>
                 </div>
             </section>
 
             <!-- ================================================= -->
-            <!-- BLOCO 07 - DADOS ADMINISTRATIVOS                  -->
+            <!-- BLOCO 06 - DADOS ADMINISTRATIVOS & OBSERVAÇÕES    -->
+            <!-- ================================================= -->
+            <div class="form-grid-duplo">
+                <!-- Seção: Dados Administrativos -->
+                <section class="cadastro-secao">
+                    <h2>
+                        <span class="secao-icone">📋</span>
+                        Dados Administrativos
+                    </h2>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="dataAquisicao" class="obrigatorio" data-i18n="dataAquisicao">Data de Aquisição</label>
+                            <input type="date" id="dataAquisicao" name="dataAquisicao" required>
+                            <small class="form-help" data-i18n="helpDataAquisicao">Entrada na instituição.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notaFiscal" class="obrigatorio" data-i18n="notaFiscal">Nota Fiscal</label>
+                            <input type="text" id="notaFiscal" name="notaFiscal" placeholder="Ex: NF-10001" maxlength="50" autocomplete="off" required>
+                            <small class="form-help" data-i18n="helpNotaFiscal">Documento fiscal.</small>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Seção: Observações Técnicas -->
+                <section class="cadastro-secao">
+                    <h2>
+                        <span class="secao-icone">💬</span>
+                        Observações
+                    </h2>
+
+                    <div class="form-grid">
+                        <div class="form-group campo-full">
+                            <label for="observacoes" data-i18n="observacoes">Notas e Ocorrências Técnicas</label>
+                            <textarea id="observacoes" name="observacoes" maxlength="500" placeholder="Insira restrições de uso ou histórico..."></textarea>
+                            <div class="form-help-contador">
+                                <small class="form-help">Informações complementares.</small>
+                                <small id="contadorObservacoes" class="contador-caracteres">0 / 500</small>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- ================================================= -->
+            <!-- BLOCO 07 - DOCUMENTOS E ANEXOS                    -->
             <!-- ================================================= -->
             <section class="cadastro-secao">
-                <h2 data-i18n="dadosAdministrativos">Dados Administrativos</h2>
+                <h2>
+                    <span class="secao-icone">📁</span>
+                    Documentos e Anexos
+                </h2>
 
                 <div class="form-grid">
-                    <!-- Data de Aquisição / Instalação -->
-                    <div class="form-group">
-                        <label for="dataAquisicao" class="obrigatorio" data-i18n="dataAquisicao">Data de Aquisição / Instalação</label>
-                        <input type="date" id="dataAquisicao" name="dataAquisicao" required>
-                        <small class="form-help" data-i18n="helpDataAquisicao">Data de entrada do ativo na instituição.</small>
-                    </div>
-
-                    <!-- Nota Fiscal -->
-                    <div class="form-group">
-                        <label for="notaFiscal" class="obrigatorio" data-i18n="notaFiscal">Nota Fiscal</label>
-                        <input type="text" id="notaFiscal" name="notaFiscal" placeholder="Ex: NF-10001" maxlength="50" data-i18n-placeholder="placeholderNF" autocomplete="off" required>
-                        <small class="form-help" data-i18n="helpNotaFiscal">Número do documento fiscal de compra.</small>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ================================================= -->
-            <!-- BLOCO 08 - DOCUMENTOS E ANEXOS ESSENCIAIS         -->
-            <!-- ================================================= -->
-            <section class="cadastro-secao">
-                <h2 data-i18n="documentosAnexos">Documentos e Anexos</h2>
-
-                <div class="form-grid">
-                    <!-- Foto do Equipamento -->
                     <div class="form-group">
                         <label for="fotoEquipamento" data-i18n="fotoEquipamento">Foto do Equipamento</label>
-                        <input type="file" id="fotoEquipamento" name="fotoEquipamento" accept="image/*">
-                        <small class="form-help" data-i18n="helpFoto">Imagem para identificação visual do ativo no inventário.</small>
+                        <div class="upload-box">
+                            <span>📷</span>
+                            <p>Clique ou arraste a foto aqui</p>
+                            <input type="file" id="fotoEquipamento" name="fotoEquipamento" accept="image/*">
+                        </div>
                     </div>
 
-                    <!-- Anexo da Nota Fiscal -->
                     <div class="form-group">
                         <label for="anexoNotaFiscal" data-i18n="anexoNotaFiscal">Anexo da Nota Fiscal</label>
-                        <input type="file" id="anexoNotaFiscal" name="anexoNotaFiscal" accept=".pdf,.png,.jpg,.jpeg">
-                        <small class="form-help" data-i18n="helpAnexoNF">Cópia digital da nota fiscal de compra.</small>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ================================================= -->
-            <!-- BLOCO 09 - OBSERVAÇÕES TÉCNICAS                   -->
-            <!-- ================================================= -->
-            <section class="cadastro-secao">
-                <h2 data-i18n="observacoesGerais">Observações Gerais</h2>
-
-                <div class="form-grid">
-                    <!-- Campo de Texto para Observações com Contador -->
-                    <div class="form-group campo-full">
-                        <label for="observacoes" data-i18n="observacoes">Notas e Ocorrências Técnicas</label>
-                        <textarea id="observacoes" name="observacoes" rows="6" maxlength="500" placeholder="Insira restrições de uso, histórico de instalação ou observações relevantes..." data-i18n-placeholder="placeholderObservacoes"></textarea>
-
-                        <div class="form-help-contador">
-                            <small class="form-help" data-i18n="helpObservacoes">Informações complementares para a equipe de engenharia.</small>
-                            <small id="contadorObservacoes" class="contador-caracteres">0 / 500</small>
+                        <div class="upload-box">
+                            <span>📄</span>
+                            <p>Clique ou arraste o PDF/Imagem da NF</p>
+                            <input type="file" id="anexoNotaFiscal" name="anexoNotaFiscal" accept=".pdf,.png,.jpg,.jpeg">
                         </div>
                     </div>
                 </div>
             </section>
 
             <!-- ================================================= -->
-            <!-- BLOCO 10 - RESUMO DO CADASTRO                     -->
-            <!-- ================================================= -->
-            <section class="cadastro-secao" id="secao-resumo">
-                <h2 data-i18n="resumoCadastro">Resumo e Conferência</h2>
-
-                <p class="resumo-instrucao" data-i18n="instrucaoResumo">
-                    Confira os principais dados do ativo antes de efetivar o registro no sistema:
-                </p>
-
-                <div class="resumo-equipamento">
-                    <!-- Número de Série -->
-                    <div class="resumo-item">
-                        <span class="resumo-label" data-i18n="numeroSerie">Número de Série:</span>
-                        <strong id="resumoSerie">--</strong>
-                    </div>
-
-                    <!-- Equipamento / Descrição -->
-                    <div class="resumo-item">
-                        <span class="resumo-label" data-i18n="descricaoAtivo">Equipamento:</span>
-                        <strong id="resumoEquipamento">--</strong>
-                    </div>
-
-                    <!-- Fabricante -->
-                    <div class="resumo-item">
-                        <span>Fabricante:</span>
-                        <strong id="resumoFabricante">--</strong>
-                    </div>
-
-                    <!-- Modelo -->
-                    <div class="resumo-item">
-                        <span>Modelo:</span>
-                        <strong id="resumoModelo">--</strong>
-                    </div>
-
-                    <!-- Regional -->
-                    <div class="resumo-item">
-                        <span class="resumo-label" data-i18n="regional">Regional:</span>
-                        <strong id="resumoRegional">--</strong>
-                    </div>
-
-                    <!-- Unidade / Hospital -->
-                    <div class="resumo-item">
-                        <span class="resumo-label" data-i18n="unidade">Unidade / Hospital:</span>
-                        <strong id="resumoUnidade">--</strong>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ================================================= -->
-            <!-- BLOCO 11 - BOTÕES DE AÇÃO DO FORMULÁRIO           -->
+            <!-- BLOCO 08 - BOTÕES DE AÇÃO DO FORMULÁRIO           -->
             <!-- ================================================= -->
             <div class="form-acoes">
-                <!-- Botão Secundário: Cancelar / Limpar -->
-                <button type="reset" class="btn btn-secundario" id="btnCancelar" data-i18n="btnCancelar">
-                    Cancelar / Limpar
+                <button type="reset" class="btn btn-secundario" id="btnCancelar">
+                    Limpar
                 </button>
 
                 <div class="grupo-botoes-direita">
-                    <!-- Botão Neutro: Salvar Rascunho -->
-                    <button type="button" class="btn btn-terciario" id="btnRascunho" data-i18n="btnRascunho">
-                        Salvar Rascunho
-                    </button>
-
-                    <!-- Botão Principal: Cadastrar Equipamento -->
-                    <button type="submit" class="btn btn-principal" id="btnSalvar" data-i18n="btnSalvar">
+                    <button type="submit" class="btn btn-principal" id="btnSalvar">
                         Cadastrar Equipamento
                     </button>
                 </div>
@@ -343,23 +295,23 @@
     </main>
 
     <!-- ================================================= -->
-    <!-- BLOCO 12 - RODAPÉ INSTITUCIONAL                   -->
+    <!-- BLOCO 09 - RODAPÉ INSTITUCIONAL                   -->
     <!-- ================================================= -->
     <footer class="rodape-institucional">
         <div class="rodape-container">
             <div class="rodape-info">
                 <p>&copy; 2026 SIGEM — Sistema Integrado de Gestão de Engenharia Clínica</p>
-                <small class="rodape-subtexto">Todos os direitos reservados. Uso exclusivo para gestão hospitalar e controle de ativos biomédicos.</small>
+                <small class="rodape-subtexto">Uso exclusivo para gestão hospitalar e controle de ativos biomédicos.</small>
             </div>
 
             <div class="rodape-meta">
-                <span class="versao-sistema" title="Versão Inicial da Plataforma">v1.0.0</span>
-                <nav class="rodape-links" aria-label="Navegação do Rodapé">
-                    <a href="#termos" data-i18n="termosUso">Termos de Uso</a>
+                <span class="versao-sistema">v1.0.0</span>
+                <nav class="rodape-links">
+                    <a href="#termos">Termos de Uso</a>
                     <span class="divisor">•</span>
-                    <a href="#privacidade" data-i18n="politicaPrivacidade">Privacidade</a>
+                    <a href="#privacidade">Privacidade</a>
                     <span class="divisor">•</span>
-                    <a href="#suporte" data-i18n="suporteTecnico">Suporte Técnico</a>
+                    <a href="#suporte">Suporte Técnico</a>
                 </nav>
             </div>
         </div>
