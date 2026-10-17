@@ -1,297 +1,117 @@
-/* ==================================================
-   SIGEM - Sistema de Botões Corporativos (Design System)
-   Compatível com Tema Claro e Escuro
-   ================================================== */
+/* ===================================================== */
+/* SIGEM - Sistema de Botões Corporativos                */
+/* ===================================================== */
 
-/* Base do Botão */
+/* Botão Base */
 .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-width: 180px;
-  min-height: 45px;
-  padding: 12px 24px;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 600;
-  line-height: 1.2;
-  text-decoration: none;
-  cursor: pointer;
-  user-select: none;
-  white-space: nowrap;
-  transition: 
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.15s ease,
-    box-shadow 0.2s ease;
-}
-
-.btn:hover {
-  transform: translateY(-1px);
-}
-
-.btn:active {
-  transform: translateY(0) scale(0.98);
-}
-
-.btn:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
-}
-
-.btn:disabled,
-.btn.disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-  pointer-events: none;
-  transform: none !important;
-  box-shadow: none !important;
-}
-
-/* --------------------------------------------------
-   VARIAÇÕES DE COR E TEMA
-   -------------------------------------------------- */
-
-/* Primário (Ação Principal) */
-.btn-primario {
-  background: var(--azul-principal, #005A9C);
-  color: #FFFFFF;
-  box-shadow: 0 4px 12px rgba(0, 90, 156, 0.25);
-}
-
-.btn-primario:hover {
-  background: var(--azul-hover, #004A80);
-  box-shadow: 0 6px 16px rgba(0, 90, 156, 0.35);
-}
-
-/* Secundário (Contorno / Outlined) */
-.btn-secundario {
-  background: transparent;
-  color: var(--azul-principal, #005A9C);
-  border-color: var(--azul-principal, #005A9C);
-}
-
-.btn-secundario:hover {
-  background: rgba(0, 90, 156, 0.08);
-}
-
-/* Fantasma (Ghost - Ações Sutis / Tabelas) */
-.btn-ghost {
-  background: transparent;
-  color: var(--texto, #1F2937);
-  border-color: transparent;
-}
-
-.btn-ghost:hover {
-  background: rgba(148, 163, 184, 0.15);
-}
-
-/* Sucesso (Aprovação / Conclusão / Salvar) */
-.btn-sucesso {
-  background: var(--sucesso, #22C55E);
-  color: #FFFFFF;
-  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
-}
-
-.btn-sucesso:hover {
-  filter: brightness(0.92);
-  box-shadow: 0 6px 16px rgba(34, 197, 94, 0.35);
-}
-
-/* Alerta (Aviso / Pendência / Manutenção) */
-.btn-alerta {
-  background: var(--alerta, #F59E0B);
-  color: #FFFFFF;
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);
-}
-
-.btn-alerta:hover {
-  filter: brightness(0.92);
-  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.35);
-}
-
-/* Erro / Perigo (Exclusão / Baixa de Ativo) */
-.btn-erro {
-  background: var(--erro, #EF4444);
-  color: #FFFFFF;
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
-}
-
-.btn-erro:hover {
-  filter: brightness(0.92);
-  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35);
-}
-
-/* --------------------------------------------------
-   TAMANHOS E MODIFICADORES
-   -------------------------------------------------- */
-
-/* Pequeno (Listagens, Modais e Tabelas) */
-.btn-sm {
-  min-height: 36px;
-  padding: 6px 16px;
-  font-size: 0.85rem;
-  min-width: auto;
-  border-radius: 6px;
-}
-
-/* Grande (Destaques, Dashboards e Homologações) */
-.btn-lg {
-  min-height: 52px;
-  padding: 14px 32px;
-  font-size: 1.05rem;
-  border-radius: 10px;
-}
-
-/* Largura Total (Formulários Mobile) */
-.btn-full {
-  width: 100%;
-}
-
-/* Botão Apenas Ícone (Quadrado/Circular) */
-.btn-icon {
-  min-width: 45px;
-  width: 45px;
-  height: 45px;
-  min-height: 45px;
-  padding: 0;
-  border-radius: 8px;
-}
-
-.btn-icon.btn-sm {
-  min-width: 36px;
-  width: 36px;
-  height: 36px;
-  min-height: 36px;
-  border-radius: 6px;
-}
-
-/* --------------------------------------------------
-   ESTADO DE LOADING (AGUARDE)
-   -------------------------------------------------- */
-
-.btn-loading {
-  position: relative;
-  color: transparent !important;
-  pointer-events: none;
-}
-
-.btn-loading::after {
-  content: "";
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  top: 50%;
-  left: 50%;
-  margin-top: -9px;
-  margin-left: -9px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: #FFFFFF;
-  border-radius: 50%;
-  animation: btn-spinner 0.6s linear infinite;
-}
-
-.btn-secundario.btn-loading::after,
-.btn-ghost.btn-loading::after {
-  border: 2px solid rgba(0, 90, 156, 0.2);
-  border-top-color: var(--azul-principal, #005A9C);
-}
-
-@keyframes btn-spinner {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* --------------------------------------------------
-   AGRUPAMENTO DE BOTÕES (TOOLBARS E FORMULÁRIOS)
-   -------------------------------------------------- */
-
-.btn-group {
-  display: inline-flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-/* Grupo Unificado (Segmentado) */
-.btn-group-joined {
-  display: inline-flex;
-  gap: 0;
-}
-
-.btn-group-joined .btn {
-  border-radius: 0;
-  min-width: auto;
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.btn-group-joined .btn:first-child {
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
-}
-
-.btn-group-joined .btn:last-child {
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
-  border-right: none;
-}
-
-/* ===================================================== */
-/* SIGEM - Padrão Unificado de Botões (botoes.css)       */
-/* ===================================================== */
-
-.btn-primario,
-.btn-secundario {
-    display: inline-block;
-    font-family: inherit;
-    font-size: 1rem;
-    font-weight: 700;
-    padding: 0.75rem 1.5rem;
-    border-radius: 6px;
-    text-decoration: none;
-    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 12px;
     cursor: pointer;
-    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-    border: 2px solid transparent;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    transition: all .2s ease;
 }
 
-/* Botão Primário - Ação Principal */
+/* ===================================================== */
+/* Botão Principal                                       */
+/* ===================================================== */
 .btn-primario {
-    background-color: var(--primary-color, #0f4c81);
-    color: var(--white, #ffffff);
+    background: linear-gradient(135deg, #0F4C81, #2C7DA0);
+    color: #FFFFFF;
+    box-shadow: 0 6px 16px rgba(15,76,129,.25);
 }
-
 .btn-primario:hover {
-    background-color: #0b3962;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #D97706, #F59E0B); /* Amarelo Dourado */
+    color: #0F172A;
+    box-shadow: 0 8px 22px rgba(217,119,6,.35);
 }
 
-.btn-primario:focus {
-    outline: 3px solid #FFBF47;
-    outline-offset: 2px;
-    background-color: #0b3962;
-    color: var(--white, #ffffff);
+/* ===================================================== */
+/* Botão Sucesso                                         */
+/* ===================================================== */
+.btn-sucesso {
+    background: linear-gradient(135deg, #16A34A, #22C55E);
+    color: white;
+}
+.btn-sucesso:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #D97706, #F59E0B); /* Amarelo Dourado */
+    color: #0F172A;
+    box-shadow: 0 8px 22px rgba(217,119,6,.35);
 }
 
-/* Botão Secundário - Ação Alternativa */
+/* ===================================================== */
+/* Botão Aviso                                           */
+/* ===================================================== */
+.btn-aviso {
+    background: linear-gradient(135deg, #D97706, #F59E0B);
+    color: white;
+}
+.btn-aviso:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.15);
+    box-shadow: 0 8px 22px rgba(217,119,6,.35);
+}
+
+/* ===================================================== */
+/* Botão Perigo                                          */
+/* ===================================================== */
+.btn-perigo {
+    background: linear-gradient(135deg, #DC2626, #EF4444);
+    color: white;
+}
+.btn-perigo:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #D97706, #F59E0B); /* Amarelo Dourado */
+    color: #0F172A;
+    box-shadow: 0 8px 22px rgba(217,119,6,.35);
+}
+
+/* ===================================================== */
+/* Botão Secundário                                      */
+/* ===================================================== */
 .btn-secundario {
-    background-color: transparent;
-    color: var(--primary-color, #0f4c81);
-    border-color: var(--primary-color, #0f4c81);
+    background: #E2E8F0;
+    color: #0F172A;
 }
-
 .btn-secundario:hover {
-    background-color: rgba(15, 76, 129, 0.08);
-    transform: translateY(-1px);
+    background: #F59E0B; /* Amarelo Dourado */
+    color: #0F172A;
+    box-shadow: 0 8px 22px rgba(245,158,11,.3);
 }
 
-.btn-secundario:focus {
-    outline: 3px solid #FFBF47;
-    outline-offset: 2px;
-    background-color: rgba(15, 76, 129, 0.12);
+/* ===================================================== */
+/* Botão Outline                                         */
+/* ===================================================== */
+.btn-outline {
+    background: transparent;
+    border: 2px solid #0F4C81;
+    color: #0F4C81;
+}
+.btn-outline:hover {
+    background: #F59E0B; /* Amarelo Dourado */
+    border-color: #F59E0B;
+    color: #0F172A;
+}
+
+/* ===================================================== */
+/* Tamanhos de Botões                                    */
+/* ===================================================== */
+.btn-sm {
+    padding: 10px 16px;
+    font-size: .85rem;
+}
+
+.btn-lg {
+    padding: 18px 32px;
+    font-size: 1rem;
 }

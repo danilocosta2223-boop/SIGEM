@@ -220,3 +220,195 @@
         grid-template-columns: repeat(6, 1fr);
     }
 }
+
+
+/* ===================================================== */
+/* SIGEM - Design System Avançado (Nível Hospitalar)     */
+/* ===================================================== */
+
+/* 8. Tipografia Moderna e Fundo com Gradiente Suave */
+body {
+    font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+    color: #222222;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 1. Cabeçalho com Imagem Hero e Overlay Profissional */
+.cadastro-header-secao {
+    background: linear-gradient(
+        rgba(15, 76, 129, 0.90),
+        rgba(15, 76, 129, 0.85)
+    ),
+    url('../img/engenharia-clinica-banner.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    border-radius: 16px;
+    padding: 35px 40px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+}
+
+.cadastro-header-secao h1 {
+    font-size: 38px;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+}
+
+.badge-clinica {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffd54f;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 6px 16px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    width: fit-content;
+}
+
+.cadastro-header-secao .subtitulo {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+}
+
+/* 7. Dashboard de Métricas Hospitalares no Topo */
+.dashboard-metricas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.metrica-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    border-left: 5px solid #0F4C81;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: transform 0.2s ease;
+}
+
+.metrica-card:hover {
+    transform: translateY(-2px);
+}
+
+.metrica-card .valor {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0F4C81;
+}
+
+.metrica-card .rotulo {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #64748b;
+}
+
+/* 2 & 6. Seções com Glassmorphism, Destaque Superior e Hover Dinâmico */
+.cadastro-secao {
+    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    padding: 28px;
+    border: 1px solid #dce3ea;
+    border-top: 5px solid #0F4C81;
+    box-shadow: 0 8px 20px rgba(15, 76, 129, 0.08);
+    margin-bottom: 24px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cadastro-secao:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(15, 76, 129, 0.12);
+}
+
+/* 4. Títulos com Ícones Modernos */
+.cadastro-secao h2 {
+    font-size: 24px;
+    font-weight: 800;
+    color: #0F4C81;
+    border-bottom: 1px solid #e7e7e7;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cadastro-secao h2 i {
+    color: #2C7DA0;
+}
+
+/* 3. Campos de Formulário com Fundo Suave e Hover Intuitivo */
+input,
+select,
+textarea {
+    width: 100%;
+    height: 48px;
+    font-size: 15px;
+    font-family: inherit;
+    color: #111827;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #f8fafc;
+    padding: 0 14px;
+    transition: all 0.2s ease;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+    border-color: #0F4C81;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    background: #ffffff;
+    border-color: #0F4C81;
+    box-shadow: 0 0 0 3px rgba(15, 76, 129, 0.15);
+}
+
+textarea {
+    height: auto;
+    min-height: 140px;
+    padding: 14px;
+}
+
+/* 5. Botão Principal com Gradiente Premium */
+.btn-principal {
+    background: linear-gradient(135deg, #0F4C81, #2C7DA0);
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 14px 28px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 4px 12px rgba(15, 76, 129, 0.25);
+    transition: all 0.2s ease;
+}
+
+.btn-principal:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(15, 76, 129, 0.35);
+}

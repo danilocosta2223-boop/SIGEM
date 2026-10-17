@@ -1,20 +1,53 @@
-/* ================================================= */
-/* ESTILOS DO CABEÇALHO CORPORATIVO - SIGEM          */
-/* ================================================= */
+/* ===================================================== */
+/* SIGEM - Variáveis Globais de Cores                    */
+/* ===================================================== */
+:root {
+    --cor-primaria: #0F4C81;
+    --cor-secundaria: #1B5E91;
+    --cor-destaque: #FFD54F;
+}
 
+/* ===================================================== */
+/* Animação Suave Global                                 */
+/* ===================================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    transition: 
+        color 0.2s ease, 
+        background-color 0.2s ease, 
+        border-color 0.2s ease, 
+        box-shadow 0.2s ease;
+}
+
+/* ===================================================== */
+/* SIGEM - Cabeçalho Corporativo Hospitalar              */
+/* ===================================================== */
+header,
 .header-principal {
-    background: #005A9C;
-    color: #fff;
+    background: linear-gradient(
+        90deg,
+        var(--cor-primaria),
+        var(--cor-secundaria)
+    );
+    backdrop-filter: blur(10px);
+    color: #FFFFFF;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    height: 72px;
+    padding: 0 40px;
     position: sticky;
     top: 0;
     z-index: 1000;
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.10),
+        0 12px 24px rgba(0, 0, 0, 0.08);
+    width: 100%;
 }
 
+/* ===================================================== */
+/* Logo e Área da Esquerda                               */
+/* ===================================================== */
 .logo-area {
     display: flex;
     align-items: center;
@@ -29,21 +62,22 @@
 }
 
 .logo img {
-    width: 52px;
-    height: 52px;
+    width: 56px;
+    height: 56px;
     object-fit: contain;
 }
 
 .logo-texto {
     display: flex;
     flex-direction: column;
+    border-left: 1px solid rgba(255, 255, 255, 0.25);
+    padding-left: 15px;
 }
 
 .logo-texto strong {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: 700;
     line-height: 1.2;
-    letter-spacing: 0.5px;
 }
 
 .logo-texto span {
@@ -51,45 +85,86 @@
     opacity: 0.85;
 }
 
+/* ===================================================== */
+/* Menu Principal                                        */
+/* ===================================================== */
 .menu-principal {
     display: flex;
-    gap: 30px;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-.menu-principal a {
-    color: #fff;
+.menu-principal a,
+header a {
+    color: #FFFFFF;
     text-decoration: none;
     font-weight: 600;
-    padding: 8px 12px;
-    border-radius: 6px;
-    transition: all 0.2s ease;
+    font-size: 0.95rem;
+    padding: 8px 14px;
+    border-radius: 8px;
 }
 
-.menu-principal a:hover {
-    color: #FFD54F;
-    transform: translateY(-1px);
+.menu-principal a:hover,
+header a:hover {
+    color: var(--cor-destaque);
     background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-1px);
 }
 
 .menu-principal a.ativo {
-    color: #FFD54F;
+    color: var(--cor-destaque);
     background: rgba(255, 255, 255, 0.12);
+    border-bottom: 3px solid var(--cor-destaque);
 }
 
+/* ===================================================== */
+/* Ícones e Efeitos                                      */
+/* ===================================================== */
+.menu-principal i,
+.logo i,
+#icone-tema,
+.secao-icone,
+header i,
+header .icon {
+    color: var(--cor-destaque);
+    transition: transform 0.2s ease;
+}
+
+.menu-principal a:hover i {
+    transform: scale(1.15);
+}
+
+/* ===================================================== */
+/* Área de Ações                                         */
+/* ===================================================== */
 .acoes {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
-/* ================================================= */
-/* RESPONSIVIDADE DO CABEÇALHO                       */
-/* ================================================= */
+/* ===================================================== */
+/* Responsividade                                        */
+/* ===================================================== */
 @media (max-width: 900px) {
-    .header-principal {
+    .header-principal,
+    header {
         flex-direction: column;
+        height: auto;
+        padding: 20px;
         gap: 15px;
-        padding: 15px;
+        text-align: center;
+    }
+
+    .logo-texto {
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.25);
+        padding-left: 0;
+        padding-top: 10px;
+        align-items: center;
     }
 
     .menu-principal {
@@ -102,160 +177,4 @@
         width: 100%;
         justify-content: center;
     }
-}
-
-
-/* ================================================= */
-/* SIGEM - Cabeçalho Corporativo de Alta Qualidade   */
-/* ================================================= */
-
-.header-principal {
-    background-color: var(--primary-color, #0f4c81);
-    color: #ffffff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 40px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-/* Área da Esquerda (Logótipo e Título) */
-.logo-area {
-    display: flex;
-    align-items: center;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    text-decoration: none;
-    color: inherit;
-}
-
-.logo img {
-    height: 40px;
-    object-fit: contain;
-}
-
-.logo-texto {
-    font-size: 1.15rem;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-    border-left: 1px solid rgba(255, 255, 255, 0.25);
-    padding-left: 16px;
-    color: #ffffff;
-    line-height: 1.2;
-}
-
-/* Menu de Navegação à Direita */
-.menu-principal {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.menu-principal a {
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    padding: 6px 10px;
-    border-radius: 6px;
-    transition: color 0.2s ease, background-color 0.2s ease;
-}
-
-.menu-principal a:hover {
-    color: #ffd54f;
-    background-color: rgba(255, 255, 255, 0.08);
-}
-
-.menu-principal a.ativo {
-    color: #ffd54f;
-    font-weight: 700;
-    background-color: rgba(255, 255, 255, 0.12);
-}
-
-/* Responsividade para Ecrãs Móveis */
-@media (max-width: 768px) {
-    .header-principal {
-        flex-direction: column;
-        gap: 16px;
-        padding: 16px 20px;
-        text-align: center;
-    }
-
-    .logo-texto {
-        border-left: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.25);
-        padding-left: 0;
-        padding-top: 10px;
-    }
-
-    .menu-principal {
-        gap: 16px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-}
-
-.header-principal {
-    height: 72px;
-    background: linear-gradient(90deg, #005baa, #006fd6);
-    width: 100%;
-}
-
-/* ===================================================== */
-/* SIGEM - Barra de Navegação Corporativa (Hospitalar)   */
-/* ===================================================== */
-
-.header-principal {
-    background-color: #0F4C81; /* Azul escuro corporativo */
-    color: #FFFFFF; /* Texto branco */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 40px;
-    height: 72px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-/* Links do menu */
-.menu-principal a {
-    color: #FFFFFF; /* Texto branco */
-    text-decoration: none;
-    font-weight: 500;
-    padding: 8px 12px;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-}
-
-/* Hover do menu */
-.menu-principal a:hover {
-    color: #FFD54F; /* Amarelo dourado */
-    background: rgba(255, 255, 255, 0.08);
-}
-
-/* Link ativo */
-.menu-principal a.ativo {
-    color: #FFD54F; /* Amarelo dourado */
-    font-weight: 600;
-    background: rgba(255, 255, 255, 0.12);
-}
-
-/* Ícones em destaque */
-.secao-icone,
-#icone-tema,
-.logo i,
-.menu-principal a i {
-    color: #FFD54F; /* Amarelo dourado para ícones */
 }

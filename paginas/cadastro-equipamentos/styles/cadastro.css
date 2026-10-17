@@ -1,935 +1,49 @@
-/* ==================================================
-   SIGEM - Módulo de Cadastro de Equipamentos
-   Design System Hospitalar & Engenharia Clínica
-   ================================================== */
-
-/* Área Principal do Cadastro */
-.cadastro-container {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-/* --------------------------------------------------
-   1. BARRA DE PROGRESSO DO CADASTRO
-   -------------------------------------------------- */
-
-.progresso-cadastro {
-  width: 100%;
-  height: 10px;
-  background: #E5E7EB;
-  border-radius: 999px;
-  overflow: hidden;
-  margin-bottom: 8px;
-}
-
-.progresso-cadastro .barra {
-  height: 100%;
-  width: 50%; /* Controlado dinamicamente via JS conforme o preenchimento */
-  background: var(--azul-principal, #005A9C);
-  border-radius: 999px;
-  transition: width 0.3s ease;
-}
-
-/* Cabeçalho de Cadastro */
-.cadastro-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 16px;
-  border-bottom: 2px solid var(--borda, #D1D5DB);
-}
-
-.cadastro-header-info h1 {
-  color: var(--azul-principal, #005A9C);
-  font-size: 1.75rem;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-  margin-bottom: 4px;
-}
-
-.cadastro-header-info p {
-  color: var(--texto-secundario, #6B7280);
-  font-size: 0.9rem;
-}
-
-/* --------------------------------------------------
-   2. SEÇÕES DO FORMULÁRIO (Efeito Hover & Recolhível)
-   -------------------------------------------------- */
-
-.cadastro-secao {
-  background: var(--card, #FFFFFF);
-  border-radius: 12px;
-  padding: 28px;
-  box-shadow: var(--sombra, 0 8px 24px rgba(15, 23, 42, 0.08));
-  border: 1px solid var(--borda, #D1D5DB);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* Destaque visual ao passar o mouse */
-.cadastro-secao:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
-}
-
-.cadastro-secao h2 {
-  color: var(--azul-principal, #005A9C);
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid rgba(0, 90, 156, 0.12);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  user-select: none;
-}
-
-/* Classe para controle de seção recolhida */
-.cadastro-secao.fechada .conteudo-secao {
-  display: none;
-}
-
-.cadastro-secao.fechada h2 {
-  margin-bottom: 0;
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-/* Grid de Formulário Flexível e Responsivo */
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-}
-
-/* Modificadores de Coluna */
-.campo-full {
-  grid-column: 1 / -1;
-}
-
-.campo-metade {
-  grid-column: span 2;
-}
-
-@media (max-width: 768px) {
-  .campo-metade {
-    grid-column: 1 / -1;
-  }
-}
-
-/* Agrupamento de Campo */
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.form-group label {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--texto, #1F2937);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* Indicador de Campo Obrigatório */
-.obrigatorio::after {
-  content: " *";
-  color: var(--erro, #EF4444);
-  font-weight: 700;
-}
-
-/* Texto de Dica/Apoio Abaixo do Campo */
-.form-help {
-  font-size: 0.78rem;
-  color: var(--texto-secundario, #6B7280);
-  margin-top: 2px;
-}
-
-/* Área de Observações e Textarea */
-textarea {
-  min-height: 120px;
-  padding: 12px 14px;
-  resize: vertical;
-  line-height: 1.5;
-}
-
-/* --------------------------------------------------
-   3. VALIDAÇÃO DE CAMPOS
-   -------------------------------------------------- */
-
-.campo-valido {
-  border-color: var(--sucesso, #22C55E) !important;
-  box-shadow: 0 0 0 1px var(--sucesso, #22C55E);
-}
-
-.campo-invalido {
-  border-color: var(--erro, #EF4444) !important;
-  box-shadow: 0 0 0 1px var(--erro, #EF4444);
-}
-
-.mensagem-validacao {
-  font-size: 0.75rem;
-  margin-top: 4px;
-  font-weight: 600;
-  display: block;
-}
-
-.mensagem-validacao.erro {
-  color: var(--erro, #EF4444);
-}
-
-.mensagem-validacao.sucesso {
-  color: var(--sucesso, #22C55E);
-}
-
-/* --------------------------------------------------
-   4. UPLOAD DE DOCUMENTOS (Manuais, Notas, Fotos)
-   -------------------------------------------------- */
-
-.upload-area {
-  border: 2px dashed var(--borda, #D1D5DB);
-  border-radius: 12px;
-  padding: 24px;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.01);
-  cursor: pointer;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
-}
-
-.upload-area:hover {
-  border-color: var(--azul-principal, #005A9C);
-  background: rgba(0, 90, 156, 0.03);
-}
-
-.upload-area p {
-  font-size: 0.9rem;
-  color: var(--texto-secundario, #6B7280);
-  margin-top: 8px;
-}
-
-.upload-area strong {
-  color: var(--azul-principal, #005A9C);
-}
-
-/* --------------------------------------------------
-   5. CAMPO SOMENTE LEITURA (IDs e Patrimônios Gerados)
-   -------------------------------------------------- */
-
-.readonly {
-  background: rgba(148, 163, 184, 0.10) !important;
-  color: var(--texto-secundario, #6B7280);
-  cursor: not-allowed;
-  user-select: none;
-}
-
-/* --------------------------------------------------
-   6. BADGES DE CRITICIDADE (Engenharia Clínica / Risco)
-   -------------------------------------------------- */
-
-.criticidade-alta,
-.criticidade-media,
-.criticidade-baixa {
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  display: inline-block;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.criticidade-alta {
-  background: #FEE2E2;
-  color: #991B1B;
-}
-
-.criticidade-media {
-  background: #FEF3C7;
-  color: #92400E;
-}
-
-.criticidade-baixa {
-  background: #DCFCE7;
-  color: #166534;
-}
-
-/* --------------------------------------------------
-   OUTROS COMPONENTES DO CADASTRO
-   -------------------------------------------------- */
-
-.info-automatica {
-  background: rgba(0, 90, 156, 0.06);
-  border-left: 4px solid var(--azul-principal, #005A9C);
-  padding: 14px 18px;
-  border-radius: 8px;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  font-size: 0.88rem;
-  color: var(--texto, #1F2937);
-  margin-bottom: 20px;
-}
-
-.info-automatica strong {
-  color: var(--azul-principal, #005A9C);
-}
-
-.mensagem-sucesso,
-.mensagem-erro,
-.mensagem-alerta {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 18px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-.mensagem-sucesso {
-  background: #DCFCE7;
-  color: #166534;
-  border: 1px solid #86EFAC;
-}
-
-.mensagem-erro {
-  background: #FEE2E2;
-  color: #991B1B;
-  border: 1px solid #FCA5A5;
-}
-
-.mensagem-alerta {
-  background: #FEF3C7;
-  color: #92400E;
-  border: 1px solid #FDE68A;
-}
-
-.resumo-equipamento {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  margin-top: 8px;
-}
-
-.resumo-item {
-  background: rgba(0, 0, 0, 0.02);
-  padding: 16px;
-  border-radius: 8px;
-  border-left: 4px solid var(--azul-principal, #005A9C);
-  border: 1px solid var(--borda, #D1D5DB);
-}
-
-.resumo-item strong {
-  display: block;
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--texto-secundario, #6B7280);
-  margin-bottom: 6px;
-}
-
-.resumo-item span {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--texto, #1F2937);
-}
-
-.cadastro-acoes {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 14px;
-  flex-wrap: wrap;
-  padding-top: 16px;
-  border-top: 1px solid var(--borda, #D1D5DB);
-}
-
-/* --------------------------------------------------
-   SUPORTE PARA TEMA ESCURO
-   -------------------------------------------------- */
-
-body.tema-escuro .progresso-cadastro,
-:root[data-theme="dark"] .progresso-cadastro {
-  background: #334155;
-}
-
-body.tema-escuro .cadastro-secao:hover,
-:root[data-theme="dark"] .cadastro-secao:hover {
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
-}
-
-body.tema-escuro .upload-area,
-:root[data-theme="dark"] .upload-area {
-  background: rgba(255, 255, 255, 0.02);
-}
-
-body.tema-escuro .upload-area:hover,
-:root[data-theme="dark"] .upload-area:hover {
-  background: rgba(96, 165, 250, 0.08);
-  border-color: #60A5FA;
-}
-
-body.tema-escuro .readonly,
-:root[data-theme="dark"] .readonly {
-  background: rgba(51, 65, 85, 0.4) !important;
-  color: #94A3B8;
-}
-
-body.tema-escuro .criticidade-alta,
-:root[data-theme="dark"] .criticidade-alta {
-  background: #7F1D1D;
-  color: #FEE2E2;
-}
-
-body.tema-escuro .criticidade-media,
-:root[data-theme="dark"] .criticidade-media {
-  background: #78350F;
-  color: #FDE68A;
-}
-
-body.tema-escuro .criticidade-baixa,
-:root[data-theme="dark"] .criticidade-baixa {
-  background: #14532D;
-  color: #DCFCE7;
-}
-
-body.tema-escuro .info-automatica,
-:root[data-theme="dark"] .info-automatica {
-  background: rgba(96, 165, 250, 0.1);
-  color: #F8FAFC;
-}
-
-body.tema-escuro .mensagem-sucesso,
-:root[data-theme="dark"] .mensagem-sucesso {
-  background: #14532D;
-  color: #DCFCE7;
-  border-color: #166534;
-}
-
-body.tema-escuro .mensagem-erro,
-:root[data-theme="dark"] .mensagem-erro {
-  background: #7F1D1D;
-  color: #FEE2E2;
-  border-color: #991B1B;
-}
-
-/* Ajustes Responsivos */
-@media (max-width: 768px) {
-  .cadastro-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .cadastro-secao {
-    padding: 20px 16px;
-  }
-
-  .cadastro-acoes {
-    flex-direction: column-reverse;
-    width: 100%;
-  }
-
-  .cadastro-acoes .btn {
-    width: 100%;
-  }
-}
-
-/* Apresentação e Título do Módulo */
+/* ===================================================== */
+/* SIGEM - Módulo de Cadastro de Equipamentos (Elite)    */
+/* styles/cadastro.css                                   */
+/* ===================================================== */
+
+/* 1. Header de Seção (Banner Hero Hospitalar com Imagem, Overlay e Zoom) */
 .cadastro-header-secao {
-  margin-bottom: 24px;
-}
-
-.cadastro-header-secao h1 {
-  color: var(--azul-principal);
-  font-size: 2rem;
-  margin-bottom: 8px;
-}
-
-.cadastro-header-secao .subtitulo {
-  color: var(--texto-secundario);
-  max-width: 700px;
-  line-height: 1.5;
-  font-size: 1rem;
-}
-
-/* Barra de Progresso do Cadastro */
-.progresso-cadastro {
-  width: 100%;
-  height: 8px;
-  background: var(--borda);
-  border-radius: 999px;
-  overflow: hidden;
-  margin-bottom: 24px;
-}
-
-.progresso-cadastro .barra {
-  height: 100%;
-  width: 15%; /* Atualizado via JavaScript conforme o preenchimento */
-  background: var(--azul-principal);
-  border-radius: 999px;
-  transition: width 0.3s ease;
-}
-
-/* Área de Upload / Dropzone */
-.upload-area {
-  border: 2px dashed var(--borda, #D1D5DB);
-  border-radius: 8px;
-  padding: 24px;
-  text-align: center;
-  background: var(--fundo, #F4F6F8);
-  cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
-}
-
-.upload-area:hover,
-.upload-area.dragover {
-  border-color: var(--azul-principal, #0B4F8A);
-  background: rgba(11, 79, 138, 0.05);
-}
-
-.upload-area strong {
-  display: block;
-  color: var(--azul-principal, #0B4F8A);
-  font-size: 1rem;
-  margin-bottom: 4px;
-}
-
-.upload-area p {
-  color: var(--texto-secundario, #6B7280);
-  font-size: 0.875rem;
-  margin: 0;
-}
-
-.form-help-contador {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 4px;
-}
-
-.contador-caracteres {
-  color: var(--texto-secundario, #6B7280);
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-/* Badges de Status / Criticidade */
-.badge-status {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  width: fit-content;
-}
-
-.badge-neutral {
-  background: #E5E7EB;
-  color: #374151;
-}
-
-/* Aproveitando as classes já existentes para estados de criticidade */
-.badge-status.criticidade-alta {
-  background: #FEE2E2;
-  color: var(--erro, #EF4444);
-}
-
-.badge-status.criticidade-media {
-  background: #FEF3C7;
-  color: var(--alerta, #F59E0B);
-}
-
-.badge-status.criticidade-baixa {
-  background: #DCFCE7;
-  color: var(--sucesso, #22C55E);
-}
-
-/* Container de Ações do Formulário */
-.form-acoes {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  margin-top: 32px;
-  padding-top: 24px;
-  border-top: 1px solid var(--borda, #D1D5DB);
-  flex-wrap: wrap;
-}
-
-.grupo-botoes-direita {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-/* Responsividade para telas menores */
-@media (max-width: 600px) {
-  .form-acoes,
-  .grupo-botoes-direita {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .form-acoes .btn,
-  .grupo-botoes-direita .btn {
-    width: 100%;
-  }
-}
-
-/* Rodapé Institucional SIGEM */
-.rodape-institucional {
-  background: var(--card, #FFFFFF);
-  border-top: 1px solid var(--borda, #D1D5DB);
-  padding: 24px 0;
-  margin-top: 48px;
-  color: var(--texto-secundario, #6B7280);
-  font-size: 0.875rem;
-}
-
-.rodape-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.rodape-info p {
-  margin: 0 0 4px 0;
-  font-weight: 500;
-  color: var(--texto, #1F2937);
-}
-
-.rodape-subtexto {
-  font-size: 0.775rem;
-  color: var(--texto-secundario, #6B7280);
-}
-
-.rodape-meta {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.versao-sistema {
-  background: var(--fundo, #F4F6F8);
-  border: 1px solid var(--borda, #D1D5DB);
-  padding: 2px 8px;
-  border-radius: 6px;
-  font-family: monospace;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--azul-principal, #0B4F8A);
-}
-
-.rodape-links {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.rodape-links a {
-  color: var(--texto-secundario, #6B7280);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.rodape-links a:hover {
-  color: var(--azul-principal, #0B4F8A);
-  text-decoration: underline;
-}
-
-.rodape-links .divisor {
-  color: var(--borda, #D1D5DB);
-}
-
-/* Responsividade do Rodapé */
-@media (max-width: 768px) {
-  .rodape-container {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .rodape-meta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-}
-
-/* FUNDO DO SISTEMA */
-body {
-    background: #f4f7fb;
-    font-family: 'Segoe UI', sans-serif;
-}
-
-/* CONTAINER PRINCIPAL */
-.cadastro-container {
-    max-width: 1400px;
-    margin: auto;
-    padding: 30px;
-}
-
-/* CARDS DE SEÇÃO */
-.cadastro-secao {
-    background: #fff;
-    border: 1px solid #dbe5f1;
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 24px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-/* TÍTULOS DE SEÇÃO */
-.cadastro-secao h2 {
-    color: #005baa;
-    font-size: 26px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #e5e7eb;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.secao-icone {
-    font-size: 24px;
-}
-
-/* GRID DUPLO */
-.form-grid-duplo {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 24px;
-}
-
-@media(max-width: 900px) {
-    .form-grid-duplo {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* CAMPOS DO FORMULÁRIO */
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-}
-
-/* INPUTS, SELECTS E TEXTAREAS */
-input,
-select,
-textarea {
-    width: 100%;
-    min-height: 48px;
-    padding: 12px 16px;
-    border: 1px solid #cbd5e1;
-    border-radius: 10px;
-    background: white;
-    font-size: 14px;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-    border-color: #0066cc;
-    outline: none;
-    box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.15);
-}
-
-textarea {
-    min-height: 120px;
-}
-
-/* DESTAQUE DE OBRIGATÓRIOS */
-.obrigatorio::after {
-    content: " *";
-    color: #dc2626;
-}
-
-/* INPUT COM ÍCONE */
-.input-icon {
+    background: linear-gradient(
+        rgba(15, 76, 129, 0.85),
+        rgba(15, 76, 129, 0.75)
+    ),
+    url('../img/banner-hospital.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #fff;
+    min-height: 320px;
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 30px;
     position: relative;
-}
-
-.input-icon span {
-    position: absolute;
-    left: 14px;
-    top: 14px;
-}
-
-.input-icon input {
-    padding-left: 42px;
-}
-
-/* BARRA DE ETAPAS */
-.etapas {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 30px;
-}
-
-.passo {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: #dbe5f1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    color: #475569;
-}
-
-.passo.ativo {
-    background: #0066cc;
-    color: white;
-    box-shadow: 0 4px 10px rgba(0, 102, 204, 0.3);
-}
-
-.linha {
-    width: 80px;
-    height: 4px;
-    background: #dbe5f1;
-}
-
-/* UPLOAD BOX */
-.upload-box {
-    border: 2px dashed #9ec5fe;
-    border-radius: 12px;
-    padding: 30px;
-    text-align: center;
-    background: #f8fbff;
-    cursor: pointer;
-    transition: background 0.2s, border-color 0.2s;
-}
-
-.upload-box:hover {
-    background: #f1f7ff;
-    border-color: #0066cc;
-}
-
-.upload-box span {
-    font-size: 36px;
-    display: block;
-    margin-bottom: 8px;
-}
-
-.upload-box input[type="file"] {
-    display: none;
-}
-
-/* RESUMO EM CARDS */
-.resumo-card {
-    background: #f8fafc;
-    padding: 16px;
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(15, 76, 129, 0.2);
     display: flex;
     flex-direction: column;
-    gap: 6px;
-}
-
-.resumo-card strong {
-    font-size: 12px;
-    color: #64748b;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.resumo-card span {
-    font-size: 16px;
-    color: #0f172a;
-    font-weight: 600;
-}
-
-/* BOTÕES DE AÇÃO */
-.form-acoes {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #e2e8f0;
-}
-
-.grupo-botoes-direita {
-    display: flex;
+    justify-content: center;
     gap: 12px;
+    transition: all 0.4s ease;
 }
 
-.btn {
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 14px;
-    transition: background 0.2s, box-shadow 0.2s;
+.cadastro-header-secao:hover {
+    background-size: 105%;
 }
 
-.btn-principal {
-    background: #0066cc;
-    color: white;
-    border: none;
-    padding: 14px 24px;
-    border-radius: 10px;
-    font-weight: 600;
-}
-
-.btn-principal:hover {
-    background: #0050a3;
-}
-
-.btn-secundario {
-    background: white;
-    border: 1px solid #cbd5e1;
-    color: #334155;
-    padding: 14px 24px;
-    border-radius: 10px;
-    font-weight: 600;
-}
-
-.btn-secundario:hover {
-    background: #f8fafc;
-}
-
-.btn-terciario {
-    background: #eef6ff;
-    color: #0066cc;
-    border: 1px solid transparent;
-    padding: 14px 24px;
-    border-radius: 10px;
-    font-weight: 600;
-}
-
-.btn-terciario:hover {
-    background: #e0f0ff;
-}
-
-/* CABEÇALHO DE SEÇÃO CORPORATIVO */
-.cadastro-header-secao {
-    background: #ffffff;
-    border-left: 5px solid #005baa;
-    border-radius: 12px;
-    padding: 24px 30px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+/* Efeito de brilho sutil sobre o banner */
+.cadastro-header-secao::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, .06),
+        transparent
+    );
+    pointer-events: none;
 }
 
 .header-titulo-wrapper {
@@ -937,32 +51,431 @@ textarea {
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 16px;
+    z-index: 1;
 }
 
 .cadastro-header-secao h1 {
-    font-size: 32px;
+    font-size: 2.3rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.30);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1;
+}
+
+.badge-clinica {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffd54f;
     font-weight: 700;
+    font-size: 0.85rem;
+    padding: 8px 18px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(255, 213, 79, 0.25);
+    z-index: 1;
+}
+
+.cadastro-header-secao .subtitulo {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    max-width: 700px;
+    line-height: 1.6;
+    font-weight: 400;
+    z-index: 1;
+}
+
+/* Painel de Informações do Prédio no Banner */
+.info-banner {
+    display: flex;
+    gap: 16px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+    z-index: 1;
+}
+
+.info-banner span {
+    background: rgba(15, 76, 129, 0.4);
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(4px);
+}
+
+/* 2. Seções do Formulário (Cards Corporativos sem Borda Estática e Linha Gradiente) */
+.cadastro-secao {
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 20px;
+    padding: 32px;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, .05), 0 12px 20px rgba(15, 76, 129, .08);
+    margin-bottom: 32px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Linha gradiente sofisticada no topo de cada card */
+.cadastro-secao::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #0F4C81, #2C7DA0, #38BDF8);
+}
+
+.cadastro-secao:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, .08), 0 16px 26px rgba(15, 76, 129, 0.12);
+}
+
+.cadastro-secao h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--cor-primaria, #0F4C81);
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 14px;
+    margin-bottom: 24px;
+    margin-top: 0;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cadastro-secao h2 i {
+    color: var(--cor-secundaria, #2C7DA0);
+}
+
+/* 3. Labels, Campos Obrigatórios e Textos de Ajuda */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+}
+
+.campo-obrigatorio {
+    color: #ef4444;
+    font-weight: 700;
+    margin-left: 4px;
+}
+
+.form-help {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 4px;
+    display: block;
+}
+
+/* 4. Inputs, Selects e Textareas com Placeholders Refinados */
+input,
+select,
+textarea {
+    width: 100%;
+    height: 50px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    font-weight: 500;
     color: #0f172a;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    background: #f8fafc;
+    padding: 0 16px;
+    transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+::placeholder {
+    color: #94a3b8;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+    border-color: var(--cor-primaria, #0F4C81);
+    background: #ffffff;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    background: #ffffff;
+    border-color: var(--cor-primaria, #0F4C81);
+    box-shadow: 0 0 0 4px rgba(15, 76, 129, 0.15);
+}
+
+textarea {
+    height: auto;
+    min-height: 130px;
+    padding: 14px 16px;
+}
+
+/* 5. Ações e Botão Principal Corporativo */
+.form-acoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.btn-principal {
+    background: linear-gradient(135deg, #0F4C81, #2C7DA0);
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    padding: 14px 32px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 6px 16px rgba(15, 76, 129, 0.25);
+    transition: all 0.2s ease;
+}
+
+.btn-principal:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(15, 76, 129, 0.35);
+}
+
+/* ===================================================== */
+/* SIGEM - Cabeçalho de Seção Corporativo com Banner     */
+/* ===================================================== */
+
+.cadastro-header-secao {
+    background: 
+        linear-gradient(
+            rgba(15, 76, 129, 0.85),
+            rgba(15, 76, 129, 0.75)
+        ),
+        url('../imagens/banner-hospital.jpg');
+    
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    
+    color: #ffffff;
+    min-height: 280px;
+    border-radius: 20px;
+    padding: 36px 40px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 12px 24px rgba(15, 76, 129, 0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    transition: background-size 0.4s ease;
+}
+
+.cadastro-header-secao:hover {
+    background-size: 105%;
+}
+
+.header-titulo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    z-index: 1;
+}
+
+.cadastro-header-secao h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #ffffff;
     display: flex;
     align-items: center;
     gap: 12px;
     margin: 0;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.30);
+    z-index: 1;
 }
 
 .badge-clinica {
-    background: #eef6ff;
-    color: #005baa;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 6px 14px;
-    border-radius: 20px;
-    border: 1px solid #bfdbfe;
-    letter-spacing: 0.3px;
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffd54f; /* Amarelo institucional em alto contraste */
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 8px 18px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(255, 213, 79, 0.25);
+    z-index: 1;
 }
 
 .cadastro-header-secao .subtitulo {
-    font-size: 15px;
-    color: #64748b;
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.9);
     margin: 0;
+    max-width: 720px;
+    line-height: 1.6;
+    font-weight: 400;
+    z-index: 1;
+}
+
+/* ===================================================== */
+/* SIGEM - Cabeçalho de Seção Corporativo com Banner     */
+/* ===================================================== */
+
+.cadastro-header-secao {
+    background:
+        linear-gradient(
+            rgba(15, 76, 129, 0.85),
+            rgba(15, 76, 129, 0.75)
+        ),
+        url('../imagens/banner-hospital.jpg');
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    color: #ffffff;
+
+    min-height: 320px;
+
+    border-radius: 20px;
+
+    padding: 40px;
+
+    margin-bottom: 32px;
+
+    position: relative;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+
+    box-shadow:
+        0 4px 6px rgba(0, 0, 0, 0.05),
+        0 12px 24px rgba(15, 76, 129, 0.15);
+
+    transition:
+        background-size 0.4s ease;
+}
+
+.cadastro-header-secao:hover {
+    background-size: 105%;
+}
+
+.cadastro-header-secao::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.05),
+            transparent
+        );
+
+    pointer-events: none;
+}
+
+.header-titulo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 16px;
+
+    position: relative;
+    z-index: 1;
+}
+
+.cadastro-header-secao h1 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 2.4rem;
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+
+    text-shadow:
+        0 2px 10px rgba(0,0,0,.30);
+}
+
+.badge-clinica {
+    background:
+        rgba(255,255,255,.15);
+
+    color: #FFD54F;
+
+    border: 1px solid rgba(255,255,255,.30);
+
+    border-radius: 24px;
+
+    padding: 8px 18px;
+
+    font-size: .85rem;
+    font-weight: 700;
+
+    backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 0 20px rgba(255,213,79,.25);
+
+    position: relative;
+    z-index: 1;
+}
+
+.cadastro-header-secao .subtitulo {
+    margin: 0;
+
+    max-width: 720px;
+
+    color:
+        rgba(255,255,255,.92);
+
+    font-size: 1.05rem;
+
+    line-height: 1.6;
+
+    position: relative;
+    z-index: 1;
 }
