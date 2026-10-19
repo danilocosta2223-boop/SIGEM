@@ -1,302 +1,56 @@
 /* ================================================================= */
-/* TEMA ESCURO COMPLETO - SIGEM (Engenharia Clínica & Gestão)       */
+/* TEMA ESCURO - LEITURA MÁXIMA & ALTO CONTRASTE (SIGEM)            */
 /* ================================================================= */
 
 :root,
 body.dark-mode,
 [data-theme="dark"] {
   --bg-principal: #1e1f24;
-  --bg-card: #2b2d33;
+  --bg-card: rgba(43, 45, 51, 0.95);
   --bg-header: #17181c;
   --bg-input: #30343b;
   --bg-input-focus: #373b44;
-  --texto-principal: #f3f4f6;
-  --texto-secundario: #9ca3af;
-  --borda-padrao: #3f444f;
-  --borda-hover: #4b5563;
-  --azul-sigem: #1d8cf8;
-  --azul-sigem-hover: #1770d2;
-  --gradiente-hero-inicio: #13293d;
-  --gradiente-hero-fim: #1e3a5f;
-}
-
-/* 1. Base e Fundo Principal */
-body {
-  background-color: var(--bg-principal) !important;
-  color: var(--texto-principal) !important;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* 2. Containers Gerais de Dashboard e Cadastro */
-.dashboard-container,
-.cadastro-container,
-.main-container,
-.container-principal {
-  background-color: var(--bg-principal) !important;
-}
-
-/* 3. Topbar, Header e Logo */
-header,
-.header-principal,
-.navbar,
-.topbar {
-  background-color: var(--bg-header) !important;
-  border-bottom: 1px solid var(--borda-padrao) !important;
-}
-
-.logo-texto,
-.logo-texto strong,
-.logo-texto span,
-.logo-texto a {
-  color: #ffffff !important;
-}
-
-/* 4. Banner / Hero de Cabeçalho das Seções */
-.cadastro-header-secao,
-.dashboard-hero {
-  background: linear-gradient(
-    135deg,
-    var(--gradiente-hero-inicio) 0%,
-    var(--gradiente-hero-fim) 100%
-  ) !important;
-  color: #ffffff !important;
-  border-bottom: 1px solid var(--borda-padrao) !important;
-}
-
-.cadastro-header-secao h1,
-.cadastro-header-secao h2,
-.cadastro-header-secao p,
-.dashboard-hero h1,
-.dashboard-hero p {
-  color: #ffffff !important;
-}
-
-/* 5. Menu de Navegação */
-.menu-principal a,
-.nav-link {
-  color: var(--texto-secundario) !important;
-  transition: all 0.2s ease;
-}
-
-.menu-principal a:hover,
-.menu-principal a.ativo,
-.nav-link:hover,
-.nav-link.active {
-  color: #ffffff !important;
-  background-color: rgba(29, 140, 248, 0.15) !important;
-  border-radius: 6px;
-}
-
-/* 6. Cards, Métrica Cards e Seções de Cadastro */
-.card,
-.cadastro-secao,
-.metrica-card,
-.panel,
-.box,
-.modal-content {
-  background-color: var(--bg-card) !important;
-  color: var(--texto-principal) !important;
-  border: 1px solid var(--borda-padrao) !important;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-}
-
-.metrica-dados strong,
-.metrica-card .valor,
-.metrica-card h3 {
-  color: #ffffff !important;
-}
-
-.metrica-dados span,
-.metrica-card .rotulo {
-  color: var(--texto-secundario) !important;
-}
-
-/* 7. Formulários, Inputs, Datalists e Textos de Ajuda */
-label,
-.form-label {
-  color: var(--texto-principal) !important;
-  font-weight: 500;
-}
-
-input,
-select,
-textarea,
-input[list] {
-  background-color: var(--bg-input) !important;
-  color: #ffffff !important;
-  border: 1px solid var(--borda-padrao) !important;
-  border-radius: 6px;
-  padding: 8px 12px;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: var(--texto-secundario) !important;
-}
-
-input:focus,
-select:focus,
-textarea:focus,
-input[list]:focus {
-  background-color: var(--bg-input-focus) !important;
-  border-color: var(--azul-sigem) !important;
-  box-shadow: 0 0 0 3px rgba(29, 140, 248, 0.2) !important;
-  outline: none;
-}
-
-.form-help,
-.contador-caracteres,
-small,
-.text-muted {
-  color: var(--texto-secundario) !important;
-}
-
-/* 8. Área de Upload (Upload Box) */
-.upload-box {
-  background-color: var(--bg-input) !important;
-  border: 2px dashed var(--borda-hover) !important;
-  color: var(--texto-principal) !important;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
-}
-
-.upload-box:hover {
-  border-color: var(--azul-sigem) !important;
-  background-color: var(--bg-input-focus) !important;
-}
-
-.upload-box p,
-.upload-box span,
-.upload-box i {
-  color: var(--texto-secundario) !important;
-}
-
-/* 9. Badges e Tags (Identificação Clínica / Status) */
-.badge-clinica,
-.badge-status {
-  background-color: rgba(29, 140, 248, 0.15) !important;
-  color: var(--azul-sigem) !important;
-  border: 1px solid rgba(29, 140, 248, 0.3) !important;
-}
-
-/* 10. Botões (Primários e Secundários) */
-button.btn-primario,
-.btn-primary {
-  background-color: var(--azul-sigem) !important;
-  color: #ffffff !important;
-  border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  transition: background-color 0.2s ease;
-}
-
-button.btn-primario:hover,
-.btn-primary:hover {
-  background-color: var(--azul-sigem-hover) !important;
-}
-
-.btn-secundario,
-button[type="button"].btn-secundario {
-  background-color: #3a404a !important;
-  color: #ffffff !important;
-  border: 1px solid var(--borda-padrao) !important;
-  border-radius: 6px;
-  padding: 8px 16px;
-  font-weight: 500;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.btn-secundario:hover,
-button[type="button"].btn-secundario:hover {
-  background-color: #4b5563 !important;
-  border-color: #6b7280 !important;
-}
-
-/* 11. Tabelas */
-table {
-  background-color: var(--bg-card) !important;
-  color: var(--texto-principal) !important;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th {
-  background-color: var(--bg-header) !important;
-  color: var(--azul-sigem) !important;
-  border-bottom: 2px solid var(--borda-padrao) !important;
-  padding: 12px;
-}
-
-td {
-  border-bottom: 1px solid var(--borda-padrao) !important;
-  padding: 12px;
-}
-
-tbody tr:hover {
-  background-color: rgba(29, 140, 248, 0.08) !important;
-}
-
-/* 12. Rodapé */
-footer,
-.footer-principal {
-  background-color: var(--bg-header) !important;
-  border-top: 1px solid var(--borda-padrao) !important;
-  color: var(--texto-secundario) !important;
-}
-
-/* 13. Ajustes de Seleção de Texto e Gráficos (Chart.js) */
-::selection {
-  background-color: var(--azul-sigem) !important;
-  color: #ffffff !important;
-}
-
-canvas {
-  filter: brightness(1.05);
-}
-/* ================================================================= */
-/* TEMA ESCURO SUPREMO - SIGEM (Padrão Enterprise Hospitalar)       */
-/* ================================================================= */
-
-:root,
-body.dark-mode,
-[data-theme="dark"] {
-  --bg-principal: #1e1f24;
-  --bg-card: rgba(43, 45, 51, 0.92);
-  --bg-header: #17181c;
-  --bg-input: #30343b;
-  --bg-input-focus: #373b44;
-  --texto-principal: #ffffff;
-  --texto-label: #f8fafc;
-  --texto-secundario: #94a3b8;
-  --texto-placeholder: #64748b;
+  
+  /* CORES DE TEXTO - MÁXIMA VISIBILIDADE */
+  --texto-branco: #ffffff;          /* Texto principal e labels 100% branco */
+  --texto-azul-claro: #38bdf8;      /* Títulos e destaques em azul bem claro */
+  --texto-cinza-claro: #cbd5e1;     /* Subtextos e ajudas em cinza bem claro */
+  --texto-placeholder: #94a3b8;     /* Placeholders e exemplos visualizáveis */
+  
   --borda-padrao: #3f444f;
   --borda-hover: #475569;
-  --azul-sigem-vibrante: #38bdf8;
   --azul-botao: #1d8cf8;
   --azul-botao-hover: #1770d2;
   --gradiente-hero-inicio: #13293d;
   --gradiente-hero-fim: #1e3a5f;
 }
 
-/* 1. Base, Fundo e Scrollbar Personalizada */
+/* 1. Base e Todos os Textos Gerais */
+body,
+p,
+span,
+div,
+li,
+a {
+  color: var(--texto-branco) !important;
+}
+
 body {
   background-color: var(--bg-principal) !important;
-  color: var(--texto-principal) !important;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Scrollbar Personalizada */
 ::-webkit-scrollbar {
   width: 10px;
 }
-
 ::-webkit-scrollbar-track {
   background: var(--bg-principal);
 }
-
 ::-webkit-scrollbar-thumb {
-  background: var(--azul-sigem-vibrante);
+  background: var(--texto-azul-claro);
   border-radius: 20px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: var(--azul-botao);
 }
@@ -322,10 +76,10 @@ header,
 .logo-texto strong,
 .logo-texto span,
 .logo-texto a {
-  color: #ffffff !important;
+  color: var(--texto-branco) !important;
 }
 
-/* 4. Banner / Hero Impactante com Sombra e Inset Glow */
+/* 4. Banner / Hero de Cabeçalho */
 .cadastro-header-secao,
 .dashboard-hero {
   background: linear-gradient(
@@ -333,7 +87,6 @@ header,
     var(--gradiente-hero-inicio) 0%,
     var(--gradiente-hero-fim) 100%
   ) !important;
-  color: #ffffff !important;
   border-bottom: 1px solid var(--borda-padrao) !important;
   padding: 24px !important;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05);
@@ -342,19 +95,19 @@ header,
 .cadastro-header-secao h1,
 .cadastro-header-secao h2,
 .dashboard-hero h1 {
-  color: #ffffff !important;
+  color: var(--texto-branco) !important;
   font-weight: 800 !important;
 }
 
 .cadastro-header-secao p,
 .dashboard-hero p {
-  color: #cbd5e1 !important;
+  color: var(--texto-cinza-claro) !important;
 }
 
 /* 5. Menu de Navegação */
 .menu-principal a,
 .nav-link {
-  color: var(--texto-secundario) !important;
+  color: var(--texto-cinza-claro) !important;
   transition: all 0.2s ease;
 }
 
@@ -362,12 +115,12 @@ header,
 .menu-principal a.ativo,
 .nav-link:hover,
 .nav-link.active {
-  color: #ffffff !important;
-  background-color: rgba(29, 140, 248, 0.15) !important;
+  color: var(--texto-branco) !important;
+  background-color: rgba(56, 189, 248, 0.15) !important;
   border-radius: 6px;
 }
 
-/* 6. Cards, Métrica Cards e Seções (Efeito Glass + Linha Luminosa Superior) */
+/* 6. Cards, Métrica Cards e Seções */
 .card,
 .cadastro-secao,
 .metrica-card,
@@ -377,7 +130,7 @@ header,
   background: var(--bg-card) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
-  color: var(--texto-principal) !important;
+  color: var(--texto-branco) !important;
   border: 1px solid var(--borda-padrao) !important;
   border-radius: 8px;
   padding: 20px;
@@ -387,6 +140,7 @@ header,
   overflow: hidden;
 }
 
+/* Linha luminosa no topo do card */
 .card::before,
 .cadastro-secao::before,
 .metrica-card::before {
@@ -398,16 +152,17 @@ header,
   border-radius: 8px 8px 0 0;
 }
 
-/* Títulos das Seções */
+/* TÍTU LOS DAS SEÇÕES (AZUL BEM CLARO & VIBRANTE) */
 .cadastro-secao h2,
 .cadastro-secao h3,
 .card h2,
 .card h3,
-.secao-titulo {
-  color: var(--azul-sigem-vibrante) !important;
+.secao-titulo,
+.secao-header h2 {
+  color: var(--texto-azul-claro) !important;
   font-weight: 700 !important;
   letter-spacing: 0.5px;
-  border-bottom: 2px solid rgba(56, 189, 248, 0.2) !important;
+  border-bottom: 2px solid rgba(56, 189, 248, 0.25) !important;
   padding-bottom: 8px !important;
   margin-bottom: 16px !important;
 }
@@ -416,34 +171,42 @@ header,
 .cadastro-secao h3 i,
 .card h2 i {
   background: rgba(56, 189, 248, 0.15) !important;
-  color: var(--azul-sigem-vibrante) !important;
+  color: var(--texto-azul-claro) !important;
   padding: 6px 10px !important;
   border-radius: 6px !important;
   margin-right: 8px !important;
 }
 
-/* Métricas do Dashboard Maiores */
+/* Métricas do Dashboard */
 .metrica-dados strong,
 .metrica-card .valor,
 .metrica-card h3 {
-  color: #ffffff !important;
+  color: var(--texto-branco) !important;
   font-size: 2rem !important;
   font-weight: 800 !important;
 }
 
 .metrica-dados span,
 .metrica-card .rotulo {
-  color: var(--texto-secundario) !important;
+  color: var(--texto-cinza-claro) !important;
 }
 
-/* 7. Formulários, Inputs, Selects e Textareas */
+/* 7. Formulários, Labels e Inputs */
 label,
-.form-label {
-  color: var(--texto-label) !important;
-  font-weight: 600 !important;
-  font-size: 0.9rem !important;
+.form-label,
+legend {
+  color: var(--texto-branco) !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
   display: block;
   margin-bottom: 6px;
+}
+
+/* Marcação de obrigatório (*) em vermelho bem visível */
+label span.obrigatorio,
+label .asterisco,
+label:after {
+  color: #f87171 !important;
 }
 
 input,
@@ -451,7 +214,7 @@ select,
 textarea,
 input[list] {
   background-color: var(--bg-input) !important;
-  color: #ffffff !important;
+  color: var(--texto-branco) !important;
   border: 1px solid var(--borda-padrao) !important;
   border-radius: 6px !important;
   padding: 10px 12px !important;
@@ -480,18 +243,20 @@ select:focus,
 textarea:focus,
 input[list]:focus {
   background-color: var(--bg-input-focus) !important;
-  border-color: var(--azul-sigem-vibrante) !important;
+  border-color: var(--texto-azul-claro) !important;
   box-shadow: 0 0 12px rgba(56, 189, 248, 0.3) !important;
   outline: none;
 }
 
+/* Textos de Ajuda e Contadores (Cinza Claro Visualizável) */
 .form-help,
 .contador-caracteres,
 small,
 .text-muted,
-.input-hint {
-  color: var(--texto-secundario) !important;
-  font-size: 0.8rem !important;
+.input-hint,
+span.help-block {
+  color: var(--texto-cinza-claro) !important;
+  font-size: 0.82rem !important;
   margin-top: 4px;
 }
 
@@ -499,7 +264,7 @@ small,
 .upload-box {
   background-color: #24272e !important;
   border: 2px dashed var(--borda-hover) !important;
-  color: var(--texto-principal) !important;
+  color: var(--texto-branco) !important;
   padding: 20px !important;
   border-radius: 8px !important;
   text-align: center;
@@ -507,14 +272,15 @@ small,
 }
 
 .upload-box:hover {
-  border-color: var(--azul-sigem-vibrante) !important;
+  border-color: var(--texto-azul-claro) !important;
   background-color: #2b303b !important;
 }
 
 .upload-box p,
 .upload-box span,
-.upload-box i {
-  color: #cbd5e1 !important;
+.upload-box i,
+.upload-box label {
+  color: var(--texto-cinza-claro) !important;
 }
 
 input[type="file"]::file-selector-button {
@@ -527,18 +293,18 @@ input[type="file"]::file-selector-button {
   margin-right: 10px;
 }
 
-/* 9. Badges Corporativos (Ex: Engenharia Clínica) */
+/* 9. Badges Corporativos */
 .badge-clinica,
 .badge-status {
   background-color: rgba(56, 189, 248, 0.15) !important;
-  color: var(--azul-sigem-vibrante) !important;
+  color: var(--texto-azul-claro) !important;
   border: 1px solid rgba(56, 189, 248, 0.3) !important;
   font-weight: 700 !important;
   letter-spacing: 1px !important;
   text-transform: uppercase !important;
 }
 
-/* 10. Botões Premium com Letras maiúsculas e espaçamento */
+/* 10. Botões */
 button.btn-primario,
 .btn-primary,
 .btn-cadastrar,
@@ -569,7 +335,7 @@ button[type="submit"]:hover {
 button[type="button"].btn-secundario,
 button[type="reset"] {
   background-color: #374151 !important;
-  color: #f3f4f6 !important;
+  color: #ffffff !important;
   border: 1px solid #4b5563 !important;
   border-radius: 6px !important;
   padding: 10px 16px !important;
@@ -585,23 +351,24 @@ button[type="button"].btn-secundario:hover {
   color: #ffffff !important;
 }
 
-/* 11. Tabelas Modernas com Micro-interações */
+/* 11. Tabelas */
 table {
   background-color: var(--bg-card) !important;
-  color: var(--texto-principal) !important;
+  color: var(--texto-branco) !important;
   border-collapse: collapse;
   width: 100%;
 }
 
 th {
   background-color: var(--bg-header) !important;
-  color: var(--azul-sigem-vibrante) !important;
+  color: var(--texto-azul-claro) !important;
   border-bottom: 2px solid var(--borda-padrao) !important;
   padding: 12px;
 }
 
 td {
   border-bottom: 1px solid var(--borda-padrao) !important;
+  color: var(--texto-branco) !important;
   padding: 12px;
 }
 
@@ -619,12 +386,12 @@ footer,
 .footer-principal {
   background-color: var(--bg-header) !important;
   border-top: 1px solid var(--borda-padrao) !important;
-  color: var(--texto-secundario) !important;
+  color: var(--texto-cinza-claro) !important;
 }
 
-/* 13. Seleção de Texto e Gráficos (Chart.js) */
+/* 13. Seleção de Texto e Gráficos */
 ::selection {
-  background-color: var(--azul-sigem-vibrante) !important;
+  background-color: var(--texto-azul-claro) !important;
   color: #0f172a !important;
 }
 
