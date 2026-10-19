@@ -194,3 +194,212 @@
         max-width: 1600px;
     }
 }
+
+/* ===================================================== */
+/* SIGEM - Adaptabilidade Responsiva (responsive.css)    */
+/* Apenas regras de layout, grids, flexbox e media queries*/
+/* ===================================================== */
+
+/* Reset global para cálculo exato de dimensões */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* ----------------------------------------------------- */
+/* 1. DISPOSITIVOS MÓVEIS (Até 767px)                     */
+/* ----------------------------------------------------- */
+@media screen and (max-width: 767px) {
+    
+    /* Layout Container com imagem nas laterais */
+    .cadastro-container,
+    .relatorios-container {
+        padding: 16px;
+        width: 100%;
+        margin: 0;
+        border-radius: 12px;
+    }
+
+    body {
+        padding: 12px 8px;
+    }
+
+    /* Cabeçalho Principal */
+    .header-principal {
+        flex-direction: column;
+        height: auto;
+        padding: 16px 20px;
+        gap: 14px;
+        text-align: center;
+    }
+
+    .logo-texto {
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.25);
+        padding-left: 0;
+        padding-top: 8px;
+    }
+
+    .menu-principal {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    /* Banner Hero com Tipografia Fluida (clamp) */
+    .cadastro-header-secao {
+        min-height: 220px;
+        padding: 24px 20px;
+        margin-bottom: 20px;
+    }
+
+    .cadastro-header-secao h1 {
+        font-size: clamp(1.6rem, 5vw, 2rem);
+    }
+
+    .header-titulo-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .header-dashboard-topo {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* Form Grids em Coluna Única */
+    .form-grid,
+    .form-grid-duplo,
+    #secao-resumo .form-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .cadastro-secao {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* Botões Ocupando Largura Total no Celular */
+    .form-acoes {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .form-acoes .btn {
+        width: 100%;
+    }
+
+    .filtros-relatorio {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ----------------------------------------------------- */
+/* 2. TABLETS E ECRÃS MÉDIOS (768px até 1023px)          */
+/* ----------------------------------------------------- */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+
+    .cadastro-container,
+    .relatorios-container {
+        padding: 24px;
+        max-width: 90%;
+    }
+
+    .cadastro-header-secao {
+        min-height: 260px;
+        padding: 32px;
+    }
+
+    .cadastro-header-secao h1 {
+        font-size: clamp(1.6rem, 5vw, 2rem);
+    }
+
+    .form-grid,
+    .form-grid-duplo {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    #secao-resumo .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-acoes {
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+
+    .form-acoes .btn {
+        width: auto;
+        min-width: 200px;
+    }
+}
+
+
+/* ----------------------------------------------------- */
+/* 3. DESKTOP / MONITORES FULL HD (1024px até 1399px)    */
+/* ----------------------------------------------------- */
+@media screen and (min-width: 1024px) {
+
+    .cadastro-container,
+    .relatorios-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 32px;
+    }
+
+    .form-grid,
+    .form-grid-duplo {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+
+    #secao-resumo .form-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .form-acoes .btn {
+        min-width: 220px;
+    }
+}
+
+
+/* ----------------------------------------------------- */
+/* 4. TELAS ULTRAWIDE (1400px até 1918px)                */
+/* ----------------------------------------------------- */
+@media screen and (min-width: 1400px) {
+
+    .cadastro-container,
+    .relatorios-container {
+        max-width: 1200px;
+    }
+
+    .form-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
+
+    .form-grid-duplo {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #secao-resumo .form-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+
+/* ----------------------------------------------------- */
+/* 5. MONITORES GIGANTES / TV (1920px ou mais)           */
+/* ----------------------------------------------------- */
+@media screen and (min-width: 1920px) {
+
+    .cadastro-container,
+    .relatorios-container {
+        max-width: 1300px;
+    }
+}
