@@ -530,3 +530,47 @@ body.dark-mode .relatorios-container {
     gap: 16px;
     margin-bottom: 24px;
 }
+
+
+/* ===================================================== */
+/* SIGEM - Fundo Corporativo com Imagem Hospitalar nas Laterais */
+/* ===================================================== */
+
+body {
+    background-image: url("../assets/img/hospital.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 40px 20px;
+    min-height: 100vh;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.cadastro-container,
+.relatorios-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-radius: 16px;
+    padding: 36px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    position: relative;
+    z-index: 1;
+}
+
+body.dark-mode .cadastro-container,
+body.dark-mode .relatorios-container {
+    background: rgba(30, 31, 36, 0.95);
+    color: #f8fafc;
+}
