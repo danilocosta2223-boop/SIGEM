@@ -1,0 +1,200 @@
+/* ===================================================== */
+/* SIGEM - Módulo de Relatórios (Correção e Estilização) */
+/* ===================================================== */
+
+:root {
+  --cor-primaria: #0F4C81;
+  --cor-secundaria: #2C7DA0;
+  --cor-destaque: #FFD54F;
+  --bg-cinza: #f8fafc;
+  --borda-cor: #cbd5e1;
+  --texto-principal: #1e293b;
+}
+
+/* 1. Estrutura Geral e Reset */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f1f5f9;
+  color: var(--texto-principal);
+  margin: 0;
+  padding: 20px;
+  line-height: 1.5;
+}
+
+/* 2. Container Principal do Relatório */
+.relatorios-container, .container {
+  max-width: 1200px;
+  margin: 20px auto;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 10px 25px rgba(15, 76, 129, 0.08);
+}
+
+/* 3. Títulos e Metadados */
+h1, .titulo-relatorio {
+  color: var(--cor-primaria);
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-top: 0;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 3px solid var(--cor-primaria);
+  padding-bottom: 12px;
+}
+
+.ultima-atualizacao, small {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-bottom: 20px;
+  display: block;
+}
+
+/* 4. Barra de Filtros e Ações (Pesquisa, Selects e Botões) */
+.filtros-acoes-container, 
+div[style*="display"], 
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 24px;
+  background: var(--bg-cinza);
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--borda-cor);
+}
+
+input[type="text"], select {
+  height: 42px;
+  padding: 0 14px;
+  font-size: 0.9rem;
+  border: 1px solid var(--borda-cor);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--texto-principal);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]:focus, select:focus {
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 3px rgba(15, 76, 129, 0.15);
+}
+
+/* Estilização dos Botões de Ação (Atualizar, Exportar, Imprimir) */
+button, .btn, a.btn {
+  background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(15, 76, 129, 0.2);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+button:hover, .btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* 5. Cards de Indicadores (Total Equipamentos, Fabricantes, Regionais) */
+.indicadores-grid, .stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.card-indicador {
+  background: linear-gradient(135deg, #f8fafc, #edf2f7);
+  border-left: 4px solid var(--cor-secundaria);
+  padding: 16px 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.card-indicador h3, .card-indicador span {
+  font-size: 0.85rem;
+  color: #64748b;
+  text-transform: uppercase;
+  margin: 0 0 6px 0;
+}
+
+.card-indicador .valor, .card-indicador strong {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--cor-primaria);
+}
+
+/* 6. Tabela de Equipamentos Cadastrados */
+h2 {
+  font-size: 1.2rem;
+  color: var(--cor-primaria);
+  margin-top: 30px;
+  margin-bottom: 12px;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 10px;
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--borda-cor);
+}
+
+th, td {
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+  background-color: var(--cor-primaria);
+  color: #ffffff;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+tr:hover {
+  background-color: #f1f5f9;
+}
+
+/* 7. Ajustes para Impressão */
+@media print {
+  body {
+    background: #ffffff;
+    padding: 0;
+  }
+  .relatorios-container {
+    box-shadow: none;
+    padding: 0;
+  }
+  button, .filtros-acoes-container {
+    display: none;
+  }
+}
