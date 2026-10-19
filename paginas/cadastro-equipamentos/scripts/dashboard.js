@@ -1,152 +1,71 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Referências globais dos gráficos para poder destruí-los e recriá-los ao atualizar
-    let graficoRegionalInstance = null;
-    let graficoUnidadeInstance = null;
-    let graficoFabricanteInstance = null;
-    let graficoCrescimentoInstance = null;
+    // Referências globais das instâncias dos gráficos para destruição/re-renderização limpa
+    let graficoRegionalInst = null;
+    let graficoUnidadeInst = null;
+    let graficoFabricanteInst = null;
+    let graficoCrescimentoInst = null;
 
-    // Função principal de atualização do Dashboard
+    // Chave padronizada do LocalStorage
+    const STORAGE_KEY = "sigem_equipamentos";
+
+    // --- FUNÇÃO PRINCIPAL DE ATUALIZAÇÃO DO DASHBOARD ---
     function atualizarDashboard() {
-        // 1. Lê os equipamentos do localStorage
-        const equipamentos = JSON.parse(localStorage.getItem("sigem_equipamentos")) || [];
+        // 1. Lê os equipamentos cadastrados no localStorage
+        const equipamentos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
-        // 2. Atualiza a Data de Última Atualização
-        const agora = new Date();
-        const dataFormatada = agora.toLocaleDateString("pt-BR") + " " + agora.toLocaleTimeString("pt-BR");
-        const elUltimaAtualizacao = document.getElementById("ultimaAtualizacao");
-        if (elUltimaAtualizacao) elUltimaAtualizacao.textContent = dataFormatada;
+        // 2. Atualiza os Cards de Métricas e Indicadores
+        atualizarCards(equipamentos);
 
-        // 3. Atualiza os Cards de Totais
-        const elTotal = document.getElementById("totalEquipamentos");
-        if (elTotal) elTotal.textContent = equipamentos.length;
+        // 3. Renderiza os Gráficos Estatísticos via Chart.js
+        renderizarGraficos(equipamentos);
 
-        // Total de Fabricantes únicos
-        const fabricantes = new Set(equipamentos.map(e => e.fabricante?.trim()).filter(Boolean));
-        const elFab = document.getElementById("totalFabricantes");
-        if (elFab) elFab.textContent = fabricantes.size;
+        // 4. Renderiza a Tabela e Lista de Equipamentos (respeitando eventual busca)
+        const inputBusca = document.getElementById("inputBusca");
+        const termoBusca = inputBusca ? inputBusca.value : "";
+        renderizarTabela(equipamentos, termoBusca);
+    }
 
-        // Total de Modelos únicos
-        const modelos = new Set(equipamentos.map(e => e.modelo?.trim()).filter(Boolean));
-        const elMod = document.getElementById("totalModelos");
-        if (elMod) elMod.textContent = modelos.size;
+    // --- 1. ATUALIZAÇÃO DOS CARDS ---
+    function atualizarCards(equipamentos) {
+        const totalEquipamentos = equipamentos.length;
 
-        // Total de Regionais únicas
+        // Contagem de elementos únicos
         const regionais = new Set(equipamentos.map(e => e.regional?.trim()).filter(Boolean));
-        const elReg = document.getElementById("totalRegionais");
-        if (elReg) elReg.textContent = regionais.size;
-
-        // Total de Unidades únicas
         const unidades = new Set(equipamentos.map(e => e.unidade?.trim()).filter(Boolean));
-        const elUnd = document.getElementById("totalUnidades");
-        if (elUnd) elUnd.textContent = unidades.size;
+        const modelos = new Set(equipamentos.map(e => e.modelo?.trim()).filter(Boolean));
+        const fabricantes = new Set(equipamentos.map(e => e.fabricante?.trim()).filter(Boolean));
 
-        // Total de Setores únicos (compatível com setorInstalacao)
-        const setores = new Set(equipamentos.map(e => (e.setorInstalacao || e.setor)?.trim()).filter(Boolean));
-        const elSetor = document.getElementById("totalSetores");
-        if (elSetor) elSetor.textContent = setores.size;
-
-        // Cadastros Realizados Hoje
-        const hojeStr = agora.toISOString().split('T')[0]; // Formato YYYY-MM-DD
+        // Cadastrados Hoje
+        const hojeIso = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
         const cadastrosHoje = equipamentos.filter(e => {
-            const dataRegRaw = e.dataRegistro || e.dataAquisicao;
-            if (!dataRegRaw) return false;
-            let dataReg = dataRegRaw;
-            if (dataReg.includes('/')) {
-                const partes = dataReg.split(' ')[0].split('/');
-                dataReg = `${partes[2]}-${partes[1]}-${partes[0]}`;
-            }
-            return dataReg.startsWith(hojeStr);
-        });
-        const elHoje = document.getElementById("cadastrosHoje");
-        if (elHoje) elHoje.textContent = cadastrosHoje.length;
+            const dataReg = e.dataRegistro || e.dataAquisicao;
+            if (!dataReg) return false;
+            return dataReg.startsWith(hojeIso);
+        }).length;
 
-        // Último Equipamento Registrado (usando descricaoAtivo e numeroSerie)
-        const elUltimo = document.getElementById("ultimoEquipamento");
-        if (elUltimo) {
-            if (equipamentos.length > 0) {
-                const ultimo = equipamentos[equipamentos.length - 1];
-                elUltimo.textContent = ultimo.descricaoAtivo || ultimo.numeroSerie || "Registrado";
-            } else {
-                elUltimo.textContent = "--";
-            }
-        }
-
-        // 4. Renderiza a Tabela e Contagem
-        renderizarTabela(equipamentos);
-
-        // 5. Atualiza os Gráficos
-        atualizarGraficos(equipamentos);
+        // Atualiza elementos DOM
+        setElementText("totalEquipamentos", totalEquipamentos);
+        setElementText("totalRegionais", regionais.size);
+        setElementText("totalUnidades", unidades.size);
+        setElementText("totalModelos", modelos.size);
+        setElementText("totalFabricantes", fabricantes.size);
+        setElementText("cadastrosHoje", cadastrosHoje);
     }
 
-    // Função para renderizar a tabela com base nos equipamentos (e suporte ao filtro de busca)
-    function renderizarTabela(equipamentos, termoBusca = "") {
-        const tbodyUltimos = document.getElementById("ultimosCadastros");
-        const spanTotalTabela = document.getElementById("totalTabela");
-        const divVazio = document.getElementById("dashboardVazio");
-        const tabelaEl = document.querySelector(".dashboard-tabela table");
-
-        // Filtra por termo de busca se houver (usando numeroSerie e descricaoAtivo)
-        let listaFiltrada = equipamentos;
-        if (termoBusca.trim() !== "") {
-            const termo = termoBusca.toLowerCase();
-            listaFiltrada = equipamentos.filter(e => 
-                (e.numeroSerie && e.numeroSerie.toLowerCase().includes(termo)) ||
-                (e.descricaoAtivo && e.descricaoAtivo.toLowerCase().includes(termo)) ||
-                (e.fabricante && e.fabricante.toLowerCase().includes(termo)) ||
-                (e.modelo && e.modelo.toLowerCase().includes(termo)) ||
-                (e.regional && e.regional.toLowerCase().includes(termo)) ||
-                (e.unidade && e.unidade.toLowerCase().includes(termo))
-            );
-        }
-
-        if (spanTotalTabela) spanTotalTabela.textContent = `(${listaFiltrada.length})`;
-
-        if (equipamentos.length === 0) {
-            if (tabelaEl) tabelaEl.style.display = "none";
-            if (divVazio) {
-                divVazio.style.display = "block";
-                divVazio.textContent = "Nenhum equipamento cadastrado.";
-            }
-            if (tbodyUltimos) tbodyUltimos.innerHTML = "";
-            return;
-        }
-
-        if (listaFiltrada.length === 0) {
-            if (tabelaEl) tabelaEl.style.display = "none";
-            if (divVazio) {
-                divVazio.style.display = "block";
-                divVazio.textContent = "Nenhum equipamento encontrado com esse termo de busca.";
-            }
-            if (tbodyUltimos) tbodyUltimos.innerHTML = "";
-            return;
-        }
-
-        if (tabelaEl) tabelaEl.style.display = "table";
-        if (divVazio) divVazio.style.display = "none";
-
-        // Pega os últimos cadastrados (inverte para mostrar os mais recentes primeiro) e limita a 10 linhas
-        const ultimos = [...listaFiltrada].reverse().slice(0, 10);
-        if (tbodyUltimos) {
-            tbodyUltimos.innerHTML = ultimos.map(e => `
-                <tr>
-                    <td>${e.numeroSerie || '-'}</td>
-                    <td>${e.descricaoAtivo || '-'}</td>
-                    <td>${e.fabricante || '-'}</td>
-                    <td>${e.modelo || '-'}</td>
-                    <td>${e.regional || '-'}</td>
-                    <td>${e.unidade || '-'}</td>
-                </tr>
-            `).join('');
-        }
+    // Auxiliary para setar texto com segurança no DOM
+    function setElementText(id, valor) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = valor;
     }
 
-    // Função para atualizar os gráficos do Chart.js dinamicamente
-    function atualizarGraficos(equipamentos) {
+    // --- 2. RENDERIZAÇÃO DOS GRÁFICOS (CHART.JS) ---
+    function renderizarGraficos(equipamentos) {
         const regionalCounts = {};
         const unidadeCounts = {};
         const fabricanteCounts = {};
         const crescimentoCounts = {};
 
+        // Processamento dinâmico dos dados do LocalStorage
         equipamentos.forEach(e => {
             if (e.regional) {
                 const reg = e.regional.trim();
@@ -160,48 +79,76 @@ document.addEventListener("DOMContentLoaded", () => {
                 const fab = e.fabricante.trim();
                 fabricanteCounts[fab] = (fabricanteCounts[fab] || 0) + 1;
             }
-            const dataReg = e.dataRegistro || e.dataAquisicao;
-            if (dataReg) {
-                let mesAno = dataReg.substring(0, 7); // ex: "2026-10"
+            
+            // Agrupamento para Crescimento Mensal (YYYY-MM)
+            const dataRaw = e.dataRegistro || e.dataAquisicao;
+            if (dataRaw) {
+                const mesAno = dataRaw.substring(0, 7); // Ex: "2026-10"
                 crescimentoCounts[mesAno] = (crescimentoCounts[mesAno] || 0) + 1;
             }
         });
 
-        const coresPadrao = ['#007bff', '#28a745', '#ffc107', '#dc3545', '#17a2b8', '#6f42c1', '#fd7e14', '#20c997', '#e83e8c'];
+        // Paleta de cores corporativa Engenharia Clínica
+        const cores = ['#005A9C', '#28a745', '#ffc107', '#dc3545', '#17a2b8', '#6f42c1', '#fd7e14', '#20c997'];
 
-        // 1. Gráfico Regional (Pizza / Doughnut)
-        const ctxRegional = document.getElementById('graficoRegional');
-        if (ctxRegional) {
-            if (graficoRegionalInstance) graficoRegionalInstance.destroy();
-            graficoRegionalInstance = new Chart(ctxRegional.getContext('2d'), {
-                type: 'doughnut',
+        // A) Gráfico por Regional (Doughnut)
+        const canvasRegional = document.getElementById("graficoRegional");
+        if (canvasRegional) {
+            if (graficoRegionalInst) graficoRegionalInst.destroy();
+            graficoRegionalInst = new Chart(canvasRegional.getContext("2d"), {
+                type: "doughnut",
                 data: {
-                    labels: Object.keys(regionalCounts),
+                    labels: Object.keys(regionalCounts).length ? Object.keys(regionalCounts) : ["Sem dados"],
                     datasets: [{
-                        data: Object.values(regionalCounts),
-                        backgroundColor: coresPadrao
+                        data: Object.values(regionalCounts).length ? Object.values(regionalCounts) : [0],
+                        backgroundColor: cores
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom' } }
+                    plugins: { legend: { position: "bottom" } }
                 }
             });
         }
 
-        // 2. Gráfico Unidade (Barras)
-        const ctxUnidade = document.getElementById('graficoUnidade');
-        if (ctxUnidade) {
-            if (graficoUnidadeInstance) graficoUnidadeInstance.destroy();
-            graficoUnidadeInstance = new Chart(ctxUnidade.getContext('2d'), {
-                type: 'bar',
+        // B) Gráfico por Unidade (Barras Horizontais)
+        const canvasUnidade = document.getElementById("graficoUnidade");
+        if (canvasUnidade) {
+            if (graficoUnidadeInst) graficoUnidadeInst.destroy();
+            graficoUnidadeInst = new Chart(canvasUnidade.getContext("2d"), {
+                type: "bar",
                 data: {
-                    labels: Object.keys(unidadeCounts),
+                    labels: Object.keys(unidadeCounts).length ? Object.keys(unidadeCounts) : ["Sem dados"],
                     datasets: [{
-                        label: 'Qtd. Equipamentos',
-                        data: Object.values(unidadeCounts),
-                        backgroundColor: '#28a745',
+                        label: "Equipamentos",
+                        data: Object.values(unidadeCounts).length ? Object.values(unidadeCounts) : [0],
+                        backgroundColor: "#28a745",
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: "y",
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                }
+            });
+        }
+
+        // C) Gráfico por Fabricante (Barras Verticais)
+        const canvasFabricante = document.getElementById("graficoFabricante");
+        if (canvasFabricante) {
+            if (graficoFabricanteInst) graficoFabricanteInst.destroy();
+            graficoFabricanteInst = new Chart(canvasFabricante.getContext("2d"), {
+                type: "bar",
+                data: {
+                    labels: Object.keys(fabricanteCounts).length ? Object.keys(fabricanteCounts) : ["Sem dados"],
+                    datasets: [{
+                        label: "Equipamentos",
+                        data: Object.values(fabricanteCounts).length ? Object.values(fabricanteCounts) : [0],
+                        backgroundColor: "#005A9C",
                         borderRadius: 4
                     }]
                 },
@@ -214,44 +161,20 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
 
-        // 3. Gráfico Fabricante (Barras)
-        const ctxFabricante = document.getElementById('graficoFabricante');
-        if (ctxFabricante) {
-            if (graficoFabricanteInstance) graficoFabricanteInstance.destroy();
-            graficoFabricanteInstance = new Chart(ctxFabricante.getContext('2d'), {
-                type: 'bar',
-                data: {
-                    labels: Object.keys(fabricanteCounts),
-                    datasets: [{
-                        label: 'Qtd. Equipamentos',
-                        data: Object.values(fabricanteCounts),
-                        backgroundColor: '#007bff',
-                        borderRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
-                }
-            });
-        }
-
-        // 4. Crescimento Mensal (Linha)
+        // D) Gráfico de Crescimento Mensal (Linha Suave)
         const mesesOrdenados = Object.keys(crescimentoCounts).sort();
-        const ctxCrescimento = document.getElementById('graficoCrescimento');
-        if (ctxCrescimento) {
-            if (graficoCrescimentoInstance) graficoCrescimentoInstance.destroy();
-            graficoCrescimentoInstance = new Chart(ctxCrescimento.getContext('2d'), {
-                type: 'line',
+        const canvasCrescimento = document.getElementById("graficoCrescimento");
+        if (canvasCrescimento) {
+            if (graficoCrescimentoInst) graficoCrescimentoInst.destroy();
+            graficoCrescimentoInst = new Chart(canvasCrescimento.getContext("2d"), {
+                type: "line",
                 data: {
-                    labels: mesesOrdenados.length > 0 ? mesesOrdenados : ['Nenhum registro'],
+                    labels: mesesOrdenados.length ? mesesOrdenados : ["Sem registros"],
                     datasets: [{
-                        label: 'Cadastros no Período',
-                        data: mesesOrdenados.length > 0 ? mesesOrdenados.map(m => crescimentoCounts[m]) : [0],
-                        borderColor: '#6f42c1',
-                        backgroundColor: 'rgba(111, 66, 193, 0.1)',
+                        label: "Novos Cadastros",
+                        data: mesesOrdenados.length ? mesesOrdenados.map(m => crescimentoCounts[m]) : [0],
+                        borderColor: "#6f42c1",
+                        backgroundColor: "rgba(111, 66, 193, 0.1)",
                         fill: true,
                         tension: 0.3
                     }]
@@ -265,295 +188,94 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Busca Rápida
-    const inputBusca = document.getElementById("buscaEquipamento");
-    if (inputBusca) {
-        inputBusca.addEventListener("input", (e) => {
-            const equipamentos = JSON.parse(localStorage.getItem("sigem_equipamentos")) || [];
-            renderizarTabela(equipamentos, e.target.value);
-        });
-    }
-
-    // Botão de Atualização Manual
-    const btnAtualizar = document.getElementById("btnAtualizar");
-    if (btnAtualizar) {
-        btnAtualizar.addEventListener("click", () => {
-            atualizarDashboard();
-        });
-    }
-
-    // Carga inicial
-    atualizarDashboard();
-
-    // Sincronização entre abas (Storage Event)
-    window.addEventListener("storage", (event) => {
-        if (event.key === "sigem_equipamentos") {
-            atualizarDashboard();
-        }
-    });
-
-    // Atualização leve a cada 5 segundos (ótima performance e excelente tempo real)
-    setInterval(() => {
-        atualizarDashboard();
-    }, 5000);
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-    // ==========================================
-    // 1. REFERÊNCIAS DOS GRÁFICOS (CHART.JS)
-    // ==========================================
-    let graficoRegionalInstance = null;
-    let graficoUnidadeInstance = null;
-    let graficoFabricanteInstance = null;
-    let graficoCrescimentoInstance = null;
-
-    // ==========================================
-    // 2. FUNÇÃO PRINCIPAL DE ATUALIZAÇÃO
-    // ==========================================
-    function atualizarDashboard() {
-        // Lê os equipamentos do localStorage
-        const equipamentos = JSON.parse(localStorage.getItem("sigem_equipamentos")) || [];
-
-        // Atualiza a Data de Última Atualização
-        const agora = new Date();
-        const dataFormatada = `${agora.toLocaleDateString("pt-BR")} ${agora.toLocaleTimeString("pt-BR")}`;
-        const elUltimaAtualizacao = document.getElementById("ultimaAtualizacao");
-        if (elUltimaAtualizacao) elUltimaAtualizacao.textContent = dataFormatada;
-
-        // Atualiza os Cards de Totais
-        atualizarCardsTotais(equipamentos, agora);
-
-        // Renderiza a Tabela e Contagem
-        renderizarTabela(equipamentos);
-
-        // Atualiza os Gráficos
-        atualizarGraficos(equipamentos);
-    }
-
-    // ==========================================
-    // 3. ATUALIZAÇÃO DOS CARDS DE TOTAIS
-    // ==========================================
-    function atualizarCardsTotais(equipamentos, agora) {
-        const elTotal = document.getElementById("totalEquipamentos");
-        if (elTotal) elTotal.textContent = equipamentos.length;
-
-        // Métricas únicas utilizando Set
-        const fabricantes = new Set(equipamentos.map(e => e.fabricante?.trim()).filter(Boolean));
-        const elFab = document.getElementById("totalFabricantes");
-        if (elFab) elFab.textContent = fabricantes.size;
-
-        const modelos = new Set(equipamentos.map(e => e.modelo?.trim()).filter(Boolean));
-        const elMod = document.getElementById("totalModelos");
-        if (elMod) elMod.textContent = modelos.size;
-
-        const regionais = new Set(equipamentos.map(e => e.regional?.trim()).filter(Boolean));
-        const elReg = document.getElementById("totalRegionais");
-        if (elReg) elReg.textContent = regionais.size;
-
-        const unidades = new Set(equipamentos.map(e => e.unidade?.trim()).filter(Boolean));
-        const elUnd = document.getElementById("totalUnidades");
-        if (elUnd) elUnd.textContent = unidades.size;
-
-        const setores = new Set(equipamentos.map(e => (e.setorInstalacao || e.setor)?.trim()).filter(Boolean));
-        const elSetor = document.getElementById("totalSetores");
-        if (elSetor) elSetor.textContent = setores.size;
-
-        // Cadastros Realizados Hoje
-        const hojeStr = agora.toISOString().split('T')[0];
-        const cadastrosHoje = equipamentos.filter(e => {
-            const dataRegRaw = e.dataRegistro || e.dataAquisicao;
-            if (!dataRegRaw) return false;
-            let dataReg = dataRegRaw;
-            if (dataReg.includes('/')) {
-                const partes = dataReg.split(' ')[0].split('/');
-                dataReg = `${partes[2]}-${partes[1]}-${partes[0]}`;
-            }
-            return dataReg.startsWith(hojeStr);
-        });
-        const elHoje = document.getElementById("cadastrosHoje");
-        if (elHoje) elHoje.textContent = cadastrosHoje.length;
-
-        // Último Equipamento Registrado
-        const elUltimo = document.getElementById("ultimoEquipamento");
-        if (elUltimo) {
-            if (equipamentos.length > 0) {
-                const ultimo = equipamentos[equipamentos.length - 1];
-                elUltimo.textContent = ultimo.descricaoAtivo || ultimo.numeroSerie || "Registrado";
-            } else {
-                elUltimo.textContent = "--";
-            }
-        }
-    }
-
-    // ==========================================
-    // 4. RENDERIZAÇÃO DA TABELA E FILTROS
-    // ==========================================
+    // --- 3. RENDERIZAÇÃO DA TABELA E CONSULTA RÁPIDA ---
     function renderizarTabela(equipamentos, termoBusca = "") {
-        const tbodyUltimos = document.getElementById("ultimosCadastros");
-        const spanTotalTabela = document.getElementById("totalTabela");
-        const divVazio = document.getElementById("dashboardVazio");
-        const tabelaEl = document.querySelector(".dashboard-tabela table");
+        const tabela = document.getElementById("tabelaEquipamentos");
+        const tbody = document.getElementById("tabelaEquipamentosBody");
+        const emptyState = document.getElementById("emptyState");
+        const contadorRegistros = document.getElementById("contadorRegistros");
 
-        let listaFiltrada = equipamentos;
+        // Aplica o filtro de pesquisa em tempo real
+        let filtrados = equipamentos;
         if (termoBusca.trim() !== "") {
             const termo = termoBusca.toLowerCase();
-            listaFiltrada = equipamentos.filter(e => 
+            filtrados = equipamentos.filter(e => 
                 (e.numeroSerie && e.numeroSerie.toLowerCase().includes(termo)) ||
                 (e.descricaoAtivo && e.descricaoAtivo.toLowerCase().includes(termo)) ||
                 (e.fabricante && e.fabricante.toLowerCase().includes(termo)) ||
                 (e.modelo && e.modelo.toLowerCase().includes(termo)) ||
                 (e.regional && e.regional.toLowerCase().includes(termo)) ||
-                (e.unidade && e.unidade.toLowerCase().includes(termo))
+                (e.unidade && e.unidade.toLowerCase().includes(termo)) ||
+                (e.setorInstalacao || e.setor ? (e.setorInstalacao || e.setor).toLowerCase().includes(termo) : false)
             );
         }
 
-        if (spanTotalTabela) spanTotalTabela.textContent = `(${listaFiltrada.length})`;
+        // Atualiza o contador visual de registros
+        if (contadorRegistros) {
+            contadorRegistros.textContent = `${filtrados.length} registro(s) salvo(s)`;
+        }
 
-        if (equipamentos.length === 0) {
-            if (tabelaEl) tabelaEl.style.display = "none";
-            if (divVazio) {
-                divVazio.style.display = "block";
-                divVazio.textContent = "Nenhum equipamento cadastrado.";
-            }
-            if (tbodyUltimos) tbodyUltimos.innerHTML = "";
+        // Caso o banco do LocalStorage ou a busca estejam vazios
+        if (filtrados.length === 0) {
+            if (tabela) tabela.style.display = "none";
+            if (emptyState) emptyState.style.display = "block";
+            if (tbody) tbody.innerHTML = "";
             return;
         }
 
-        if (listaFiltrada.length === 0) {
-            if (tabelaEl) tabelaEl.style.display = "none";
-            if (divVazio) {
-                divVazio.style.display = "block";
-                divVazio.textContent = "Nenhum equipamento encontrado com esse termo de busca.";
-            }
-            if (tbodyUltimos) tbodyUltimos.innerHTML = "";
-            return;
-        }
+        // Mostra a tabela e oculta a mensagem de estado vazio
+        if (tabela) tabela.style.display = "table";
+        if (emptyState) emptyState.style.display = "none";
 
-        if (tabelaEl) tabelaEl.style.display = "table";
-        if (divVazio) divVazio.style.display = "none";
+        // Ordena para mostrar os mais recentes primeiro
+        const listaInvertida = [...filtrados].reverse();
 
-        const ultimos = [...listaFiltrada].reverse().slice(0, 10);
-        if (tbodyUltimos) {
-            tbodyUltimos.innerHTML = ultimos.map(e => `
-                <tr>
-                    <td>${e.numeroSerie || '-'}</td>
-                    <td>${e.descricaoAtivo || '-'}</td>
-                    <td>${e.fabricante || '-'}</td>
-                    <td>${e.modelo || '-'}</td>
-                    <td>${e.regional || '-'}</td>
-                    <td>${e.unidade || '-'}</td>
-                </tr>
-            `).join('');
-        }
-    }
+        if (tbody) {
+            tbody.innerHTML = listaInvertida.map(e => {
+                // Formatação legível da Data de Registro
+                let dataFormatada = "-";
+                const rawData = e.dataRegistro || e.dataAquisicao;
+                if (rawData) {
+                    try {
+                        const d = new Date(rawData);
+                        if (!isNaN(d.getTime())) {
+                            dataFormatada = d.toLocaleDateString("pt-BR") + " " + d.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+                        } else {
+                            dataFormatada = rawData;
+                        }
+                    } catch {
+                        dataFormatada = rawData;
+                    }
+                }
 
-    // ==========================================
-    // 5. ATUALIZAÇÃO DOS GRÁFICOS (CHART.JS)
-    // ==========================================
-    function atualizarGraficos(equipamentos) {
-        const regionalCounts = {};
-        const unidadeCounts = {};
-        const fabricanteCounts = {};
-        const crescimentoCounts = {};
-
-        equipamentos.forEach(e => {
-            if (e.regional) {
-                const reg = e.regional.trim();
-                regionalCounts[reg] = (regionalCounts[reg] || 0) + 1;
-            }
-            if (e.unidade) {
-                const und = e.unidade.trim();
-                unidadeCounts[und] = (unidadeCounts[und] || 0) + 1;
-            }
-            if (e.fabricante) {
-                const fab = e.fabricante.trim();
-                fabricanteCounts[fab] = (fabricanteCounts[fab] || 0) + 1;
-            }
-            const dataReg = e.dataRegistro || e.dataAquisicao;
-            if (dataReg) {
-                const mesAno = dataReg.substring(0, 7);
-                crescimentoCounts[mesAno] = (crescimentoCounts[mesAno] || 0) + 1;
-            }
-        });
-
-        const coresPadrao = ['#007bff', '#28a745', '#ffc107', '#dc3545', '#17a2b8', '#6f42c1', '#fd7e14', '#20c997', '#e83e8c'];
-
-        // Gráfico Regional (Doughnut)
-        const ctxRegional = document.getElementById('graficoRegional');
-        if (ctxRegional) {
-            if (graficoRegionalInstance) graficoRegionalInstance.destroy();
-            graficoRegionalInstance = new Chart(ctxRegional.getContext('2d'), {
-                type: 'doughnut',
-                data: {
-                    labels: Object.keys(regionalCounts),
-                    datasets: [{ data: Object.values(regionalCounts), backgroundColor: coresPadrao }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
-            });
-        }
-
-        // Gráfico Unidade (Bar)
-        const ctxUnidade = document.getElementById('graficoUnidade');
-        if (ctxUnidade) {
-            if (graficoUnidadeInstance) graficoUnidadeInstance.destroy();
-            graficoUnidadeInstance = new Chart(ctxUnidade.getContext('2d'), {
-                type: 'bar',
-                data: {
-                    labels: Object.keys(unidadeCounts),
-                    datasets: [{ label: 'Qtd. Equipamentos', data: Object.values(unidadeCounts), backgroundColor: '#28a745', borderRadius: 4 }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
-            });
-        }
-
-        // Gráfico Fabricante (Bar)
-        const ctxFabricante = document.getElementById('graficoFabricante');
-        if (ctxFabricante) {
-            if (graficoFabricanteInstance) graficoFabricanteInstance.destroy();
-            graficoFabricanteInstance = new Chart(ctxFabricante.getContext('2d'), {
-                type: 'bar',
-                data: {
-                    labels: Object.keys(fabricanteCounts),
-                    datasets: [{ label: 'Qtd. Equipamentos', data: Object.values(fabricanteCounts), backgroundColor: '#007bff', borderRadius: 4 }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
-            });
-        }
-
-        // Gráfico Crescimento Mensal (Line)
-        const mesesOrdenados = Object.keys(crescimentoCounts).sort();
-        const ctxCrescimento = document.getElementById('graficoCrescimento');
-        if (ctxCrescimento) {
-            if (graficoCrescimentoInstance) graficoCrescimentoInstance.destroy();
-            graficoCrescimentoInstance = new Chart(ctxCrescimento.getContext('2d'), {
-                type: 'line',
-                data: {
-                    labels: mesesOrdenados.length > 0 ? mesesOrdenados : ['Nenhum registro'],
-                    datasets: [{
-                        label: 'Cadastros no Período',
-                        data: mesesOrdenados.length > 0 ? mesesOrdenados.map(m => crescimentoCounts[m]) : [0],
-                        borderColor: '#6f42c1',
-                        backgroundColor: 'rgba(111, 66, 193, 0.1)',
-                        fill: true,
-                        tension: 0.3
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
-            });
+                return `
+                    <tr>
+                        <td><strong>${e.numeroSerie || '-'}</strong></td>
+                        <td>${e.descricaoAtivo || '-'}</td>
+                        <td>${e.fabricante || '-'}</td>
+                        <td>${e.modelo || '-'}</td>
+                        <td>${e.regional || '-'}</td>
+                        <td>${e.unidade || '-'}</td>
+                        <td>${e.setorInstalacao || e.setor || '-'}</td>
+                        <td>${dataFormatada}</td>
+                    </tr>
+                `;
+            }).join("");
         }
     }
 
-    // ==========================================
-    // 6. EVENT LISTENERS E INICIALIZAÇÃO
-    // ==========================================
-    const inputBusca = document.getElementById("buscaEquipamento");
+    // --- 4. EVENTOS E SINCRONIZAÇÃO EM TEMPO REAL ---
+
+    // A) Escuta a digitação no campo de busca rápida
+    const inputBusca = document.getElementById("inputBusca");
     if (inputBusca) {
         inputBusca.addEventListener("input", (e) => {
-            const equipamentos = JSON.parse(localStorage.getItem("sigem_equipamentos")) || [];
+            const equipamentos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
             renderizarTabela(equipamentos, e.target.value);
         });
     }
 
+    // B) Escuta o clique no botão Atualizar Dashboard
     const btnAtualizar = document.getElementById("btnAtualizar");
     if (btnAtualizar) {
         btnAtualizar.addEventListener("click", () => {
@@ -561,18 +283,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Carga inicial do painel
-    atualizarDashboard();
-
-    // Sincronização entre abas (Storage Event)
+    // C) Sincronização entre abas/janelas (Storage Event)
     window.addEventListener("storage", (event) => {
-        if (event.key === "sigem_equipamentos") {
+        if (event.key === STORAGE_KEY) {
             atualizarDashboard();
         }
     });
 
-    // Atualização automática em tempo real a cada 5 segundos
+    // D) Atualização automática a cada 5 segundos (Tempo Real Reativo)
     setInterval(() => {
         atualizarDashboard();
     }, 5000);
+
+    // E) Execução Inicial ao carregar a página
+    atualizarDashboard();
 });

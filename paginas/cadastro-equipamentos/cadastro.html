@@ -16,20 +16,25 @@
     <!-- Favicon do SIGEM -->
     <link rel="icon" href="assets/img/logo.png" type="image/png">
 
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <!-- 1. Reset Global de CSS -->
     <link rel="stylesheet" href="styles/normalize.css">
 
-    <!-- 2. Tema Ativo (Suporta troca dinâmica entre claro.css e escuro.css) -->
+    <!-- 2. Tema Ativo (Alterna dinamicamente entre styles/claro.css e styles/escuro.css via temas.js) -->
     <link id="tema-css" rel="stylesheet" href="styles/claro.css">
 
-    <!-- 3. Componentes, Header e Estrutura do Módulo -->
+    <!-- 3. Componentes, Header, Estrutura do Módulo e Responsividade -->
     <link rel="stylesheet" href="styles/botoes.css">
     <link rel="stylesheet" href="styles/header.css">
     <link rel="stylesheet" href="styles/cadastro.css">
-
-    <!-- 4. Regras de Responsividade -->
-    <link rel="stylesheet" href="styles/pequeno.css">
-    <link rel="stylesheet" href="styles/grande.css" media="screen and (min-width: 900px)">
+    <link rel="stylesheet" href="styles/responsive.css">
 </head>
 <body id="cadastro-equipamento">
 
@@ -40,7 +45,7 @@
 
         <!-- Área da Logo e Nome Institucional -->
         <div class="logo-area">
-            <a href="dashboard.html" class="logo" title="Ir para o Dashboard do SIGEM">
+            <a href="dashboard.html" class="logo" title="Ir para o Início / Dashboard do SIGEM">
                 <img src="assets/img/logo.png" alt="Logo SIGEM" width="48" height="48" onerror="this.style.display='none'">
                 <div class="logo-texto">
                     <strong>SIGEM</strong>
@@ -51,12 +56,18 @@
 
         <!-- Menu de Navegação Principal Corporativo -->
         <nav class="menu-principal">
-            <a href="dashboard.html" data-i18n="menuDashboard">Dashboard</a>
-            <a href="cadastro.html" class="ativo" data-i18n="menuCadastro">Cadastro</a>
-            <a href="relatorios.html" data-i18n="menuRelatorios">Relatórios</a>
+            <a href="dashboard.html" data-i18n="menuInicio">
+                <i class="fa-solid fa-house"></i> Início
+            </a>
+            <a href="cadastro.html" class="ativo" data-i18n="menuCadastro">
+                <i class="fa-solid fa-plus"></i> Cadastro
+            </a>
+            <a href="relatorios.html" data-i18n="menuRelatorios">
+                <i class="fa-solid fa-file-lines"></i> Relatórios
+            </a>
         </nav>
 
-        <!-- Ações do Cabeçalho (Idioma e Tema) -->
+        <!-- Ações do Cabeçalho (Idioma e Troca de Tema Claro/Escuro) -->
         <div class="acoes">
             <!-- Seletor de Idioma Internacional (i18n) -->
             <div class="seletor-idioma">
@@ -84,7 +95,7 @@
         <div class="cadastro-header-secao">
             <div class="header-titulo-wrapper">
                 <h1>
-                    <span>🏥</span> Cadastro de Equipamentos
+                    <i class="fa-solid fa-hospital"></i> Cadastro de Equipamentos
                 </h1>
                 <span class="badge-clinica">Engenharia Clínica</span>
             </div>
@@ -101,7 +112,7 @@
                 <!-- Seção: Dados da Solicitação -->
                 <section class="cadastro-secao">
                     <h2>
-                        <span class="secao-icone">📄</span>
+                        <i class="fa-regular fa-file-lines secao-icone"></i>
                         Dados da Solicitação
                     </h2>
 
@@ -115,8 +126,8 @@
                         <div class="form-group campo-full">
                             <label for="solicitante" class="obrigatorio" data-i18n="solicitante">Nome do Solicitante</label>
                             <div class="input-icon">
-                                <span>👤</span>
-                                <input type="text" id="solicitante" name="solicitante" placeholder="Digite o nome do solicitante" data-i18n-placeholder="placeholderSolicitante" required>
+                                <i class="fa-regular fa-user"></i>
+                                <input type="text" id="solicitante" name="solicitante" placeholder="Digite o nome do solicitante" data-i18n-placeholder="placeholderSolicitante" spellcheck="false" required>
                             </div>
                             <small class="form-help" data-i18n="helpSolicitante">Profissional responsável.</small>
                         </div>
@@ -126,39 +137,60 @@
                 <!-- Seção: Localização do Equipamento -->
                 <section class="cadastro-secao">
                     <h2>
-                        <span class="secao-icone">📍</span>
+                        <i class="fa-solid fa-location-dot secao-icone"></i>
                         Localização do Equipamento
                     </h2>
 
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="regional" class="obrigatorio" data-i18n="regional">Regional</label>
-                            <select id="regional" name="regional" required>
-                                <option value="" data-i18n="selecioneRegional">Selecione...</option>
-                            </select>
+                            <input 
+                                type="text" 
+                                id="regional" 
+                                name="regional" 
+                                list="listaRegionais" 
+                                placeholder="Digite ou selecione a regional..." 
+                                required 
+                                autocomplete="off"
+                                spellcheck="false"
+                            >
+                            <datalist id="listaRegionais">
+                                <!-- Preenchido dinamicamente via regionais.js -->
+                            </datalist>
                             <small class="form-help" data-i18n="helpRegional">Região administrativa.</small>
                         </div>
 
                         <div class="form-group">
                             <label for="unidade" class="obrigatorio" data-i18n="unidade">Unidade / Hospital</label>
-                            <select id="unidade" name="unidade" required disabled>
-                                <option value="" data-i18n="selecioneRegionalPrimeiro">Primeiro selecione...</option>
-                            </select>
+                            <input 
+                                type="text" 
+                                id="unidade" 
+                                name="unidade" 
+                                list="listaUnidades" 
+                                placeholder="Primeiro selecione a regional..." 
+                                required 
+                                disabled 
+                                autocomplete="off"
+                                spellcheck="false"
+                            >
+                            <datalist id="listaUnidades">
+                                <!-- Preenchido dinamicamente via unidades.js -->
+                            </datalist>
                             <small class="form-help" data-i18n="helpUnidade">Unidade de atendimento.</small>
                         </div>
 
                         <div class="form-group" id="grupoOutraUnidade" style="display: none;">
                             <label for="unidadePersonalizada" class="obrigatorio" data-i18n="outraUnidade">Nome da Outra Unidade</label>
-                            <input type="text" id="unidadePersonalizada" name="unidadePersonalizada" placeholder="Digite o nome completo...">
+                            <input type="text" id="unidadePersonalizada" name="unidadePersonalizada" placeholder="Digite o nome completo da unidade..." spellcheck="false">
                         </div>
 
                         <div class="form-group campo-full">
                             <label for="setorInstalacao" class="obrigatorio" data-i18n="setorInstalacao">Setor de Instalação</label>
                             <div class="input-icon">
-                                <span>🏥</span>
-                                <input type="text" id="setorInstalacao" name="setorInstalacao" placeholder="Ex: UTI Adulto, Centro Cirúrgico" data-i18n-placeholder="placeholderSetor" required>
+                                <i class="fa-solid fa-hospital-user"></i>
+                                <input type="text" id="setorInstalacao" name="setorInstalacao" placeholder="Ex: UTI Adulto, Centro Cirúrgico, Pronto Atendimento" data-i18n-placeholder="placeholderSetor" spellcheck="false" required>
                             </div>
-                            <small class="form-help" data-i18n="helpSetor">Setor onde operará.</small>
+                            <small class="form-help" data-i18n="helpSetor">Setor onde o equipamento operará.</small>
                         </div>
                     </div>
                 </section>
@@ -169,32 +201,32 @@
             <!-- ================================================= -->
             <section class="cadastro-secao">
                 <h2>
-                    <span class="secao-icone">⚙️</span>
+                    <i class="fa-solid fa-gear secao-icone"></i>
                     Identificação do Equipamento
                 </h2>
 
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="numeroSerie" class="obrigatorio" data-i18n="numeroSerie">Número de Série</label>
-                        <input type="text" id="numeroSerie" name="numeroSerie" placeholder="Ex: SN-8830192" data-i18n-placeholder="placeholderSerie" autocomplete="off" required>
+                        <input type="text" id="numeroSerie" name="numeroSerie" placeholder="Ex: SN-8830192" data-i18n-placeholder="placeholderSerie" autocomplete="off" spellcheck="false" required>
                         <small class="form-help" data-i18n="helpNumeroSerie">Identificador único do fabricante.</small>
                     </div>
 
                     <div class="form-group">
                         <label for="descricaoAtivo" class="obrigatorio" data-i18n="descricaoAtivo">Descrição do Ativo</label>
-                        <input type="text" id="descricaoAtivo" name="descricaoAtivo" maxlength="150" placeholder="Ex: Monitor Multiparâmetro" data-i18n-placeholder="placeholderDescricao" required>
+                        <input type="text" id="descricaoAtivo" name="descricaoAtivo" maxlength="150" placeholder="Ex: Monitor Multiparâmetro" data-i18n-placeholder="placeholderDescricao" spellcheck="false" required>
                         <small class="form-help" data-i18n="helpDescricao">Nome oficial.</small>
                     </div>
 
                     <div class="form-group">
                         <label for="fabricante" class="obrigatorio" data-i18n="fabricante">Fabricante</label>
-                        <input type="text" id="fabricante" name="fabricante" placeholder="Ex: GE Healthcare / Philips" data-i18n-placeholder="placeholderFabricante" required>
+                        <input type="text" id="fabricante" name="fabricante" placeholder="Ex: GE Healthcare / Philips" data-i18n-placeholder="placeholderFabricante" spellcheck="false" required>
                         <small class="form-help" data-i18n="helpFabricante">Marca do equipamento.</small>
                     </div>
 
                     <div class="form-group">
                         <label for="modelo" class="obrigatorio" data-i18n="modelo">Modelo</label>
-                        <input type="text" id="modelo" name="modelo" placeholder="Ex: Carescape B650" data-i18n-placeholder="placeholderModelo" required>
+                        <input type="text" id="modelo" name="modelo" placeholder="Ex: Carescape B650" data-i18n-placeholder="placeholderModelo" spellcheck="false" required>
                         <small class="form-help" data-i18n="helpModelo">Modelo comercial.</small>
                     </div>
                 </div>
@@ -207,7 +239,7 @@
                 <!-- Seção: Dados Administrativos -->
                 <section class="cadastro-secao">
                     <h2>
-                        <span class="secao-icone">📋</span>
+                        <i class="fa-regular fa-clipboard secao-icone"></i>
                         Dados Administrativos
                     </h2>
 
@@ -220,7 +252,7 @@
 
                         <div class="form-group">
                             <label for="notaFiscal" class="obrigatorio" data-i18n="notaFiscal">Nota Fiscal</label>
-                            <input type="text" id="notaFiscal" name="notaFiscal" placeholder="Ex: NF-10001" maxlength="50" autocomplete="off" required>
+                            <input type="text" id="notaFiscal" name="notaFiscal" placeholder="Ex: NF-10001" maxlength="50" autocomplete="off" spellcheck="false" required>
                             <small class="form-help" data-i18n="helpNotaFiscal">Documento fiscal.</small>
                         </div>
                     </div>
@@ -229,7 +261,7 @@
                 <!-- Seção: Observações Técnicas -->
                 <section class="cadastro-secao">
                     <h2>
-                        <span class="secao-icone">💬</span>
+                        <i class="fa-regular fa-comment-dots secao-icone"></i>
                         Observações
                     </h2>
 
@@ -251,7 +283,7 @@
             <!-- ================================================= -->
             <section class="cadastro-secao">
                 <h2>
-                    <span class="secao-icone">📁</span>
+                    <i class="fa-regular fa-folder-open secao-icone"></i>
                     Documentos e Anexos
                 </h2>
 
@@ -259,7 +291,7 @@
                     <div class="form-group">
                         <label for="fotoEquipamento" data-i18n="fotoEquipamento">Foto do Equipamento</label>
                         <div class="upload-box">
-                            <span>📷</span>
+                            <i class="fa-solid fa-camera upload-icone"></i>
                             <p>Clique ou arraste a foto aqui</p>
                             <input type="file" id="fotoEquipamento" name="fotoEquipamento" accept="image/*">
                         </div>
@@ -268,7 +300,7 @@
                     <div class="form-group">
                         <label for="anexoNotaFiscal" data-i18n="anexoNotaFiscal">Anexo da Nota Fiscal</label>
                         <div class="upload-box">
-                            <span>📄</span>
+                            <i class="fa-solid fa-file-pdf upload-icone"></i>
                             <p>Clique ou arraste o PDF/Imagem da NF</p>
                             <input type="file" id="anexoNotaFiscal" name="anexoNotaFiscal" accept=".pdf,.png,.jpg,.jpeg">
                         </div>
@@ -317,7 +349,7 @@
         </div>
     </footer>
 
-    <!-- Scripts de Funcionalidade e Internacionalização -->
+    <!-- Scripts de Funcionalidade, Temas e Internacionalização -->
     <script src="scripts/regionais.js"></script>
     <script src="scripts/unidades.js"></script>
     <script src="scripts/temas.js"></script>
