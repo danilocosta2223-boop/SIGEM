@@ -298,3 +298,44 @@ document.addEventListener("DOMContentLoaded", () => {
     // E) Execução Inicial ao carregar a página
     atualizarDashboard();
 });
+
+
+// dashboard.js - Configuração de Cores para o Chart.js
+
+function obterCoresTema() {
+  const modoEscuro = document.body.classList.contains('dark-mode') || 
+                     document.documentElement.getAttribute('data-theme') === 'dark';
+
+  return {
+    texto: modoEscuro ? '#f3f4f6' : '#333333',
+    grade: modoEscuro ? '#3f444f' : '#e5e7eb'
+  };
+}
+
+// Exemplo de aplicação ao criar/atualizar um gráfico no SIGEM:
+const cores = obterCoresTema();
+
+const meuGrafico = new Chart(ctx, {
+  type: 'bar', // ou 'line', 'pie', etc.
+  data: data,
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        labels: {
+          color: cores.texto
+        }
+      }
+    },
+    scales: {
+      x: {
+        ticks: { color: cores.texto },
+        grid: { color: cores.grade }
+      },
+      y: {
+        ticks: { color: cores.texto },
+        grid: { color: cores.grade }
+      }
+    }
+  }
+});

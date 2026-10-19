@@ -1,162 +1,315 @@
+<!-- ================================================= -->
+<!-- BLOCO 01 - CABEÇALHO E CONFIGURAÇÕES GERAIS       -->
+<!-- ================================================= -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - SIGEM</title>
-    
-    <!-- Estilos da pasta styles/ -->
-    <link rel="stylesheet" href="styles/normalize.css">
-    <link rel="stylesheet" href="styles/header.css">
-    <link rel="stylesheet" href="styles/botoes.css">
-    <link rel="stylesheet" href="styles/dashboard.css">
-    <link rel="stylesheet" href="styles/claro.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="SIGEM - Sistema Integrado de Gestão de Engenharia Clínica. Dashboard e Indicadores de Ativos Médico-Hospitalares.">
+    <meta name="author" content="Danilo Rafael da Silva Costa">
+    <meta name="theme-color" content="#005A9C">
 
-    <!-- Biblioteca dos Gráficos (Chart.js) -->
+    <title data-i18n="dashboardTitulo">Dashboard - SIGEM</title>
+
+    <!-- Favicon do SIGEM -->
+    <link rel="icon" href="assets/img/logo.png" type="image/png">
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Estilos do Sistema -->
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link id="tema-css" rel="stylesheet" href="styles/claro.css">
+    <link rel="stylesheet" href="styles/botoes.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+
+    <!-- Chart.js para Renderização dos Gráficos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
+<body id="dashboard-page">
 
-    <!-- Menu do SIGEM -->
-    <aside>
-        <nav>
-            <a href="dashboard.html" class="ativo">🏠 Dashboard</a>
-            <a href="cadastro.html">📝 Cadastro</a>
-            <a href="relatorios.html">📋 Relatórios</a>
-        </nav>
-    </aside>
+    <!-- ================================================= -->
+    <!-- BLOCO 02 - MENU SUPERIOR CORPORATIVO              -->
+    <!-- ================================================= -->
+    <header class="header-principal">
 
-    <!-- Conteúdo Principal -->
-    <main class="dashboard-container">
-        
-        <!-- Cabeçalho do Dashboard & Status de Tempo Real -->
-        <header class="dashboard-header">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <h1>Dashboard SIGEM</h1>
-                    <p>Visão geral e tempo real dos equipamentos cadastrados</p>
+        <!-- Área da Logo e Nome Institucional -->
+        <div class="logo-area">
+            <a href="dashboard.html" class="logo" title="Ir para o Dashboard do SIGEM">
+                <img src="assets/img/logo.png" alt="Logo SIGEM" width="48" height="48" onerror="this.style.display='none'">
+                <div class="logo-texto">
+                    <strong>SIGEM</strong>
+                    <span>Engenharia Clínica</span>
                 </div>
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <div class="status-sistema">
-                        <span class="status-online"></span>
-                        Dados atualizados em tempo real
-                    </div>
-                    <button id="btnAtualizar" class="btn-atualizar">Atualizar Dashboard</button>
-                </div>
-            </div>
-        </header>
-
-        <!-- Data de Atualização -->
-        <div class="ultima-atualizacao">
-            Última atualização: <span id="ultimaAtualizacao">--</span>
+            </a>
         </div>
-      
-        <!-- Cards de Totais Completos -->
-        <section class="cards-dashboard">
-            <div class="card">
-                <h3>Total Equipamentos</h3>
-                <strong id="totalEquipamentos">0</strong>
-            </div>
-      
-            <div class="card">
-                <h3>Fabricantes</h3>
-                <strong id="totalFabricantes">0</strong>
+
+        <!-- Menu de Navegação Principal Corporativo -->
+        <nav class="menu-principal">
+            <a href="dashboard.html" class="ativo" data-i18n="menuDashboard">
+                <i class="fa-solid fa-chart-line"></i> Dashboard
+            </a>
+            <a href="cadastro.html" data-i18n="menuCadastro">
+                <i class="fa-solid fa-plus"></i> Cadastro
+            </a>
+            <a href="relatorios.html" data-i18n="menuRelatorios">
+                <i class="fa-solid fa-file-lines"></i> Relatórios
+            </a>
+        </nav>
+
+        <!-- Ações do Cabeçalho (Idioma e Tema) -->
+        <div class="acoes">
+            <div class="seletor-idioma">
+                <select id="idioma" class="seletor-idioma-select" aria-label="Selecionar idioma">
+                    <option value="pt-BR">🇧🇷 Pt-BR</option>
+                    <option value="en-US">🇺🇸 En-US</option>
+                    <option value="es-ES">🇪🇸 Es-ES</option>
+                </select>
             </div>
 
-            <div class="card">
-                <h3>Modelos</h3>
-                <strong id="totalModelos">0</strong>
+            <button type="button" id="btn-troca-tema" class="btn btn-ghost btn-sm btn-icon" title="Alternar entre tema claro e escuro" aria-label="Alternar tema">
+                <span id="icone-tema">🌙</span>
+            </button>
+        </div>
+
+    </header>
+
+    <!-- ================================================= -->
+    <!-- BLOCO 03 - HERO BANNER & BOAS-VINDAS              -->
+    <!-- ================================================= -->
+    <section class="dashboard-hero">
+        <div class="dashboard-hero-conteudo">
+            <div class="dashboard-boas-vindas">
+                <h1>
+                    <i class="fa-solid fa-hospital"></i> Dashboard SIGEM
+                </h1>
+                <p>
+                    Visualização dos equipamentos médico-hospitalares cadastrados no sistema.
+                </p>
             </div>
-      
-            <div class="card">
-                <h3>Regionais</h3>
-                <strong id="totalRegionais">0</strong>
+            <span class="badge-clinica">Engenharia Clínica</span>
+        </div>
+    </section>
+
+    <!-- Indicador de Status em Tempo Real -->
+    <div class="status-dashboard">
+        <span class="status-online"></span>
+        Dashboard sincronizado em tempo real
+    </div>
+
+    <!-- ================================================= -->
+    <!-- BLOCO 04 - CONTEÚDO PRINCIPAL DO DASHBOARD        -->
+    <!-- ================================================= -->
+    <main class="dashboard-container">
+
+        <!-- Barra de Ações Rápidas & Busca -->
+        <div class="dashboard-header-topo">
+            <div class="campo-busca">
+                <i class="fa-solid fa-magnifying-glass icone-busca"></i>
+                <input type="text" id="inputBusca" placeholder="Pesquisar por número de série, equipamento, fabricante..." aria-label="Pesquisar equipamentos">
             </div>
 
-            <div class="card">
-                <h3>Unidades</h3>
-                <strong id="totalUnidades">0</strong>
+            <div class="dashboard-acoes-top">
+                <button id="btnAtualizar" class="btn btn-principal">
+                    <i class="fa-solid fa-rotate-right"></i> Atualizar Dashboard
+                </button>
+            </div>
+        </div>
+
+        <!-- Cards de Métricas e Indicadores Chaves -->
+        <div class="dashboard-metrics-grid">
+
+            <div class="card metrica-card">
+                <div class="metrica-icone icone-azul">
+                    <i class="fa-solid fa-microscope"></i>
+                </div>
+                <div class="metrica-dados">
+                    <strong id="totalEquipamentos">0</strong>
+                    <span>Total Equipamentos</span>
+                </div>
             </div>
 
-            <div class="card">
-                <h3>Setores</h3>
-                <strong id="totalSetores">0</strong>
+            <div class="card metrica-card">
+                <div class="metrica-icone icone-verde">
+                    <i class="fa-solid fa-building-user"></i>
+                </div>
+                <div class="metrica-dados">
+                    <strong id="totalRegionais">0</strong>
+                    <span>Regionais</span>
+                </div>
             </div>
 
-            <div class="card">
-                <h3>Cadastros Hoje</h3>
-                <strong id="cadastrosHoje">0</strong>
+            <div class="card metrica-card">
+                <div class="metrica-icone icone-roxo">
+                    <i class="fa-solid fa-hospital-user"></i>
+                </div>
+                <div class="metrica-dados">
+                    <strong id="totalUnidades">0</strong>
+                    <span>Unidades</span>
+                </div>
             </div>
 
-            <div class="card">
-                <h3>Último Equipamento</h3>
-                <strong id="ultimoEquipamento" style="font-size: 1.1rem; word-break: break-all;">--</strong>
+            <div class="card metrica-card">
+                <div class="metrica-icone icone-laranja">
+                    <i class="fa-solid fa-gears"></i>
+                </div>
+                <div class="metrica-dados">
+                    <strong id="totalModelos">0</strong>
+                    <span>Modelos</span>
+                </div>
             </div>
+
+            <div class="card metrica-card">
+                <div class="metrica-icone icone-tecla">
+                    <i class="fa-solid fa-industry"></i>
+                </div>
+                <div class="metrica-dados">
+                    <strong id="totalFabricantes">0</strong>
+                    <span>Fabricantes</span>
+                </div>
+            </div>
+
+            <div class="card metrica-card">
+                <div class="metrica-icone icone-ciano">
+                    <i class="fa-solid fa-calendar-check"></i>
+                </div>
+                <div class="metrica-dados">
+                    <strong id="cadastrosHoje">0</strong>
+                    <span>Cadastrados Hoje</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Seção de Gráficos Interativos (Sem estilos inline) -->
+        <section class="dashboard-secao-graficos">
+            
+            <div class="card grafico-card">
+                <h3><i class="fa-solid fa-chart-pie"></i> Distribuição por Regional</h3>
+                <div class="grafico-container">
+                    <canvas id="graficoRegional"></canvas>
+                </div>
+            </div>
+
+            <div class="card grafico-card">
+                <h3><i class="fa-solid fa-chart-bar"></i> Distribuição por Unidade</h3>
+                <div class="grafico-container">
+                    <canvas id="graficoUnidade"></canvas>
+                </div>
+            </div>
+
+            <div class="card grafico-card">
+                <h3><i class="fa-solid fa-industry"></i> Distribuição por Fabricante</h3>
+                <div class="grafico-container">
+                    <canvas id="graficoFabricante"></canvas>
+                </div>
+            </div>
+
+            <div class="card grafico-card grafico-full">
+                <h3><i class="fa-solid fa-chart-line"></i> Crescimento do Inventário (Mensal)</h3>
+                <div class="grafico-container">
+                    <canvas id="graficoCrescimento"></canvas>
+                </div>
+            </div>
+
         </section>
 
-        <!-- Ações Rápidas -->
-        <section class="acoes-rapidas">
-            <a href="cadastro.html">Novo Cadastro</a>
-            <a href="relatorios.html">Ver Relatórios</a>
-        </section>
-
-        <!-- Busca Rápida -->
-        <section class="busca-dashboard">
-            <input type="text" id="buscaEquipamento" placeholder="Pesquisar equipamento...">
-        </section>
-      
-        <!-- Gráficos Agrupados -->
-        <section class="dashboard-graficos">
-            <div class="grafico-card">
-                <h2>Equipamentos por Regional</h2>
-                <canvas id="graficoRegional"></canvas>
+        <!-- Seção de Lista / Tabela de Equipamentos -->
+        <section class="dashboard-secao">
+            <div class="secao-cabecalho">
+                <h2>
+                    <i class="fa-solid fa-list-check"></i> Equipamentos Registrados
+                </h2>
+                <span class="contador-registros" id="contadorRegistros">0 registros salvos</span>
             </div>
 
-            <div class="grafico-card">
-                <h2>Equipamentos por Unidade</h2>
-                <canvas id="graficoUnidade"></canvas>
-            </div>
-      
-            <div class="grafico-card">
-                <h2>Equipamentos por Fabricante</h2>
-                <canvas id="graficoFabricante"></canvas>
-            </div>
+            <div id="containerListaEquipamentos" class="tabela-wrapper">
+                
+                <table class="table table-striped" id="tabelaEquipamentos" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th>Nº Série</th>
+                            <th>Equipamento</th>
+                            <th>Fabricante</th>
+                            <th>Modelo</th>
+                            <th>Regional</th>
+                            <th>Unidade</th>
+                            <th>Setor</th>
+                            <th>Data Registro</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaEquipamentosBody">
+                        <!-- Conteúdo preenchido dinamicamente pelo dashboard.js -->
+                    </tbody>
+                </table>
 
-            <div class="grafico-card" style="grid-column: 1 / -1;">
-                <h2>Crescimento do Inventário (Mensal)</h2>
-                <canvas id="graficoCrescimento"></canvas>
-            </div>
-        </section>
-      
-        <!-- Últimos Cadastros -->
-        <section class="dashboard-tabela">
-            <h2>Últimos Equipamentos Cadastrados <span id="totalTabela">(0)</span></h2>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Nº Série</th>
-                        <th>Equipamento</th>
-                        <th>Fabricante</th>
-                        <th>Modelo</th>
-                        <th>Regional</th>
-                        <th>Unidade</th>
-                        <th>Setor</th>
-                        <th>Data Registro</th>
-                    </tr>
-                </thead>
-                <tbody id="ultimosCadastros">
-                    <!-- Preenchido via JavaScript -->
-                </tbody>
-            </table>
-            <!-- Mensagem de Sistema Vazio -->
-            <div id="dashboardVazio" style="display: none;" class="empty-message">
-                Nenhum equipamento cadastrado.
+                <!-- Estado Vazio (Empty State) -->
+                <div class="empty-message" id="emptyState">
+                    <div class="empty-icone">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                    </div>
+                    <h3>Nenhum equipamento cadastrado</h3>
+                    <p>Cadastre o primeiro equipamento médico-hospitalar para visualizar indicadores e relatórios detalhados.</p>
+                    <a href="cadastro.html" class="btn btn-principal">
+                        <i class="fa-solid fa-plus"></i> Novo Cadastro
+                    </a>
+                </div>
+
             </div>
         </section>
 
     </main>
 
-    <!-- Script do Dashboard -->
-    <script src="dashboard.js"></script>
+    <!-- ================================================= -->
+    <!-- BLOCO 05 - RODAPÉ INSTITUCIONAL                   -->
+    <!-- ================================================= -->
+    <footer class="rodape-institucional">
+        <div class="rodape-container">
+            <div class="rodape-info">
+                <p>&copy; 2026 SIGEM — Sistema Integrado de Gestão de Engenharia Clínica</p>
+                <small class="rodape-subtexto">Uso exclusivo para gestão hospitalar e controle de ativos biomédicos.</small>
+            </div>
+
+            <div class="rodape-meta">
+                <span class="versao-sistema">v1.0.0</span>
+                <nav class="rodape-links">
+                    <a href="#termos">Termos de Uso</a>
+                    <span class="divisor">•</span>
+                    <a href="#privacidade">Privacidade</a>
+                    <span class="divisor">•</span>
+                    <a href="#suporte">Suporte Técnico</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script Inline de Atualização Automática -->
+    <script>
+        window.addEventListener('storage', () => {
+            if (typeof carregarDashboard === 'function') {
+                carregarDashboard();
+            }
+        });
+
+        setInterval(() => {
+            if (typeof carregarDashboard === 'function') {
+                carregarDashboard();
+            }
+        }, 5000);
+    </script>
+
+    <!-- Scripts de Funcionalidades do Dashboard -->
+    <script src="scripts/temas.js"></script>
+    <script src="scripts/idiomas.js"></script>
+    <script src="scripts/dashboard.js"></script>
 </body>
 </html>
