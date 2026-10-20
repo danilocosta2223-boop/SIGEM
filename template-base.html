@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="SIGEM - Sistema Integrado de Gestão de Engenharia Clínica">
+    <meta name="author" content="Danilo Rafael da Silva Costa">
+    <meta name="theme-color" content="#005A9C">
+
+    <title data-i18n="tituloPagina">SIGEM — Engenharia Clínica</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/img/logo.png" type="image/png">
+
+    <!-- Tipografia Oficial: Roboto (300, 400, 500, 700) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- 1. Reset Global & Design System -->
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/botoes.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+
+    <!-- 2. Alternância de Tema (Claro / Escuro) -->
+    <link id="tema-css" rel="stylesheet" href="styles/claro.css">
+
+    <!-- 3. CSS Específico desta página (Opcional - remova o comentário quando necessário) -->
+    <!-- <link rel="stylesheet" href="styles/nome-da-pagina.css"> -->
+</head>
+<body id="sigem-app" class="sigem-template">
+
+    <!-- ================================================= -->
+    <!-- MENU SUPERIOR PADRONIZADO (HEADER SIGEM)          -->
+    <!-- ================================================= -->
+    <header class="header-principal">
+
+        <!-- Logotipo e Identidade Institucional -->
+        <div class="logo-area">
+            <a href="dashboard.html" class="logo" title="Ir para o Dashboard">
+                <img src="assets/img/logo.png" alt="Logo SIGEM" width="48" height="48" onerror="this.style.display='none'">
+                <div class="logo-texto">
+                    <strong>SIGEM</strong>
+                    <span>Engenharia Clínica</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Links Globais de Navegação -->
+        <nav class="menu-principal menu-navegacao">
+            <a href="dashboard.html" class="active" data-i18n="menuInicio">
+                <i class="fa-solid fa-house"></i> Início
+            </a>
+            <a href="cadastro.html" data-i18n="menuCadastro">
+                <i class="fa-solid fa-plus"></i> Cadastro
+            </a>
+            <a href="dashboard.html" data-i18n="menuDashboard">
+                <i class="fa-solid fa-chart-line"></i> Dashboard
+            </a>
+            <a href="equipamentos-imagem.html" data-i18n="menuImagem">
+                <i class="fa-solid fa-x-ray"></i> Imagem
+            </a>
+            <a href="faq.html" data-i18n="menuFaq">
+                <i class="fa-solid fa-circle-question"></i> FAQ
+            </a>
+            <a href="organograma.html" data-i18n="menuOrganograma">
+                <i class="fa-solid fa-sitemap"></i> Organograma
+            </a>
+            <a href="configuracoes.html" data-i18n="menuConfiguracoes">
+                <i class="fa-solid fa-gear"></i> Configurações
+            </a>
+        </nav>
+
+        <!-- Seletor de Idioma e Alternador de Tema -->
+        <div class="acoes">
+            <div class="seletor-idioma">
+                <select id="idioma" class="seletor-idioma-select" aria-label="Selecionar idioma">
+                    <option value="pt-BR">🇧🇷 Pt-BR</option>
+                    <option value="en-US">🇺🇸 En-US</option>
+                    <option value="es-ES">🇪🇸 Es-ES</option>
+                </select>
+            </div>
+
+            <button type="button" id="btn-troca-tema" class="btn btn-ghost btn-sm btn-icon" title="Alternar Tema" aria-label="Alternar tema">
+                <span id="icone-tema">🌙</span>
+            </button>
+        </div>
+
+    </header>
+
+    <!-- ================================================= -->
+    <!-- ÁREA DE CONTEÚDO PRINCIPAL (DESIGN SYSTEM)        -->
+    <!-- ================================================= -->
+    <main class="container">
+
+        <section class="section">
+            <div class="cadastro-header-secao">
+                <div class="header-titulo-wrapper">
+                    <h1>
+                        <i class="fa-solid fa-folder"></i> Título da Página
+                    </h1>
+                    <span class="badge-clinica">Engenharia Clínica</span>
+                </div>
+                <p class="subtitulo">
+                    Descrição simples da funcionalidade ou finalidade desta tela.
+                </p>
+            </div>
+
+            <!-- Card de Exemplo usando as classes do responsive.css -->
+            <div class="card-atalho">
+                <h3><i class="fa-solid fa-layer-group"></i> Painel de Exemplo</h3>
+                <p>Este bloco herda a tipografia Roboto, bordas, sombras e responsividade unificadas do SIGEM.</p>
+
+                <div class="form-group input-md">
+                    <label for="campoExemplo">Campo de Teste</label>
+                    <input type="text" id="campoExemplo" class="input-full" placeholder="Digite aqui..." spellcheck="false">
+                </div>
+
+                <div class="acoes-formulario">
+                    <button type="button" class="btn btn-primary">
+                        <i class="fa-solid fa-floppy-disk"></i> Salvar
+                    </button>
+                    <button type="button" class="btn btn-secondary">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================================================= -->
+    <!-- RODAPÉ INSTITUCIONAL                               -->
+    <!-- ================================================= -->
+    <footer class="rodape-institucional">
+        <div class="rodape-container">
+            <div class="rodape-info">
+                <p>&copy; 2026 SIGEM — Sistema Integrado de Gestão de Engenharia Clínica</p>
+                <small class="rodape-subtexto">Uso exclusivo para gestão hospitalar e controle de ativos biomédicos.</small>
+            </div>
+
+            <div class="rodape-meta">
+                <span class="versao-sistema">v1.0.0</span>
+                <nav class="rodape-links">
+                    <a href="#termos">Termos de Uso</a>
+                    <span class="divisor">•</span>
+                    <a href="#privacidade">Privacidade</a>
+                    <span class="divisor">•</span>
+                    <a href="#suporte">Suporte Técnico</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts do Sistema -->
+    <script src="scripts/configuracoes-globais.js"></script>
+    <script src="scripts/temas.js"></script>
+    <script src="scripts/idiomas.js"></script>
+</body>
+</html>

@@ -3,28 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGEM - Sistema de Gestão de Equipamentos</title>
+    <title>SIGEM - Gestão de Engenharia Clínica</title>
     
-    <!-- Link para a folha de estilos externa da Home -->
-    <link rel="stylesheet" href="styles/home.css">
+    <!-- CSS na Raiz -->
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/botoes.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <link id="tema-css" rel="stylesheet" href="styles/claro.css">
 </head>
 <body>
 
-    <main class="container">
-        <h1>🏥 SIGEM</h1>
-        <p>Sistema de Gestão de Equipamentos Médico-Hospitalares</p>
-        <div class="versao">SIGEM - Versão 1.0</div>
-        
-        <nav>
-            <a href="paginas/cadastro-equipamentos/cadastro.html" class="menu-link">
-                📋 Cadastro de Equipamentos
+    <!-- Menu na Raiz -->
+    <nav class="menu-navegacao">
+        <a href="index.html" class="active">🏠 Início</a>
+        <a href="paginas/cadastro-equipamentos/cadastro.html">📋 Cadastro</a>
+        <a href="paginas/cadastro-equipamentos/dashboard.html">📊 Dashboard</a>
+        <a href="paginas/faq/faq.html">❓ FAQ</a>
+        <a href="configuracoes.html">⚙️ Configurações</a>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <h1>🏥 SIGEM</h1>
+            <p class="subtitulo">Sistema Integrado de Gestão de Engenharia Clínica</p>
+            <p class="versao-tag">Versão 1.0 • Grupo Fleury • Engenharia Clínica</p>
+            <p>Selecione um dos módulos abaixo para iniciar a gestão do parque tecnológico hospitalar.</p>
+        </section>
+
+        <div class="grid-atalhos">
+            <a href="paginas/cadastro-equipamentos/dashboard.html" class="card-atalho">
+                <span class="icone">📊</span>
+                <h3>Dashboard</h3>
+                <p>Visualize indicadores gerais, totais por fabricante, unidades e regionais.</p>
             </a>
-            
-            <a href="paginas/cadastro-equipamentos/relatorios.html" class="menu-link">
-                📊 Relatórios de Cadastro
+
+            <a href="paginas/cadastro-equipamentos/cadastro.html" class="card-atalho">
+                <span class="icone">📋</span>
+                <h3>Cadastro de Equipamentos</h3>
+                <p>Registre novos ativos médicos, números de série, patrimônios e localizações.</p>
             </a>
-        </nav>
-    </main>
+
+            <a href="paginas/cadastro-equipamentos/relatorios.html" class="card-atalho">
+                <span class="icone">📈</span>
+                <h3>Relatórios</h3>
+                <p>Gere relatórios técnicos do parque instalado e histórico de equipamentos.</p>
+            </a>
+
+            <a href="paginas/diagnostico-imagem/diagnostico-imagem.html" class="card-atalho">
+                <span class="icone">📡</span>
+                <h3>Diagnóstico por Imagem</h3>
+                <p>Gestão especializada para Tomógrafos, Ressonâncias e Raio-X.</p>
+            </a>
+
+            <a href="paginas/como-cadastrar/como-cadastrar.html" class="card-atalho">
+                <span class="icone">📋</span>
+                <h3>Guia de Cadastro</h3>
+                <p>Instruções e normas para o preenchimento correto das fichas técnicas.</p>
+            </a>
+
+            <a href="paginas/organograma/organograma.html" class="card-atalho">
+                <span class="icone">👥</span>
+                <h3>Organograma</h3>
+                <p>Consulte a estrutura da equipe de Engenharia Clínica, responsabilidades e fluxo de atendimento.</p>
+            </a>
+
+            <a href="paginas/faq/faq.html" class="card-atalho">
+                <span class="icone">❓</span>
+                <h3>Perguntas Frequentes</h3>
+                <p>Tire dúvidas sobre cadastro, relatórios e utilização do sistema.</p>
+            </a>
+
+            <a href="paginas/suporte/suporte.html" class="card-atalho">
+                <span class="icone">📞</span>
+                <h3>Suporte Técnico</h3>
+                <p>Canais diretos de atendimento e suporte para dúvidas ou incidentes no sistema.</p>
+            </a>
+
+            <a href="configuracoes.html" class="card-atalho">
+                <span class="icone">⚙️</span>
+                <h3>Configurações</h3>
+                <p>Personalize tema, idioma, aparência do sistema e preferências de utilização.</p>
+            </a>
+        </div>
+    </div>
+
+    <!-- Scripts na Raiz -->
+    <script src="scripts/configuracoes-globais.js"></script>
+    <script src="scripts/temas.js"></script>
+    <script src="scripts/idiomas.js"></script>
 
 </body>
 </html>

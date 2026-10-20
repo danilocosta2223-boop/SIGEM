@@ -1,0 +1,112 @@
+/* ==========================================
+   SIGEM - NORMALIZE.CSS (FINAL)
+   Reset e normalização global
+   ========================================== */
+
+/* Box model consistente */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove margens e preenchimentos padrão */
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Rolagem suave */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Corpo base e renderização de fontes */
+body {
+    min-height: 100vh;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Imagens e picture responsivos */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Elementos de mídia e gráficos responsivos */
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* Formulários herdam tipografia */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Textareas redimensionáveis apenas na vertical */
+textarea {
+    resize: vertical;
+}
+
+/* Links limpos */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Listas sem marcação padrão */
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Tabelas resetadas */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Títulos e parágrafos com quebra de texto segura */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+    overflow-wrap: break-word;
+}
+
+/* Botões sem estilo padrão */
+button {
+    cursor: pointer;
+    background: none;
+}
+
+/* Indicador visual para elementos desabilitados */
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+    cursor: not-allowed;
+}
+
+/* Remoção do outline padrão para controle via CSS global */
+input,
+select,
+textarea,
+button {
+    outline: none;
+}

@@ -1,0 +1,218 @@
+/* ==========================================
+   SIGEM - ESTILO GLOBAL
+   ========================================== */
+
+/* 1. VARIÁVEIS DE TEMA (LIGHT MODE - PADRÃO) */
+:root {
+    --primary-color: #1d8cf8;
+    --primary-hover: #1770d2;
+    --bg-page: #f4f7fb;
+    --bg-card: #ffffff;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --border-color: #dbe3ec;
+    --success-bg: #d1e7dd;
+    --success-text: #0f5132;
+}
+
+/* 2. TEMA ESCURO (DARK MODE) */
+body.dark-mode {
+    --bg-page: #111827;
+    --bg-card: #1f2937;
+    --text-primary: #f9fafb;
+    --text-secondary: #cbd5e1;
+    --border-color: #374151;
+}
+
+/* 3. RESET UNIVERSAL */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 4. BASE DA PÁGINA */
+body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: "Segoe UI", Arial, sans-serif;
+    min-height: 100vh;
+    line-height: 1.5;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 5. NAVEGAÇÃO */
+.menu-navegacao {
+    background: #0f172a;
+    padding: 15px 25px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    border-bottom: 3px solid var(--primary-color);
+}
+
+.menu-navegacao a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 14px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.menu-navegacao a:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.menu-navegacao a.active {
+    background: var(--primary-color);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* 6. LAYOUT & CONTAINERS */
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 25px;
+    width: 100%;
+}
+
+/* 7. TIPOGRAFIA BASE */
+h1 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+p {
+    color: var(--text-secondary);
+}
+
+/* 8. FORMULÁRIOS & INPUTS */
+.form-group {
+    background: var(--bg-card);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="url"],
+select {
+    width: 100%;
+    padding: 12px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+select:focus,
+input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 8px rgba(29, 140, 248, 0.2);
+}
+
+/* Radios e Checkboxes */
+.options-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+/* Botões */
+#btnSalvar {
+    background: var(--primary-color);
+    color: #ffffff;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+#btnSalvar:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+/* Mensagens de Feedback */
+#msgSucesso {
+    margin-top: 15px;
+    background: var(--success-bg);
+    color: var(--success-text);
+    padding: 14px;
+    border-radius: 6px;
+}
+
+/* 9. CARDS E GRID DA HOME */
+.grid-atalhos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.card-atalho {
+    background: var(--bg-card);
+    border-radius: 10px;
+    padding: 25px;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-atalho:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-atalho h3 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.icone {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* 10. MEDIA QUERIES (RESPONSIVIDADE) */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .menu-navegacao {
+        flex-direction: column;
+    }
+
+    .options-group {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,618 @@
+/* ==========================================================================
+   DESIGN SYSTEM SIGEM - ESTILO GLOBAL UNIFICADO (HOSPITALAR CORPORATIVO)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. VARIÁVEIS DE TEMA & TOKENS (LIGHT MODE - PADRÃO)
+   -------------------------------------------------------------------------- */
+:root {
+    /* Cores Institucionais e Primárias */
+    --primary-color: #0F4C81;          /* Header, Footer, Menu, Títulos */
+    --primary-hover: #00335B;
+    --secondary-color: #2C7DA0;        /* Informações secundárias, cards, estatísticas */
+    --accent-success: #2A9D8F;         /* Destaques e confirmações de sucesso */
+
+    /* Botões & Acessibilidade */
+    --btn-primary-bg: #004B87;
+    --btn-primary-hover: #00335B;
+    --focus-outline: #FFBF47;          /* Navegação por teclado / Acessibilidade */
+    --link-active: #FFD54F;           /* Estado ativo no menu */
+
+    /* Neutros & Superfícies */
+    --bg-page: #F5F7FA;
+    --bg-card: #FFFFFF;
+    --text-primary: #222222;
+    --text-secondary: #6B7280;
+    --border-color: #DBE3EC;
+
+    /* Feedbacks, Alertas & Badges Contextuais */
+    --success-bg: #D1E7DD;
+    --success-text: #0F5132;
+    --warning-bg: #FFF3CD;
+    --warning-text: #856404;
+    --danger-bg: #F8D7DA;
+    --danger-text: #842029;
+    --info-bg: #CFF4FC;
+    --info-text: #055160;
+
+    /* Pesos de Fonte */
+    --font-regular: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+
+    /* Escala de Espaçamento Base (1rem = 16px) */
+    --space-xs: 0.25rem;  /* 4px */
+    --space-sm: 0.5rem;   /* 8px */
+    --space-md: 1.00rem;  /* 16px */
+    --space-lg: 2.00rem;  /* 32px */
+    --space-xl: 3.00rem;  /* 48px */
+
+    /* Raios de Borda (Border-Radius) */
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+
+    /* Sombras (Box Shadows) */
+    --shadow-card: 0 2px 5px rgba(0, 0, 0, 0.10);
+    --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.15);
+    --shadow-modal: 0 10px 30px rgba(0, 0, 0, 0.20);
+
+    /* Dimensões de Container */
+    --container-sm: 768px;
+    --container-md: 992px;
+    --container-lg: 1200px;
+    --container-xl: 1400px;
+
+    /* Dimensões Padrão de Controles */
+    --control-height: 44px;             /* Altura oficial de Inputs e Botões */
+
+    /* Camadas (Escala Z-Index) */
+    --z-dropdown: 100;
+    --z-sticky: 500;
+    --z-modal-backdrop: 900;
+    --z-modal: 1000;
+    --z-loading: 9999;
+
+    /* Transições Oficiais */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* --------------------------------------------------------------------------
+   2. TEMA ESCURO (DARK MODE)
+   -------------------------------------------------------------------------- */
+body.dark-mode {
+    --bg-page: #111827;
+    --bg-card: #1F2937;
+    --text-primary: #F9FAFB;
+    --text-secondary: #CBD5E1;
+    --border-color: #374151;
+}
+
+/* --------------------------------------------------------------------------
+   3. RESET UNIVERSAL & BASE DA PÁGINA
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    font-weight: var(--font-regular);
+    line-height: 1.5;
+    min-height: 100vh;
+    transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+/* --------------------------------------------------------------------------
+   4. ESCALA TIPOGRÁFICA
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--primary-color);
+    margin-bottom: var(--space-sm);
+    line-height: 1.2;
+}
+
+h1 { font-size: 32px; font-weight: var(--font-bold); }
+h2 { font-size: 28px; font-weight: var(--font-bold); }
+h3 { font-size: 24px; font-weight: var(--font-semibold); }
+h4 { font-size: 20px; font-weight: var(--font-semibold); }
+h5 { font-size: 18px; font-weight: var(--font-semibold); }
+h6 { font-size: 16px; font-weight: var(--font-semibold); }
+
+p {
+    color: var(--text-secondary);
+    font-size: 16px;
+    margin-bottom: var(--space-sm);
+}
+
+small,
+.text-small {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   5. NAVEGAÇÃO & HEADER
+   -------------------------------------------------------------------------- */
+.menu-navegacao {
+    background: var(--primary-color);
+    padding: var(--space-md) var(--space-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    border-bottom: 3px solid var(--secondary-color);
+    position: relative;
+    z-index: var(--z-sticky);
+}
+
+.menu-navegacao a {
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.menu-navegacao a:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.menu-navegacao a.active {
+    color: var(--link-active);
+    font-weight: var(--font-bold);
+}
+
+/* --------------------------------------------------------------------------
+   6. LAYOUT, CONTAINERS & BREADCRUMBS
+   -------------------------------------------------------------------------- */
+.container {
+    max-width: var(--container-lg);
+    margin: var(--space-lg) auto;
+    padding: var(--space-md);
+    width: 100%;
+}
+
+.container-sm { max-width: var(--container-sm); }
+.container-md { max-width: var(--container-md); }
+.container-xl { max-width: var(--container-xl); }
+
+.section {
+    margin-bottom: var(--space-xl);
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    list-style: none;
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-md);
+}
+
+.breadcrumb li + li::before {
+    content: ">";
+    margin-right: var(--space-sm);
+    color: var(--text-secondary);
+}
+
+.breadcrumb a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb .active {
+    color: var(--text-primary);
+    font-weight: var(--font-semibold);
+}
+
+/* --------------------------------------------------------------------------
+   7. FORMULÁRIOS, INPUTS & LARGURAS
+   -------------------------------------------------------------------------- */
+.form-group {
+    background: var(--bg-card);
+    padding: var(--space-md);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    margin-bottom: var(--space-md);
+    box-shadow: var(--shadow-card);
+}
+
+.form-group label {
+    display: block;
+    font-weight: var(--font-bold);
+    margin-bottom: var(--space-sm);
+    color: var(--text-primary);
+}
+
+input[type="text"],
+input[type="url"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select {
+    width: 100%;
+    height: var(--control-height);
+    padding: 0 var(--space-md);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.input-sm { max-width: 200px; }
+.input-md { max-width: 400px; }
+.input-lg { max-width: 600px; }
+.input-full { width: 100%; }
+
+select:focus,
+input:focus,
+a:focus,
+button:focus {
+    outline: 3px solid var(--focus-outline);
+    outline-offset: 2px;
+    border-color: var(--primary-color);
+}
+
+.options-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    margin-right: var(--space-sm);
+    accent-color: var(--primary-color);
+}
+
+/* --------------------------------------------------------------------------
+   8. BOTÕES OFICIAIS
+   -------------------------------------------------------------------------- */
+#btnSalvar, 
+.btn-primary,
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--control-height);
+    padding: 0 var(--space-lg);
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: var(--font-bold);
+    text-decoration: none;
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-primary,
+#btnSalvar {
+    background: var(--btn-primary-bg);
+    color: #FFFFFF;
+}
+
+.btn-primary:hover,
+#btnSalvar:hover {
+    background: var(--btn-primary-hover);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: var(--primary-color);
+    color: #FFFFFF;
+}
+
+.btn-secondary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   9. TABELAS PADRÃO
+   -------------------------------------------------------------------------- */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-card);
+    margin-bottom: var(--space-md);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 14px;
+}
+
+.table th,
+.table td {
+    padding: var(--space-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.table th {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-weight: var(--font-bold);
+}
+
+.table tbody tr {
+    transition: background-color var(--transition-fast);
+}
+
+.table tbody tr:hover {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+/* --------------------------------------------------------------------------
+   10. CARDS, GRID, DASHBOARD & KPI'S
+   -------------------------------------------------------------------------- */
+.grid-atalhos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-md);
+}
+
+.card-atalho {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-card);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.card-atalho:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+.card-atalho h3 {
+    color: var(--primary-color);
+    margin-bottom: var(--space-sm);
+}
+
+/* Dashboard KPI Cards */
+.grid-kpi {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.kpi-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-card);
+}
+
+.kpi-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: var(--font-medium);
+    margin-bottom: var(--space-xs);
+}
+
+.kpi-number {
+    font-size: 28px;
+    font-weight: var(--font-bold);
+    color: var(--primary-color);
+}
+
+.chart-container {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-card);
+    margin-bottom: var(--space-lg);
+    position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   11. COMPONENTES: BADGES, ALERTAS & ÍCONES
+   -------------------------------------------------------------------------- */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    font-size: 12px;
+    font-weight: var(--font-semibold);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.badge-success { background: var(--success-bg); color: var(--success-text); }
+.badge-warning { background: var(--warning-bg); color: var(--warning-text); }
+.badge-danger  { background: var(--danger-bg);  color: var(--danger-text); }
+.badge-info    { background: var(--info-bg);    color: var(--info-text); }
+
+.alert {
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-md);
+    font-weight: var(--font-semibold);
+}
+
+.alert-success { background: var(--success-bg); color: var(--success-text); }
+.alert-warning { background: var(--warning-bg); color: var(--warning-text); }
+.alert-danger  { background: var(--danger-bg);  color: var(--danger-text); }
+.alert-info    { background: var(--info-bg);    color: var(--info-text); }
+
+#msgSucesso {
+    margin-top: var(--space-md);
+    background: var(--success-bg);
+    color: var(--success-text);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-semibold);
+}
+
+.icone {
+    font-size: 2.5rem;
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: var(--space-sm);
+    color: var(--secondary-color);
+}
+
+.icone-sm { font-size: 1.25rem; }
+.icone-md { font-size: 2.00rem; }
+.icone-lg { font-size: 3.00rem; }
+
+/* --------------------------------------------------------------------------
+   12. MODAIS & LOADERS (SPINNERS)
+   -------------------------------------------------------------------------- */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-modal-backdrop);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-fast), visibility var(--transition-fast);
+}
+
+.modal-backdrop.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal {
+    background: var(--bg-card);
+    width: 100%;
+    max-width: 600px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-modal);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    transform: translateY(-20px);
+    transition: transform var(--transition-fast);
+    z-index: var(--z-modal);
+}
+
+.modal-backdrop.show .modal {
+    transform: translateY(0);
+}
+
+.modal-content {
+    padding: var(--space-lg);
+}
+
+/* Loader / Spinner */
+.loading {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* --------------------------------------------------------------------------
+   13. CLASSES UTILITÁRIAS (HELPERS)
+   -------------------------------------------------------------------------- */
+.text-center { text-align: center; }
+.text-right  { text-align: right; }
+.text-left   { text-align: left; }
+
+.d-flex    { display: flex; }
+.d-grid    { display: grid; }
+.align-items-center { align-items: center; }
+.justify-content-between { justify-content: space-between; }
+
+/* Margens Utilitárias */
+.mt-sm { margin-top: var(--space-sm); }
+.mt-md { margin-top: var(--space-md); }
+.mt-lg { margin-top: var(--space-lg); }
+
+.mb-sm { margin-bottom: var(--space-sm); }
+.mb-md { margin-bottom: var(--space-md); }
+.mb-lg { margin-bottom: var(--space-lg); }
+
+/* --------------------------------------------------------------------------
+   14. IMAGENS
+   -------------------------------------------------------------------------- */
+img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+}
+
+/* --------------------------------------------------------------------------
+   15. RESPONSIVIDADE (MEDIA QUERIES)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .container {
+        padding: var(--space-sm);
+    }
+
+    .menu-navegacao {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .options-group {
+        flex-direction: column;
+    }
+
+    .input-sm,
+    .input-md,
+    .input-lg {
+        max-width: 100%;
+    }
+
+    .modal {
+        margin: var(--space-sm);
+        max-width: calc(100% - 32px);
+    }
+}
