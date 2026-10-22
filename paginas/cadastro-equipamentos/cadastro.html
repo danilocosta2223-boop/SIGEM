@@ -349,5 +349,295 @@
     <script src="../../scripts/temas.js"></script>
     <script src="../../scripts/idiomas.js"></script>
     <script src="../../scripts/cadastro.js"></script>
+
+    <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="SIGEM - Módulo de Cadastro de Equipamentos Médico-Hospitalares.">
+    <meta name="author" content="Danilo Rafael da Silva Costa">
+    <meta name="theme-color" content="#005A9C">
+
+    <title data-i18n="cadastroEquipamentos">Cadastro de Equipamentos — SIGEM</title>
+
+    <!-- Favicon do SIGEM -->
+    <link rel="icon" href="../../imagens/logo-fleury.png" type="image/png">
+
+    <!-- Tipografia Oficial: Roboto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Design System Global (Subindo 2 níveis para a raiz /styles/) -->
+    <link rel="stylesheet" href="../../styles/normalize.css">
+    <link rel="stylesheet" href="../../styles/global.css">
+    <link rel="stylesheet" href="../../styles/botoes.css">
+    <link rel="stylesheet" href="../../styles/header.css">
+    <link rel="stylesheet" href="../../styles/responsive.css">
+
+    <!-- Tema Ativo (Claro / Escuro) -->
+    <link id="tema-css" rel="stylesheet" href="../../styles/claro.css">
+</head>
+<body id="sigem-app" class="sigem-pagina-interna">
+
+    <!-- ================================================= -->
+    <!-- MENU SUPERIOR CORPORATIVO (HEADER SIGEM)          -->
+    <!-- ================================================= -->
+    <header class="header-principal">
+        <div class="logo-area">
+            <a href="../../index.html" class="logo" title="Ir para o Início">
+                <img src="../../imagens/logo-fleury.png" alt="Grupo Fleury" class="logo-fleury" width="48" height="48" onerror="this.style.display='none'">
+                <div class="logo-texto">
+                    <h1>SIGEM</h1>
+                    <span>Sistema Integrado de Gestão de Engenharia Clínica</span>
+                </div>
+            </a>
+        </div>
+
+        <nav class="menu-principal menu-navegacao">
+            <a href="../../index.html" data-i18n="menuInicio">
+                <i class="fa-solid fa-house"></i> Início
+            </a>
+            <a href="cadastro.html" class="active" data-i18n="menuCadastro">
+                <i class="fa-solid fa-plus"></i> Cadastro
+            </a>
+            <a href="dashboard.html" data-i18n="menuDashboard">
+                <i class="fa-solid fa-chart-line"></i> Dashboard
+            </a>
+            <a href="../diagnostico-imagem/diagnostico-imagem.html" data-i18n="menuImagem">
+                <i class="fa-solid fa-x-ray"></i> Imagem
+            </a>
+            <a href="../faq/faq.html" data-i18n="menuFaq">
+                <i class="fa-solid fa-circle-question"></i> FAQ
+            </a>
+            <a href="../organograma/organograma.html" data-i18n="menuOrganograma">
+                <i class="fa-solid fa-sitemap"></i> Organograma
+            </a>
+            <a href="../../configuracoes.html" data-i18n="menuConfiguracoes">
+                <i class="fa-solid fa-gear"></i> Configurações
+            </a>
+        </nav>
+
+        <div class="acoes">
+            <div class="seletor-idioma">
+                <select id="idioma" class="seletor-idioma-select" aria-label="Selecionar idioma">
+                    <option value="pt-BR">🇧🇷 Pt-BR</option>
+                    <option value="en-US">🇺🇸 En-US</option>
+                    <option value="es-ES">🇪🇸 Es-ES</option>
+                </select>
+            </div>
+
+            <button type="button" id="btn-troca-tema" class="btn btn-ghost btn-sm btn-icon" title="Alternar Tema" aria-label="Alternar tema">
+                <span id="icone-tema">🌙</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ================================================= -->
+    <!-- CONTEÚDO PRINCIPAL (FORMULÁRIO DE CADASTRO)       -->
+    <!-- ================================================= -->
+    <main class="container">
+        <div class="cadastro-header-secao">
+            <div class="header-titulo-wrapper">
+                <h1>
+                    <i class="fa-solid fa-hospital"></i> Cadastro de Equipamentos
+                </h1>
+                <span class="badge-clinica">Engenharia Clínica</span>
+            </div>
+            <p class="subtitulo" data-i18n="subtituloEquipamentos">
+                Registro, inventário e gerenciamento de equipamentos médico-hospitalares da instituição.
+            </p>
+        </div>
+
+        <form id="cadastroForm" novalidate>
+            <!-- Bloco 01: Solicitação e Localização -->
+            <div class="form-grid-duplo">
+                <section class="cadastro-secao section">
+                    <h2><i class="fa-regular fa-file-lines secao-icone"></i> Dados da Solicitação</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="dataSolicitacao" class="obrigatorio" data-i18n="dataSolicitacao">Data da Solicitação</label>
+                            <input type="date" id="dataSolicitacao" name="dataSolicitacao" readonly class="readonly input-full" required>
+                            <small class="form-help" data-i18n="helpData">Preenchida automaticamente.</small>
+                        </div>
+
+                        <div class="form-group campo-full">
+                            <label for="solicitante" class="obrigatorio" data-i18n="solicitante">Nome do Solicitante</label>
+                            <div class="input-icon">
+                                <i class="fa-regular fa-user"></i>
+                                <input type="text" id="solicitante" name="solicitante" class="input-full" placeholder="Digite o nome do solicitante" data-i18n-placeholder="placeholderSolicitante" spellcheck="false" required>
+                            </div>
+                            <small class="form-help" data-i18n="helpSolicitante">Profissional responsável.</small>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="cadastro-secao section">
+                    <h2><i class="fa-solid fa-location-dot secao-icone"></i> Localização do Equipamento</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="regional" class="obrigatorio" data-i18n="regional">Regional</label>
+                            <input type="text" id="regional" name="regional" class="input-full" list="listaRegionais" placeholder="Digite ou selecione a regional..." required autocomplete="off" spellcheck="false">
+                            <datalist id="listaRegionais"></datalist>
+                            <small class="form-help" data-i18n="helpRegional">Região administrativa.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="unidade" class="obrigatorio" data-i18n="unidade">Unidade / Hospital</label>
+                            <input type="text" id="unidade" name="unidade" class="input-full" list="listaUnidades" placeholder="Primeiro selecione a regional..." required disabled autocomplete="off" spellcheck="false">
+                            <datalist id="listaUnidades"></datalist>
+                            <small class="form-help" data-i18n="helpUnidade">Unidade de atendimento.</small>
+                        </div>
+
+                        <div class="form-group" id="grupoOutraUnidade" style="display: none;">
+                            <label for="unidadePersonalizada" class="obrigatorio" data-i18n="outraUnidade">Nome da Outra Unidade</label>
+                            <input type="text" id="unidadePersonalizada" name="unidadePersonalizada" class="input-full" placeholder="Digite o nome completo da unidade..." spellcheck="false">
+                        </div>
+
+                        <div class="form-group campo-full">
+                            <label for="setorInstalacao" class="obrigatorio" data-i18n="setorInstalacao">Setor de Instalação</label>
+                            <div class="input-icon">
+                                <i class="fa-solid fa-hospital-user"></i>
+                                <input type="text" id="setorInstalacao" name="setorInstalacao" class="input-full" placeholder="Ex: UTI Adulto, Centro Cirúrgico, Pronto Atendimento" data-i18n-placeholder="placeholderSetor" spellcheck="false" required>
+                            </div>
+                            <small class="form-help" data-i18n="helpSetor">Setor onde o equipamento operará.</small>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Bloco 02: Identificação do Equipamento -->
+            <section class="cadastro-secao section">
+                <h2><i class="fa-solid fa-gear secao-icone"></i> Identificação do Equipamento</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="numeroSerie" class="obrigatorio" data-i18n="numeroSerie">Número de Série</label>
+                        <input type="text" id="numeroSerie" name="numeroSerie" class="input-full" placeholder="Ex: SN-8830192" data-i18n-placeholder="placeholderSerie" autocomplete="off" spellcheck="false" required>
+                        <small class="form-help" data-i18n="helpNumeroSerie">Identificador único do fabricante.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descricaoAtivo" class="obrigatorio" data-i18n="descricaoAtivo">Descrição do Ativo</label>
+                        <input type="text" id="descricaoAtivo" name="descricaoAtivo" class="input-full" maxlength="150" placeholder="Ex: Monitor Multiparâmetro" data-i18n-placeholder="placeholderDescricao" spellcheck="false" required>
+                        <small class="form-help" data-i18n="helpDescricao">Nome oficial.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fabricante" class="obrigatorio" data-i18n="fabricante">Fabricante</label>
+                        <input type="text" id="fabricante" name="fabricante" class="input-full" placeholder="Ex: GE Healthcare / Philips" data-i18n-placeholder="placeholderFabricante" spellcheck="false" required>
+                        <small class="form-help" data-i18n="helpFabricante">Marca do equipamento.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modelo" class="obrigatorio" data-i18n="modelo">Modelo</label>
+                        <input type="text" id="modelo" name="modelo" class="input-full" placeholder="Ex: Carescape B650" data-i18n-placeholder="placeholderModelo" spellcheck="false" required>
+                        <small class="form-help" data-i18n="helpModelo">Modelo comercial.</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bloco 03: Dados Administrativos e Observações -->
+            <div class="form-grid-duplo">
+                <section class="cadastro-secao section">
+                    <h2><i class="fa-regular fa-clipboard secao-icone"></i> Dados Administrativos</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="dataAquisicao" class="obrigatorio" data-i18n="dataAquisicao">Data de Aquisição</label>
+                            <input type="date" id="dataAquisicao" name="dataAquisicao" class="input-full" required>
+                            <small class="form-help" data-i18n="helpDataAquisicao">Entrada na instituição.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notaFiscal" class="obrigatorio" data-i18n="notaFiscal">Nota Fiscal</label>
+                            <input type="text" id="notaFiscal" name="notaFiscal" class="input-full" placeholder="Ex: NF-10001" maxlength="50" autocomplete="off" spellcheck="false" required>
+                            <small class="form-help" data-i18n="helpNotaFiscal">Documento fiscal.</small>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="cadastro-secao section">
+                    <h2><i class="fa-regular fa-comment-dots secao-icone"></i> Observações</h2>
+                    <div class="form-grid">
+                        <div class="form-group campo-full">
+                            <label for="observacoes" data-i18n="observacoes">Notas e Ocorrências Técnicas</label>
+                            <textarea id="observacoes" name="observacoes" class="input-full" maxlength="500" placeholder="Insira restrições de uso ou histórico..."></textarea>
+                            <div class="form-help-contador">
+                                <small class="form-help">Informações complementares.</small>
+                                <small id="contadorObservacoes" class="contador-caracteres">0 / 500</small>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Bloco 04: Documentos e Anexos -->
+            <section class="cadastro-secao section">
+                <h2><i class="fa-regular fa-folder-open secao-icone"></i> Documentos e Anexos</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="fotoEquipamento" data-i18n="fotoEquipamento">Foto do Equipamento</label>
+                        <div class="upload-box">
+                            <i class="fa-solid fa-camera upload-icone"></i>
+                            <p>Clique ou arraste a foto aqui</p>
+                            <input type="file" id="fotoEquipamento" name="fotoEquipamento" accept="image/*">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="anexoNotaFiscal" data-i18n="anexoNotaFiscal">Anexo da Nota Fiscal</label>
+                        <div class="upload-box">
+                            <i class="fa-solid fa-file-pdf upload-icone"></i>
+                            <p>Clique ou arraste o PDF/Imagem da NF</p>
+                            <input type="file" id="anexoNotaFiscal" name="anexoNotaFiscal" accept=".pdf,.png,.jpg,.jpeg">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bloco 05: Ações do Formulário -->
+            <div class="acoes-formulario">
+                <button type="reset" class="btn btn-secondary" id="btnCancelar">Limpar</button>
+                <button type="submit" class="btn btn-primary" id="btnSalvar">
+                    <i class="fa-solid fa-check"></i> Cadastrar Equipamento
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <!-- ================================================= -->
+    <!-- RODAPÉ INSTITUCIONAL                               -->
+    <!-- ================================================= -->
+    <footer class="rodape-institucional">
+        <div class="rodape-container">
+            <div class="rodape-info">
+                <p>&copy; 2026 SIGEM — Sistema Integrado de Gestão de Engenharia Clínica</p>
+                <small class="rodape-subtexto">Uso exclusivo para gestão hospitalar e controle de ativos biomédicos.</small>
+            </div>
+
+            <div class="rodape-meta">
+                <span class="versao-sistema">v1.0.0</span>
+                <nav class="rodape-links">
+                    <a href="#termos">Termos de Uso</a>
+                    <span class="divisor">•</span>
+                    <a href="#privacidade">Privacidade</a>
+                    <span class="divisor">•</span>
+                    <a href="#suporte">Suporte Técnico</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts Globais (Subindo 2 níveis para a pasta /scripts/) -->
+    <script src="../../scripts/configuracoes-globais.js"></script>
+    <script src="../../scripts/regionais.js"></script>
+    <script src="../../scripts/unidades.js"></script>
+    <script src="../../scripts/temas.js"></script>
+    <script src="../../scripts/idiomas.js"></script>
+    <script src="../../scripts/cadastro.js"></script>
 </body>
 </html>
