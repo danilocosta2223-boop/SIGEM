@@ -1,0 +1,107 @@
+/* ==========================================================================
+   SIGEM - HEADER & NAVEGAÇÃO CORPORATIVA (HEADER.CSS)
+   ========================================================================== */
+
+/* 1. HEADER PRINCIPAL & BRANDING */
+.header-principal {
+    min-height: 90px;
+    padding: var(--space-md) var(--space-lg);
+    background-color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    border-bottom: 3px solid var(--secondary-color);
+    position: relative;
+    z-index: var(--z-sticky);
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: var(--space-md);
+}
+
+.logo-texto h1 {
+    margin: 0;
+    font-size: 42px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    letter-spacing: 2px;
+    line-height: 1;
+    font-family: "Roboto", "Segoe UI", sans-serif;
+}
+
+.logo-texto span {
+    display: block;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 4px;
+    font-family: "Roboto", "Segoe UI", sans-serif;
+}
+
+.logo-fleury {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+/* 2. MENU DE NAVEGAÇÃO */
+.menu-navegacao {
+    background: #0F172A;
+    padding: var(--space-md) var(--space-lg);
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    border-bottom: 3px solid var(--primary-color);
+    font-family: "Roboto", "Segoe UI", sans-serif;
+}
+
+.menu-navegacao a {
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.menu-navegacao a:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.menu-navegacao a.active {
+    background: var(--primary-color);
+    color: var(--link-active);
+    font-weight: var(--font-bold);
+}
+
+/* 3. RESPONSIVIDADE */
+@media (max-width: 768px) {
+
+    .header-principal,
+    .menu-navegacao {
+        padding: var(--space-md);
+    }
+
+    .logo-area {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-sm);
+    }
+
+    .logo-texto h1 {
+        font-size: 28px;
+    }
+
+    .logo-fleury {
+        height: 38px;
+        align-self: flex-start;
+    }
+
+    .menu-navegacao {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
